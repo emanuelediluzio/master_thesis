@@ -1,0 +1,37 @@
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    auto,
+    scale=0.9,
+    transform shape,
+    block/.style={draw, rectangle, rounded corners, minimum width=1.2cm, minimum height=0.8cm, align=center, drop shadow},
+    visual/.style={block, fill=green!15},
+    text/.style={block, fill=blue!15},
+    arrow/.style={thick, ->, >=stealth}
+]
+
+    % Visual Embeddings Sequence
+    \node[visual] (v1) {$E^{(1)}_{vis}$};
+    \node[visual, right=0.3cm of v1] (v2) {$E^{(2)}_{vis}$};
+    \node[right=0.3cm of v2] (v_dots) {$\dots$};
+    \node[visual, right=0.3cm of v_dots] (vn) {$E^{(N)}_{vis}$};
+
+    % Text Embeddings Sequence
+    \node[text, right=1.0cm of vn] (t1) {$E^{(1)}_{txt}$};
+    \node[text, right=0.3cm of t1] (t2) {$E^{(2)}_{txt}$};
+    \node[right=0.3cm of t2] (t_dots) {$\dots$};
+    \node[text, right=0.3cm of t_dots] (tm) {$E^{(M)}_{txt}$};
+
+    % Labels
+    \node[above=0.2cm of v1, font=\small\bfseries, color=green!60!black] {Visual Embeddings (SPE)};
+    \node[above=0.2cm of t1, font=\small\bfseries, color=blue!60!black] {Text Embeddings (Prompt)};
+
+    % Concatenation Brace
+    \draw[decorate, decoration={brace, amplitude=10pt, mirror}, thick] 
+        (v1.south west) -- (tm.south east) 
+        node[midway, below=15pt, font=\bfseries] (concat_label) {Concatenated Input Sequence};
+
+    % Arrow to LLM
+    \node[block, fill=orange!15, minimum width=4cm, below=1.5cm of concat_label] (llm) {Large Language Model\\(Decoder-Only)};
+    \draw[arrow] (concat_label.south) -- (llm.north);
+
+\end{tikzpicture}

@@ -1,0 +1,167 @@
+\documentclass[12pt,a4paper,oneside,openany]{book}
+
+% Pacchetti essenziali
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[a-2b]{pdfx}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{url}
+%\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{pifont}
+\newcommand{\Checkmark}{\ding{51}}
+\newcommand{\XSolidBrush}{\ding{55}}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta, positioning, calc, chains, decorations.pathreplacing, shadows, fit, backgrounds}
+\input{llm-diagrams.tex}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{adjustbox}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+\usepackage{frontespizio}
+
+% Configurazione della pagina
+\geometry{
+    portrait,
+    left=3cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm,
+    bindingoffset=0.5cm
+}
+
+% Configurazione dell'interlinea
+\onehalfspacing
+
+% Configurazione dei link
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={SVG Captioning with Transformer Models: LLM-based SVG image captioning with conceptual embeddings - EXPANDED},
+    pdfauthor={Emanuele Di Luzio},
+    pdfsubject={Master's Thesis},
+}
+
+% Configurazione del codice
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false,
+    commentstyle=\color{gray},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red}
+}
+
+% Configurazione delle intestazioni
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\fancyhead[L]{\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{14.5pt}
+
+\begin{document}
+
+% Frontespizio
+\begin{frontespizio}
+	\begin{Preambolo*}
+		% Ridotto font size da 25 a 22 per far stare il titolo su una riga
+		\renewcommand{\fronttitlefont}{\fontsize{22}{30}\bfseries}
+	\end{Preambolo*}
+    \NCandidato{Candidate}{}
+    \NRelatore{Supervisor}{Supervisors}
+    \NCorrelatore{Co-supervisor}{Co-supervisors}
+	\Istituzione{University of Modena and Reggio Emilia}
+	\Divisione{Department of Engineering ``Enzo Ferrari''}
+	\Scuola{Master's Degree in Artificial Intelligence Engineering}
+	\Titolo{LLM-based SVG image captioning with conceptual embeddings}
+	\Candidato{Emanuele Di Luzio}
+	\Relatore{Prof. Lorenzo Baraldi}
+	\Correlatore{Dott. Leonardo Zini}
+	\Piede{Academic Year 2024-2025}
+	\Margini{2.5cm}{2.5cm}{2.5cm}{3cm}
+\end{frontespizio}
+
+% Indice
+\tableofcontents
+\newpage
+
+% Abstract
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Scalable Vector Graphics (SVG) are ubiquitous in modern web design, yet current Multimodal Large Language Models (MLLMs) struggle to interpret their raw XML structure. Most existing approaches rely on rasterizing SVGs into pixel grids, a process that discards the semantic richness of the vector definition and introduces resolution artifacts.
+
+In this work, I present a novel architecture that enables a decoder-only LLM to directly ingest and interpret SVG code without rasterization. I integrate a \textbf{SVG Path Embedder (SPE)}--originally developed by Zini \textit{et al.}--that maps continuous geometric coordinates into the LLM's embedding space using sinusoidal functions. By combining this encoder with \textbf{Qwen2-7B} and \textbf{Gemma-9B} via \textbf{Low-Rank Adaptation (LoRA)}, I demonstrate that the model can learn to "read" vector geometries effectively.
+
+My experiments, conducted on a dataset of \textbf{90,000 SVG-caption pairs} and evaluated on a stratified benchmark of \textbf{400 samples}, show that this vector-native approach outperforms zero-shot raster baselines. Specifically, the \textbf{SPE+Qwen2-7B} configuration achieves a CLIPScore of 29.3 and a BLEU-1 score of 0.42, offering a parameter-efficient alternative to vision-encoder-based methods. I provide a detailed analysis of the model's capabilities and limitations, offering a new perspective on vector-language understanding.
+
+\chapter*{Sommario}
+\addcontentsline{toc}{chapter}{Sommario}
+
+Le immagini vettoriali (SVG) sono onnipresenti nel design digitale, tuttavia gli attuali modelli multimodali (MLLM) faticano a interpretare la loro struttura XML grezza. La maggior parte degli approcci esistenti si basa sulla rasterizzazione degli SVG in griglie di pixel, un processo che scarta la ricchezza semantica della definizione vettoriale e introduce artefatti di risoluzione.
+
+In questa tesi, presento un'architettura che consente a un LLM decoder-only di ingerire e interpretare direttamente il codice SVG senza rasterizzazione. Integro uno \textbf{SVG Path Embedder (SPE)}--originariamente sviluppato da Zini \textit{et al.}--che mappa le coordinate geometriche continue nello spazio di embedding dell'LLM utilizzando funzioni sinusoidali. Combinando questo encoder con \textbf{Qwen2-7B} e \textbf{Gemma-9B} tramite \textbf{Low-Rank Adaptation (LoRA)}, dimostro che il modello può imparare a "leggere" le geometrie vettoriali in modo efficace.
+
+I miei esperimenti, condotti su un dataset di \textbf{90.000 coppie SVG-caption} e valutati su un benchmark stratificato di \textbf{400 campioni}, mostrano che questo approccio vettoriale supera le baseline raster zero-shot. Nello specifico, la configurazione \textbf{SPE+Qwen2-7B} ottiene un CLIPScore di 29.3 e un punteggio BLEU-1 di 0.42, offrendo un'alternativa efficiente ai metodi basati su vision-encoder. Fornisco un'analisi dettagliata delle capacità e dei limiti del modello, offrendo una nuova prospettiva sulla comprensione del linguaggio vettoriale.
+
+% ============================================
+% CAPITOLI ESPANSI (da file separati)
+% ============================================
+
+\input{chapter1_expanded}
+\input{chapter2_expanded}
+\input{chapter3_expanded}
+\input{chapter4_expanded}
+\input{chapter5_expanded}
+\input{chapter6_expanded}
+
+
+
+% ============================================
+% RINGRAZIAMENTI (dall'originale)
+% ============================================
+
+\chapter*{Acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+
+I would like to express my heartfelt gratitude to all those who have supported me throughout this academic journey.
+
+First and foremost, I want to thank my family, who have always been my foundation and source of strength. Their unwavering support and encouragement have been invaluable throughout my studies.
+
+I am deeply grateful to all my friends who have stood by me during these years of study. Special thanks go to Rocco and Alessio, with whom I have faced many exams and shared countless hours of preparation. Their friendship and collaboration have made this journey not only bearable but also enjoyable. I also want to thank Edoardo, a longtime friend who has always been supportive throughout this journey.
+
+A very special acknowledgment goes to my girlfriend Joel, who has been by my side during the most stressful period of this journey. Her patience, understanding, and continuous support have been a source of comfort and motivation when I needed it most.
+
+Finally, I want to express my gratitude to my university friends and classmates who have been an invaluable source of help and companionship during these years of study. Their support, shared experiences, and collaborative spirit have made this academic path more meaningful and enjoyable.
+
+I would also like to sincerely thank my supervisor, Prof. Lorenzo Baraldi, and my co-supervisor, Dott. Leonardo Zini, for their invaluable guidance, expertise, and support throughout the development of this thesis.
+
+This thesis would not have been possible without the collective support of all these wonderful people.
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

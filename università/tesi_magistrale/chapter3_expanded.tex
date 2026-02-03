@@ -1,0 +1,516 @@
+\chapter{Methodology}
+\label{chap:metodologia}
+
+This chapter presents the proposed methodology for SVG captioning in detail. My approach is founded on three core principles: \textbf{vector-native processing} (avoiding rasterization), \textbf{parameter-efficient adaptation} (leveraging pre-trained LLMs without prohibitive computational cost), and \textbf{continuous geometric representation} (preserving the mathematical precision of vector coordinates). I build a system that treats SVG as a structured language while respecting its geometric semantics, enabling Large Language Models to generate accurate, human-readable captions directly from the vector definition. The core of this thesis lies in the optimal application of LoRA to decoder-only models (Qwen2, Gemma, Llama) and the effective fusion of the SPE's visual representations with the LLM's linguistic capabilities.
+
+\section{Overview of the Proposed Approach}
+\label{sec:methodology-overview}
+
+\subsection{The Naive Approach: Direct Text Input}
+
+Before detailing my proposed architecture, it is useful to visualize the standard, "naive" approach where SVG code is treated simply as text. In this setup, the raw XML is fed directly into the LLM's tokenizer, as shown in Figure~\ref{fig:naive-pipeline}.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=1.5cm, auto, scale=0.85, transform shape]
+        % Styles
+        \tikzstyle{block} = [draw, rectangle, rounded corners, minimum width=2.5cm, minimum height=1.2cm, align=center, fill=white, drop shadow];
+        \tikzstyle{arrow} = [thick, ->, >=stealth];
+
+        % Nodes
+        \node[block, fill=gray!10] (svg) {Raw SVG\\(XML Text)};
+        \node[block, fill=red!10, right=of svg] (tok) {Text Tokenizer\\(BPE/SentencePiece)};
+        \node[block, fill=orange!10, right=of tok] (llm) {Standard LLM\\(Decoder-Only)};
+        \node[block, fill=gray!10, right=of llm] (out) {Generated\\Caption};
+
+        % Arrows
+        \draw[arrow] (svg) -- (tok);
+        \draw[arrow] (tok) -- (llm);
+        \draw[arrow] (llm) -- (out);
+
+        % Annotations
+        \node[below=0.2cm of svg, font=\tiny] {\texttt{<path d="M 12.5..."/>}};
+        \node[below=0.2cm of tok, font=\tiny, align=center] {Tokens: ["M", "12", ".", "5"]\\(Broken Coordinates)};
+        \node[below=0.2cm of llm, font=\tiny] {Treats geometry as text};
+        \node[below=0.2cm of out, font=\tiny] {Often hallucinated};
+
+    \end{tikzpicture}
+    \caption{The Naive Approach: Direct SVG Text Input. The tokenizer fragments continuous coordinates into meaningless sub-tokens, preventing the LLM from grasping the geometric structure.}
+    \label{fig:naive-pipeline}
+\end{figure}
+
+This approach, while simple, suffers from the "Tokenization Mismatch", a fundamental issue that I analyze in detail in Section~\ref{sec:llms-methodology}. A natural improvement over the naive zero-shot approach is to fine-tune the LLM on the SVG text. In this setup, I still treat SVG as raw code, but I use LoRA to adapt the model to the specific syntax and patterns of the dataset.
+
+Crucially, this approach should not be underestimated. My experiments reveal that for certain architectures--specifically \textbf{Qwen2-7B}--this text-only fine-tuning yields exceptionally high performance (CLIPScore: 32.3, BLEU: 0.238, METEOR: 0.206, ROUGE: 0.277). This suggests that modern LLMs, when properly adapted via LoRA, can internalize the statistical correlations between coordinate tokens and semantic descriptions to a surprising degree, establishing a very strong baseline that is difficult to beat even with specialized encoders.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=1.5cm, auto, scale=0.85, transform shape]
+        % Styles
+        \tikzstyle{block} = [draw, rectangle, rounded corners, minimum width=2.5cm, minimum height=1.2cm, align=center, fill=white, drop shadow];
+        \tikzstyle{arrow} = [thick, ->, >=stealth];
+
+        % Nodes
+        \node[block, fill=gray!10] (svg) {Raw SVG\\(XML)};
+        \node[block, fill=red!10, right=of svg] (tok) {Text Tokenizer\\(BPE)};
+        \node[block, fill=orange!10, right=of tok] (llm) {LoRA-LLM\\(Text-Adapted)};
+        \node[block, fill=gray!10, right=of llm] (out) {Generated\\Caption};
+
+        % Arrows
+        \draw[arrow] (svg) -- (tok);
+        \draw[arrow] (tok) -- (llm);
+        \draw[arrow] (llm) -- (out);
+
+        % Annotations
+        \node[below=0.2cm of svg, font=\tiny] {\texttt{<path.../>}};
+        \node[below=0.2cm of tok, font=\tiny, align=center] {Tokens\\(Broken Coords)};
+        \node[below=0.2cm of llm, font=\tiny] {Learns Syntax};
+        \node[below=0.2cm of out, font=\tiny, align=center] {Better, but\\not grounded};
+
+    \end{tikzpicture}
+    \caption{Intermediate Approach: Text-Only Fine-Tuning. The model is adapted via LoRA to the SVG text format. While it learns to generate valid syntax, it still suffers from the tokenization mismatch and lacks true geometric perception.}
+    \label{fig:text-ft-pipeline}
+\end{figure}
+
+\subsection{Multimodal Training Process (SPE-LoRA)}
+
+To overcome the limitations of text-based processing, I propose a \textbf{vector-native} approach. I integrate the \textbf{SVG Path Embedder (SPE)}, a module developed by Zini \textit{et al.} \cite{zini2025vhector}, which encodes continuous coordinates into dense vectors. My contribution is the effective integration of this pre-existing encoder with a decoder-only LLM via LoRA, creating a pipeline that is both geometry-aware and parameter-efficient.
+
+This training process differs fundamentally from standard fine-tuning. Instead of updating all model weights to learn a new syntax (as in the text-only approach), we freeze the LLM's backbone and only train the LoRA adapters and the MLP projection layer of the SPE. This forces the model to learn a translation mapping: it must learn to interpret the continuous signals from the SPE as semantic concepts ("circle", "top-left", "red") using its existing linguistic knowledge. This "modality alignment" is the core objective of our training phase. By keeping the LLM frozen, we preserve its reasoning capabilities and prevent catastrophic forgetting, ensuring that the generated captions remain fluent and coherent.
+
+\subsection{High-Level Pipeline}
+
+The complete SVG captioning pipeline consists of four main stages, illustrated conceptually in Figure~\ref{fig:pipeline-overview} (described here in text):
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=0.8cm, auto, scale=0.9, transform shape]
+        % Styles
+        \tikzstyle{block} = [draw, rectangle, rounded corners, minimum width=4cm, minimum height=1.0cm, align=center, fill=white, drop shadow];
+        \tikzstyle{arrow} = [thick, ->, >=stealth];
+        \tikzstyle{label} = [font=\small\bfseries];
+
+        % Nodes (Vertical Flow)
+        \node[block, fill=gray!10] (svg) {Raw SVG\\(XML)};
+        \node[block, fill=blue!10, below=of svg] (preproc) {Preprocessing\\(Parsing, Norm)};
+        \node[block, fill=green!10, below=of preproc] (spe) {SPE Encoder\\(Geometric Emb.)};
+        \node[block, fill=orange!10, below=of spe] (llm) {LoRA-LLM\\(Decoder-Only)};
+        \node[block, fill=red!10, below=of llm] (caption) {Generated\\Caption};
+
+        % Arrows
+        \draw[arrow] (svg) -- (preproc);
+        \draw[arrow] (preproc) -- (spe);
+        \draw[arrow] (spe) -- (llm);
+        \draw[arrow] (llm) -- (caption);
+
+        % Annotations (Side annotations for vertical flow)
+        \node[right=0.5cm of svg, font=\tiny, align=left] {<svg>...};
+        \node[right=0.5cm of preproc, font=\tiny, align=left] {SVG Path List};
+        \node[right=0.5cm of spe, font=\tiny, align=left] {Vectors $v_i$};
+        \node[right=0.5cm of llm, font=\tiny, align=left] {Tokens $t_i$};
+        \node[right=0.5cm of caption, font=\tiny, align=left] {"A red circle..."};
+
+    \end{tikzpicture}
+    \caption{Conceptual overview of the proposed SVG captioning pipeline: (1) Preprocessing, (2) SPE Encoding, (3) LoRA-adapted LLM Processing, (4) Caption Generation.}
+    \label{fig:pipeline-overview}
+\end{figure}
+
+The complete SVG captioning pipeline consists of four main stages. First, (i) \textbf{SVG Preprocessing} parses the raw XML to \textbf{standardize it into a list of paths}, normalizes the viewBox, and simplifies complex paths by filtering non-standard segmtokens to reduce sequence length without losing essential topology. Second, (ii) \textbf{Geometric Encoding (SPE)} maps the attributes of each element--geometric parameters, type, and style--into dense vector embeddings using a learned vocabulary to align efficient discrete representation with the LLM's architecture. Third, (iii) \textbf{Sequence Construction} linearizes the list of paths via depth-first traversal and concatenates the resulting visual embeddings with text token embeddings (the prompt) to form a hybrid input sequence. Finally, (iv) \textbf{Caption Generation} feeds this hybrid sequence to a decoder-only LLM (adapted via LoRA), which generates the caption autoregressively, interpreting the geometric embeddings as visual context.
+
+\subsection{Design Philosophy}
+
+Three guiding principles shape this methodology: (i) \textbf{Vector-Native Processing}, which avoids rasterization to operate directly on geometric primitives, preserving resolution independence; (ii) \textbf{Parameter-Efficiency}, leveraging pre-trained LLMs (Qwen2, Gemma, Llama) via LoRA to adapt to the visual domain without the prohibitive cost of training from scratch; and (iii) \textbf{Discrete Geometric Alignment}, which bridges the gap between vector graphics and language models by tokenizing continuous coordinates into a discrete vocabulary, enabling robust cross-modal learning.
+
+\section{The Role of Large Language Models in Captioning}
+\label{sec:llms-methodology}
+
+\subsection{Why Decoder-Only Architectures?}
+
+The first methodological choice is the selection of decoder-only Large Language Models as the core generative component. As discussed in Chapter~\ref{chap:stato-arte}, decoder-only models (GPT, Llama, Qwen, Gemma) are trained to predict the next token in a sequence, learning to model the joint distribution $P(x_1, x_2, \ldots, x_T)$ via the autoregressive factorization:
+\[
+P(x_1, \ldots, x_T) = \prod_{t=1}^T P(x_t \mid x_{<t})
+\]
+
+For captioning, this is ideal: I condition the model on the SVG representation (the visual prefix) and generate the caption token by token. The causal attention mask ensures that each token in the caption depends only on the visual context and the previously generated caption tokens, aligning with the natural left-to-right reading order of text.
+
+Encoder-decoder models (\textit{e.g.}, T5, BART) could in principle be used, but they require a more complex training setup (encoding the SVG, then decoding the caption). Decoder-only models simplify this: the SVG embeddings are simply prepended to the text prompt, and the entire sequence is processed uniformly.
+
+\subsection{Selection of LLM Backbones}
+
+I experiment with three decoder-only LLMs: \textbf{Qwen2-7B}, a multilingual model from Alibaba with strong reasoning capabilities and efficient grouped-query attention (GQA), making it well-suited for code-like SVG data; \textbf{Gemma-9B}, a safety-focused model from Google with instruction tuning that aligns well with prompt-following tasks; and \textbf{Llama-8B}, a widely used open-source baseline from Meta that employs rotary positional embeddings (RoPE) and serves as a reliable reference for performance comparison. All three models have comparable sizes (7-9 billion parameters) and are trained on similar-scale corpora (trillions of tokens). The choice between them is primarily a matter of architectural details (attention variants, normalization schemes) and downstream performance, which I evaluate empirically in Chapter~\ref{chap:valutazione}.
+
+\subsection{Zero-Shot Baseline: Why Direct SVG Code Input Fails}
+
+Before introducing the SPE and LoRA, I must establish why a simpler approach--directly feeding the SVG code as text to the LLM--fails. This serves as my zero-shot baseline and motivates the need for adaptation.
+
+Empirical experiments reveal several failure modes when treating SVG as raw text. First, (i) \textbf{Tokenization Mismatch} occurs because standard tokenizers split numeric coordinates into meaningless fragments (\textit{e.g.}, `12.567` becomes `12`, `.`, `56`, `7`), destroying their semantic unity. Second, (ii) \textbf{Loss of Continuous Semantics} means the model lacks a notion of numerical proximity, treating similar values as unrelated tokens. Third, (iii) \textbf{Lack of Visual Grounding} prevents the model from "visualizing" the shape defined by path commands, leading to syntactic but semantically empty descriptions. Finally, (iv) \textbf{Context Overflow} arises because the verbosity of raw SVG code quickly exhausts the context window, forcing truncation and loss of critical geometric information.
+
+As a result, zero-shot captioning with raw SVG code produces generic or hallucinated descriptions (\textit{e.g.}, ``An SVG image with multiple paths'' or ``A graphic element''), which are not useful for accessibility or search. This motivates the need for (1) a specialized encoder (SPE) to transform the geometric data into a form the LLM can process, and (2) fine-tuning to teach the LLM to interpret these encodings.
+
+\section{Parameter-Efficient Adaptation via LoRA}
+\label{sec:lora-methodology}
+
+Having established that decoder-only LLMs are the right generative backbone, I now address how to adapt them to understand the geometric embeddings produced by the SPE. Full fine-tuning of a 7-billion-parameter model is computationally prohibitive and risks catastrophic forgetting. Instead, I employ \textbf{Low-Rank Adaptation (LoRA)}.
+
+\subsection{The Need for Fine-Tuning}
+
+Even with the SPE providing structured geometric embeddings, the LLM cannot immediately interpret them. The pre-trained model's input space consists of text token embeddings--vectors learned during pre-training to represent words, subwords, and characters. The geometric embeddings from the SPE, while matched in dimensionality, live in a different semantic space. They encode continuous coordinates and shape types, concepts utterly foreign to the LLM's pre-training on natural language.
+
+However, full fine-tuning poses two significant challenges: (i) \textbf{Computational Cost}, as storing gradients for billions of parameters requires expensive multi-GPU setups; and (ii) \textbf{Catastrophic Forgetting}, where the model overfits to the SVG task and loses its general linguistic capabilities, potentially degrading its ability to generate fluent natural language. Parameter-Efficient Fine-Tuning (PEFT) methods, specifically LoRA, address both challenges.
+
+\subsection{Low-Rank Adaptation: Mathematical Foundation}
+
+LoRA \cite{hu2021lora} is based on the hypothesis that the weight updates during task-specific fine-tuning have a low intrinsic rank. That is, the changes required to adapt the model to a new task lie in a low-dimensional subspace of the full parameter space.
+
+For a pre-trained weight matrix $W_0 \in \mathbb{R}^{d \times k}$ (\textit{e.g.}, a query projection in the attention mechanism), LoRA represents the update $\Delta W$ as the product of two low-rank matrices:
+\[
+\Delta W = B A, \quad B \in \mathbb{R}^{d \times r}, A \in \mathbb{R}^{r \times k}, \quad r \ll \min(d, k)
+\]
+The update is scaled by $\frac{\alpha}{r}$. During training, the base weights $W_0$ are frozen, and only the low-rank matrices are updated. This scaling allows the learning rate to remain consistent across different choices of $r$. \textbf{Initialization}: $A$ is initialized with random Gaussian noise (small values), and $B$ is initialized to zero. This ensures that at the start of training, $\Delta W = 0$, so the model begins with its pre-trained behavior intact.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/lora_hf_architecture.png}
+    \caption{LoRA Architecture. The pre-trained weights $W$ are frozen (blue), while the trainable low-rank matrices $A$ and $B$ (orange) capture the task-specific adaptation $\Delta W = BA$. (Source: Hu \textit{et al.}, 2021)}
+    \label{fig:lora-architecture}
+\end{figure}
+
+
+\subsection{Target Modules and Training Strategy}
+
+LoRA can be applied to any linear layer. In my experiments, I target the \textbf{Attention Projections} ($W_Q, W_K, W_V, W_O$) in every Transformer layer, as these control the model's attention mechanism and offer a high capacity for adaptation. While some approaches also target the Feed-Forward Layers ($W_1, W_2$), adapting the attention weights alone provides a sufficient balance between expressiveness and efficiency. The rank $r$ is a key hyperparameter. Smaller $r$ (\textit{e.g.}, $r=4$) is more memory-efficient but may limit the model's ability to learn complex mappings. Larger $r$ (\textit{e.g.}, $r=64$) approaches the capacity of full fine-tuning but increases memory usage. Empirically, $r=16$ is a sweet spot for many tasks, including ours (see ablation in Chapter~\ref{chap:valutazione}).
+
+\subsection{Geometric Intuition: Why LoRA Works for Continuous Features}
+
+Beyond the mathematical formulation, it is instructive to consider \textit{why} LoRA is effective for adapting LLMs to continuous geometric features.
+
+Recall that the LLM's pre-trained weights $W_0$ encode linguistic knowledge: syntactic patterns, semantic associations, world facts. When I freeze $W_0$ and train only the low-rank updates $BA$, I hypothesize that the pre-trained weights continue to handle high-level linguistic reasoning (\textit{e.g.}, ``round shapes are called circles,'' ``arrows indicate direction''), while the LoRA updates learn to map the \textit{specific} geometric features from the SPE to these linguistic concepts.
+
+In other words, $W_0$ provides the ``language'' (the vocabulary and grammar of captions), and $BA$ provides the ``translation'' (the mapping from sinusoidal coordinate encodings to words like ``center,'' ``top-left,'' ``curved''). This division of labor allows the model to adapt to the foreign visual modality without destroying its native linguistic capabilities.
+
+Furthermore, the low-rank constraint acts as a regularizer. By forcing the updates into a low-dimensional subspace, LoRA prevents overfitting to the specific quirks of the training data and encourages generalization. This is particularly important for SVG captioning, where the diversity of shapes is vast, and I cannot possibly cover all variations in the training set.
+
+% Section 3.3.5 REMOVED
+
+\section{Embedding Space Architecture}
+\label{sec:embedding-architecture}
+
+Having defined how individual SVG elements are encoded, I now describe how the sequence of visual embeddings is integrated with text embeddings and processed by the LLM.
+
+\subsection{Dimensionality Choices}
+
+I employ a linear projection layer $W_P$ to map the SPE's latent dimension to the LLM's hidden dimension $d_{\text{model}}$. For Qwen2-7B, $d_{\text{model}} = 4096$. For Gemma-9B, it is 3584. This learnable adapter ensures that the geometric features are correctly aligned with the transformer's embedding space. The positional encoding dimension $d_{\text{pos}}$ is typically 256, type embedding dimension $d_{\text{type}} = 64$, and style embedding dimension $d_{\text{style}} = 64$, for a total of $256 + 64 + 64 = 384$. The MLP hidden dimension is set to $d_{\text{hidden}} = 1024$.
+
+\subsection{Standardization into SVG Path List}
+\label{sec:linearization}
+
+SVG is inherently a tree-structured format (XML). Transformers, however, ingest sequential data. To bridge this gap, I linearize the SVG structure into a flat sequence of commands. This process is not merely a depth-first traversal; it involves a rigorous \textbf{Standardization Protocol} designed to ensure data consistency and prevent common failure modes identified during preliminary audits.
+
+\subsubsection{Standardization Protocol}
+To ensure data quality, we implemented a standardization pipeline based on logical predicates derived from our preprocessing codebase\footnote{Verified via analysis of the preprocessing modules and filtering scripts.}.
+
+\begin{itemize}
+    \item \textbf{Dataset Filtering Constraints}:
+    \begin{itemize}
+        \item \textbf{Length Thresholding}: SVG raw strings exceeding 512 characters are discarded.
+        \item \textbf{Caption Validation}: Text descriptions shorter than 20 characters are rejected. Captions ending with the placeholder "depicts" are excluded. A priority hierarchy is applied: "Long" captions are selected first, followed by "BLIP2", and finally "Short".
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+\begin{itemize}
+    \item \textbf{Input Normalization \& Cleaning}:
+    \begin{itemize}
+        \item \textbf{Tag Stripping}: XML declarations, outer \texttt{<svg>} wrappers, and background white \texttt{<rect>} elements are removed via regex, isolating the path data.
+        \item \textbf{Canonical Reconstruction}: Vector content is re-wrapped in a container with a fixed ViewBox of $0~0~512~512$.
+        \item \textbf{Sequence Padding}: Path sequences fewer than the target count ($N=12$) are padded with a special token until the required length is reached (\texttt{while len < max\_paths: append(pad\_token)}).
+    \end{itemize}
+\end{itemize}
+
+Following this protocol, the validated elements are sequenced via a depth-first traversal of the DOM tree. Groups (\texttt{<g>}) are flattened where possible, preserving the rendering order (painters algorithm). The result is a clean, deterministic sequence of drawing commands. I linearize the DOM tree via a depth-first traversal: starting at the root \texttt{<svg>} element, I recursively process each child and its descendants before moving to the next sibling. This extracts a sequence of geometric primitives (paths, circles, rectangles) that preserves the visual layering order. This linearization discards the hierarchical nesting (which group a path belongs to), but it preserves the sequential order of elements, which often corresponds to their visual layering (elements later in the file are drawn on top). An alternative would be to encode the hierarchy explicitly (\textit{e.g.}, with special tokens marking group boundaries), but I leave this as future work.
+
+\subsection{Concatenation with Text Tokens}
+
+The LLM’s input is a sequence of token embeddings. For SVG captioning, I construct a hybrid sequence:
+\[
+\text{Input} = [E_{\text{visual}}^{(1)}, \ldots, E_{\text{visual}}^{(N)}, E_{\text{text}}^{(1)}, \ldots, E_{\text{text}}^{(M)}]
+\]
+where $E_{\text{visual}}^{(i)}$ are the SPE embeddings for the SVG elements, and $E_{\text{text}}^{(j)}$ are the token embeddings for the text prompt (\textit{e.g.}, ``Describe this icon:'').
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm, scale=0.9, transform shape]
+        % Styles
+        \tikzstyle{vec_green} = [draw, rectangle, fill=green!20, minimum width=0.8cm, minimum height=1.5cm, align=center, drop shadow, rounded corners=2pt];
+        \tikzstyle{vec_blue} = [draw, rectangle, fill=cyan!30, minimum width=0.8cm, minimum height=1.5cm, align=center, drop shadow, rounded corners=2pt];
+        \tikzstyle{label_text} = [font=\small\bfseries];
+
+        % Visual Embeddings
+        \node[vec_green] (v1) {\scriptsize $v_1$};
+        \node[vec_green, right=of v1] (v2) {\scriptsize $v_2$};
+        \node[right=of v2, font=\scriptsize] (dots_v) {$\dots$};
+        \node[vec_green, right=of dots_v] (vn) {\scriptsize $v_N$};
+
+        % Plus sign
+        \node[right=of vn, font=\huge] (plus) {$+$};
+
+        % Text Embeddings
+        \node[vec_blue, right=of plus] (t1) {\scriptsize $t_1$};
+        \node[vec_blue, right=of t1] (t2) {\scriptsize $t_2$};
+        \node[right=of t2, font=\scriptsize] (dots_t) {$\dots$};
+        \node[vec_blue, right=of dots_t] (tm) {\scriptsize $t_M$};
+
+        % Group Labels (Top)
+        \node[above=0.2cm of v1, label_text] {Visual Protocol};
+        \node[above=0.2cm of t1, label_text] {Text Prompt};
+
+        % Braces
+        \draw[decoration={brace,mirror,raise=5pt},decorate] (v1.south west) -- (vn.south east) node[midway,below=10pt,font=\footnotesize] {SPE Embeddings (Green)};
+        \draw[decoration={brace,mirror,raise=5pt},decorate] (t1.south west) -- (tm.south east) node[midway,below=10pt,font=\footnotesize] {Token Embeddings (Blue)};
+
+        % Arrow to Combined
+        \node[below=1.5cm of plus, font=\Large\bfseries] (arrow) {$\Downarrow$};
+        
+        % Combined Sequence
+        \node[vec_green, below=3.5cm of v1] (c1) {\scriptsize $v_1$};
+        \node[vec_green, right=of c1] (c2) {\scriptsize $v_2$};
+        \node[right=of c2, font=\scriptsize] (dots_c) {$\dots$};
+        \node[vec_green, right=of dots_c] (cn) {\scriptsize $v_N$};
+        \node[vec_blue, right=of cn] (ct1) {\scriptsize $t_1$};
+        \node[vec_blue, right=of ct1] (ct2) {\scriptsize $t_2$};
+        \node[right=of ct2, font=\scriptsize] (dots_ct) {$\dots$};
+        \node[vec_blue, right=of dots_ct] (ctm) {\scriptsize $t_M$};
+        
+        \draw[decoration={brace,raise=5pt},decorate] (c1.north west) -- (ctm.north east) node[midway,above=10pt,font=\footnotesize\bfseries] {Combined LLM Input Sequence (Prefix-Tuning)};
+
+    \end{tikzpicture}
+    \caption{Concatenation Mechanism. The continuous visual embeddings (green) are prepended to the discrete text embeddings (blue), forming a unified sequence for the transformer. This explicitly shows the "Visual Prefix" strategy.}
+    \label{fig:concatenation}
+\end{figure}
+
+The LLM processes this sequence autoregressively. During training, the caption tokens are appended to the prompt, and the model is trained to predict each caption token given the visual embeddings and the preceding caption tokens. This "prefix-tuning" style approach allows the model to attend to the visual history as if it were a long text description, effectively "reading" the image geometry before generating the caption.
+
+\section{Integration of the SVG Path Embedder}
+\label{sec:spe-methodology}
+
+To handle the continuous nature of SVG coordinates, I integrate the \textbf{SVG Path Embedder (SPE)}, a neural module rigorously formalized in the recent work of Zini \textit{et al.} \cite{zini2025spe_autoencoder}. While their previous system, vHector \cite{zini2025vhector}, demonstrated the potential of token-augmented generation, this new formulation specifically addresses the scalability bottlenecks of monolithic sequence modeling by introducing a dense, reusable representation for vector paths. My contribution lies in the architectural integration of this module into the decoder-only LLM pipeline and the design of the joint optimization strategy via LoRA. The SPE transforms the geometric properties of SVG elements into dense embeddings compatible with the LLM.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[
+        node distance=0.8cm and 1.0cm,
+        auto,
+        block/.style={draw, rectangle, rounded corners, minimum width=2.0cm, minimum height=2.5cm, align=center, fill=blue!10, drop shadow},
+        smallblock/.style={draw, rectangle, rounded corners, minimum width=2.0cm, minimum height=1.0cm, align=center, fill=white, drop shadow},
+        input/.style={draw, circle, minimum size=0.8cm, fill=gray!10},
+        arrow/.style={thick, ->, >=stealth}
+    ]
+        % Inputs (Left side column)
+        \node[input] (t1) {$t_1$};
+        \node[input, below=0.3cm of t1] (t2) {$t_2$};
+        \node[below=0.3cm of t2] (dots) {$\vdots$};
+        \node[input, below=0.3cm of dots] (tn) {$t_N$};
+        
+        \node[above=0.2cm of t1, font=\small\bfseries] {Tokens};
+
+        % Shared Embedding Layer (First block)
+        % Centered relative to the EXACT MIDPOINT of the input column
+        \path (t1) -- (tn) coordinate[midway] (input_center);
+        \node[block, fill=blue!10, right=of input_center, minimum height=4.5cm] (embed) {Embedding\\Layer};
+        
+        % Positional Encoding (Second block)
+        \node[block, fill=yellow!10, right=of embed, minimum height=4.5cm] (pe) {Learned\\Embeddings\\+ PE};
+
+        % Transformer Encoder (Third block)
+        \node[block, fill=green!10, right=of pe, minimum height=4.5cm] (encoder) {Transformer\\Encoder};
+
+        % Output (Right side)
+        \node[right=of encoder, font=\bfseries, align=center] (out) {Visual\\Output $V$};
+
+        % Arrows
+        \draw[arrow] (t1) -- (t1 -| embed.west);
+        \draw[arrow] (t2) -- (t2 -| embed.west);
+        \draw[arrow] (tn) -- (tn -| embed.west);
+
+        \draw[arrow] (embed) -- (pe);
+        \draw[arrow] (pe) -- (encoder);
+        \draw[arrow] (encoder) -- (out);
+
+    \end{tikzpicture}
+    \caption{Detailed Architecture of the SVG Path Embedder (SPE). In alignment with the underlying code, the system processes discrete tokens rather than raw coordinates. The tokens pass through a shared embedding layer, are augmented with 1D sinusoidal positional encodings, and processed by a standard Transformer Encoder.}
+    \label{fig:spe-detailed}
+\end{figure}
+
+
+
+
+
+
+\section{Proposed Solution: Vector-Native Processing (SPE + LoRA)}
+\label{sec:proposed-solution-spe-lora}
+
+To overcome the limitations of both the naive text-based approach and the raster-based paradigm, I propose a vector-native architecture that integrates a custom geometric encoder with a pre-trained Large Language Model.
+
+The core innovation is the \textbf{SVG Path Embedder (SPE)}, a neural module designed to bridge the gap between the domain of vector graphics and the discrete domain of language models. By tokenizing the path commands and coordinates into a dense embedding space, the SPE allows the LLM to "perceive" the geometry of the SVG in a format compatible with its pre-trained token processing mechanisms.
+
+This section details the design of the SPE (Section~\ref{sec:spe-design}), its integration with the LLM via Low-Rank Adaptation (Section~\ref{sec:lora-integration}), and the specific architectural choices made for this thesis.
+
+\subsection{The SVG Path Embedder (SPE)}
+\label{sec:spe-design}
+
+The \textbf{SVG Path Embedder (SPE)} \cite{zini2025spe_autoencoder} is a specialized neural architecture designed to bridge the gap between vector graphics and language models.
+
+Unlike simple embedding lookups, the SPE is formalized as a \textbf{Vector Graphics Path Auto-Encoder}. It is designed to learn a compressed, continuous latent representation of SVG paths by optimizing a reconstruction objective.
+
+\subsubsection{Architecture: From Discrete Tokens to Continuous Latent Space}
+
+The SPE operates on a linearized sequence of path commands. To handle the raw SVG syntax efficiently, we employ a \textbf{Discrete Tokenization} strategy. A tokenizer trained with Byte-Pair Encoding (BPE) on a large corpus of SVG paths maps the verbose XML commands and coordinates into a compact vocabulary (\textit{e.g.}, 448 tokens).
+
+The architecture consists of an \textbf{Encoder-Decoder} structure:
+\begin{enumerate}
+    \item \textbf{Encoder}: Processes the sequence of discrete tokens $T = [t_1, \ldots, t_N]$ via a Transformer Encoder (1024 hidden dimension, 8 heads). It maps the input sequence into a fix-sized or sequence of continuous latent vectors $Z$.
+    \item \textbf{Latent Space}: The resulting embeddings lie on a \textbf{normalized hypersphere}. This geometric structure allows for robust vector-space operations (like cosine similarity) and ensures that the magnitude of the vectors remains constant, which stabilizes training when integrated with the LLM.
+    \item \textbf{Decoder}: A Transformer Decoder seeks to reconstruct the original token sequence from this latent representation.
+\end{enumerate}
+
+During the pre-training phase, the model is trained end-to-end with a \textbf{token reconstruction loss}, forcing the latent space to capture both the syntactic validity and the geometric semantics of the vector shapes.
+
+\subsubsection{Utilization for Captioning}
+
+For our captioning task, we discard the decoder and utilize the pre-trained \textbf{Encoder} as a frozen feature extractor. The sequence of continuous latent embeddings produced by the SPE is projected into the LLM's embedding space. This allows the LLM to access a rich, pre-learned geometric understanding of the visual input, superior to learning from scratch on raw text tokens.
+
+\subsubsection{Positional Encoding}
+
+To preserve the sequential order of drawing operations--critical for SVG where the rendering order determines the final visual layering--we inject absolute positional information using standard sinusoidal encodings \cite{vaswani2017attention}. These fixed encodings are added element-wise to the token embeddings before they enter the Transformer encoder:
+\[
+\mathbf{z}_i = \mathbf{e}_{t_i} + \mathbf{PE}(i)
+\]
+This ensures that the model distinguishes between identical drawing commands occurring at different stages of the rendering process.
+
+\subsection{Integration with the LLM}
+\label{sec:lora-integration}
+
+The embeddings produced by the SPE are continuous vectors, distinct from the discrete token embeddings of the LLM's vocabulary. To integrate them, I treat the SVG sequence as a "foreign language" prefix.
+
+Given an SVG $S$ and a caption $T$, the input to the model is the sequence $[\text{SPE}(S); \text{Embed}(T)]$. The model is trained to predict $T$ autoregressively.
+
+Since the LLM is pre-trained on text, its weights are not adapted to interpret these continuous visual embeddings. To bridge this modality gap without destroying the pre-trained knowledge, I use \textbf{Low-Rank Adaptation (LoRA)}. LoRA introduces trainable rank-decomposition matrices into the attention layers of the LLM, allowing the model to learn the mapping between geometric features and semantic concepts efficiently.
+
+\subsection{Context Window and Sequence Length}
+
+To manage the sequence length of complex icons, I employ a \textbf{Context Window Optimization} strategy. I experiment with different window sizes ($N_{\text{max}}$) and use a length-based filtering protocol to ensure all samples fit faithfully within the window. Rather than simplifying paths (which degrades geometric fidelity), I prioritize complete data representation, discarding only those rare samples that exceed the token limit.
+
+\subsection{Why SPE + LoRA?}
+
+The combination of SPE and LoRA offers three distinct advantages: (i) \textbf{Resolution Independence}, as the model processes coordinates directly; (ii) \textbf{Parameter Efficiency}, enabling fine-tuning of large models on academic hardware; and (iii) \textbf{Semantic Alignment}, leveraging the LLM's reasoning to interpret spatial relationships injected into its embedding space.
+
+This approach prioritizes \textbf{correctness over quantity}. By discarding long sequences instead of truncating them, we guarantee that the model \textit{never} encounters incomplete or corrupted geometric data. Every sample in the training set is a valid, complete SVG that fits fully within the model's attention span. While this reduces the total size of the dataset, it significantly stabilizes training by removing noisy or overly complex examples that could lead to hallucinations or syntax errors.
+
+\subsection{Trade-offs: Completeness vs. Context Length}
+
+The self-attention mechanism in the LLM operates identically over visual and text tokens. This is a key advantage of the decoder-only architecture: there is no need for cross-attention (as in encoder-decoder models). The attention scores are computed as:
+\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right) V
+\]
+where $Q, K, V$ are derived from the hybrid sequence (visual + text embeddings).
+
+The model can attend to any token in the sequence. For example, when generating the word ``circle,'' the model might attend strongly to the visual token representing a circular path. When generating ``top-left,'' it might attend to the positional encodings of elements with low $(x, y)$ values.
+
+\section{Context Window Optimization}
+\label{sec:context-optimization}
+
+\subsection{The Problem: SVG Verbosity}
+
+SVG files can be extremely verbose. A complex icon might contain hundreds of path commands, each with multiple control points. If I naively include every element, the sequence length $N$ can easily exceed 512 or even 1024 tokens, approaching the effective context window of the LLM (especially when combined with the text prompt and the caption).
+
+Long sequences present two main drawbacks: (i) \textbf{Computational Cost}, since self-attention scales quadratically ($O(N^2)$); and (ii) \textbf{Context Dilution}, where the model's attention is spread over many tokens, potentially causing it to miss salient features amidst minor details.
+
+\subsection{Path Simplification and Filtering}
+
+To reduce sequence length while preserving geometric fidelity, I apply a \textbf{simplification strategy based on segment filtering}. Instead of complex iterative algorithms, I filter the path data to retain only standard geometric primitives (Lines, Bezier curves, Arcs) and prune redundant segments from paths that exceed a complexity threshold (\textit{e.g.}, 20 segments).
+
+This approach ensures that the SPE receives a clean, standardized input stream, reducing the average sequence length by approximately 30\% while maintaining the essential topological structure of the icon.
+
+\subsection{Length-Based Filtering}
+
+A critical challenge in training Transformer models on vector graphics is managing the sequence length. While path simplification reduces the token count, some complex SVG files may still generate sequences that exceed the maximum context window $N_{\text{max}}$ (set to 512 tokens in our experiments).
+
+A common approach in NLP is truncation (cutting the sequence at $N_{\text{max}}$). However, in the context of vector graphics, truncation is risky: cutting a sequence arbitrarily can split coordinates, sever path commands, or leave XML tags unclosed, resulting in syntactically invalid geometry that confuses the model.
+
+To avoid these issues, I implemented a strict \textbf{Length-Based Filtering} strategy: (i) \textbf{Token Estimation} calculates the exact length of each SVG's string representation; (ii) \textbf{Strict Thresholding} discards any sample exceeding $N_{\text{max}}$; and (iii) \textbf{Preservation of Integrity} ensures that only complete, valid samples are used for training.
+
+This approach prioritizes \textbf{correctness over quantity}. By discarding long sequences instead of truncating them, we guarantee that the model \textit{never} encounters incomplete or corrupted geometric data. Every sample in the training set is a valid, complete SVG that fits fully within the model's attention span. While this reduces the total size of the dataset, it significantly stabilizes training by removing noisy or overly complex examples that could lead to hallucinations or syntax errors.
+
+\subsection{Trade-offs: Completeness vs. Context Length}
+
+The choice of context window size involves a trade-off. \textbf{Short Contexts ($N_{\text{max}} \approx 512$)} are computationally efficient and sufficient for most icons, though they may truncate complex illustrations. \textbf{Long Contexts ($N_{\text{max}} > 1024$)} allow for more detail but significantly increase memory usage and risk context dilution. In my experiments, I found 512 tokens to be the optimal balance for the icon captioning task. In my experiments, I found that $N_{\text{max}} = 512$ provides an optimal balance for the icon captioning task. Since icons are typically designed to be concise visual communicators, they rarely require thousands of tokens. For domains involving complex technical diagrams or UI mockups, a larger context window or a hierarchical encoding strategy (\textit{e.g.}, summarizing groups of elements) would be necessary, which I leave as a direction for future work.
+\section{Training Objective and Loss Function}
+\label{sec:training-objective}
+
+\subsection{Training Objective: Autoregressive Language Modeling}
+\label{sec:autoregressive-training}
+
+
+
+The training objective is standard autoregressive language modeling. Given a paired example $(S, C)$ where $S$ is an SVG and $C = [c_1, c_2, \ldots, c_T]$ is the caption (a sequence of tokens), I maximize the log-likelihood:
+\[
+\mathcal{L} = \sum_{t=1}^T \log P(c_t \mid E_{\text{visual}}, c_{<t})
+\]
+where $E_{\text{visual}}$ is the sequence of SPE embeddings for $S$, and $c_{<t} = [c_1, \ldots, c_{t-1}]$ are the preceding caption tokens. In practice, this is implemented as cross-entropy loss over the vocabulary $V$:
+\[
+\mathcal{L}_{\text{CE}} = - \sum_{t=1}^T \log \frac{\exp(z_{c_t})}{\sum_{v \in V} \exp(z_v)}
+\]
+where $z_v$ is the logit for token $v$ at position $t$. This formulation ensures that the model learns to assign high probability to the correct next token based on the combined visual and textual context.
+
+\subsection{Masking Strategy}
+
+Crucially, I only compute the loss over the caption tokens, not the visual embeddings or the prompt. This is achieved by setting the loss mask to zero for positions corresponding to the visual sequence and the prompt, and to one for positions corresponding to the caption. This prevents the model from "wasting" capacity trying to predict the next visual token (which is meaningless--visual tokens are inputs, not outputs). All learning is focused on the text generation task.
+
+\section{Evaluation Metrics}
+\label{sec:evaluation-metrics-methodology}
+
+To rigorously assess the performance of my SVG captioning system, I define a comprehensive set of evaluation metrics. These metrics are chosen to measure two distinct aspects of caption quality: \textbf{visual-semantic alignment} (how well the caption describes the image) and \textbf{linguistic quality} (how fluent and grammatically correct the text is).
+
+\subsection{Visual Alignment: CLIPScore}
+
+CLIPScore \cite{hessel2021clipscore} measures the semantic compatibility between the generated caption and the visual content. It leverages the pre-trained CLIP (Contrastive Language-Image Pre-training) model, which projects images and text into a shared embedding space.
+
+I compute the cosine similarity between the embedding of the rasterized SVG image ($E_I$) and the embedding of the generated caption ($E_C$):
+\[
+\text{CLIPScore}(I, C) = \max(100 \times \cos(E_I, E_C), 0)
+\]
+A higher score indicates better alignment. Although my system is vector-native, I use CLIPScore (which requires rasterization) because it is the standard reference-free metric for vision-language tasks, allowing us to benchmark against other methods.
+
+\subsection{Linguistic Quality and Composite Metrics}
+
+I employ three standard metrics to evaluate linguistic quality against ground-truth references:
+
+\begin{enumerate}
+    \item \textbf{BLEU-1} \cite{papineni2002bleu}, which measures unigram precision and is useful for checking keyword presence. It is defined as a precision metric modified by a brevity penalty:
+    \begin{equation}
+        \text{BLEU} = \text{BP} \cdot \exp\left(\sum_{n=1}^N w_n \log p_n\right)
+    \end{equation}
+    where $p_n$ is the geometric mean of the modified n-gram precisions, $w_n$ are positive weights summing to one, and BP is the brevity penalty. For BLEU-1, we focus on unigrams ($N=1$).
+
+    \item \textbf{METEOR} \cite{banerjee2005meteor}, which uses stemming and synonym matching to correlate better with human judgment. The score is computed as a harmonic mean of unigram precision ($P$) and recall ($R$), modulated by a penalty term for chunk variance:
+    \begin{equation}
+        \text{METEOR} = \left(1 - \text{Pen}\right) \cdot \frac{10PR}{R+9P}
+    \end{equation}
+    where $\text{Pen} = \gamma \cdot (\text{chunks} / \text{matches})^\theta$ penalizes fragmentation.
+
+    \item \textbf{ROUGE-L} \cite{lin2004rouge}, which measures the longest common subsequence (LCS) to capture sentence structure. The F-measure is calculated as:
+    \begin{equation}
+        F_{LCS} = \frac{(1 + \beta^2) R_{LCS} P_{LCS}}{R_{LCS} + \beta^2 P_{LCS}}
+    \end{equation}
+    where $R_{LCS}$ and $P_{LCS}$ denote the LCS-based recall and precision, respectively.
+\end{enumerate}
+
+To provide a single scalar value for model ranking, I define a composite score that aggregates these metrics. This score balances the visual grounding (CLIPScore) with linguistic fidelity (BLEU, METEOR, ROUGE). While useful for high-level comparison, I analyze the individual components to understand specific model behaviors. This holistic approach ensures that we do not optimize for one metric at the expense of others (\textit{e.g.}, generating fluent but hallucinated captions).
+
+\section{Summary of Methodological Choices}
+\label{sec:methodology-summary}
+
+This chapter has presented a methodology built on three pillars: (i) using \textbf{Decoder-Only LLMs} as generative backbones to leverage pre-trained linguistic knowledge; (ii) employing \textbf{LoRA} for parameter-efficient adaptation to the visual domain; and (iii) integrating the \textbf{SVG Path Embedder} to encode continuous geometry without rasterization. I have justified each design choice by comparing with alternatives (discretization, learned embeddings, rasterization) and explaining the trade-offs. The methodology is vector-native, parameter-efficient, and theoretically grounded in Fourier analysis and signal processing.
+
+In the following chapters, I turn to the practical realization of this methodology (Chapter~\ref{chap:implementazione}) and its empirical validation (Chapter~\ref{chap:valutazione}).

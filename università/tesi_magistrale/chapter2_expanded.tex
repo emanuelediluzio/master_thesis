@@ -1,0 +1,215 @@
+\chapter{State of the Art}
+\label{chap:stato-arte}
+
+This chapter surveys the theoretical foundations and prior research underpinning the SVG captioning system. I move from general deep learning principles to specific technologies employed in my architecture, critically assessing their relevance to vector graphics understanding. The chapter begins with Transformer fundamentals (Section~\ref{sec:dl-foundations}), traces the evolution of Large Language Models (Section~\ref{sec:llms-evolution}), examines vision-language models and their limitations for vector data (Section~\ref{sec:vision-language}), explores positional encodings as the foundation for my SPE design (Section~\ref{sec:positional-encodings}), compares parameter-efficient fine-tuning methods (Section~\ref{sec:peft-methods}), and reviews prior work on SVG generation (Section~\ref{sec:vector-graphics-generation}).
+
+\section{Foundations: Transformers and Self-Attention}
+\label{sec:dl-foundations}
+
+\subsection{The Transformer Architecture}
+
+The Transformer \cite{vaswani2017attention} represented a paradigm shift in deep learning, replacing recurrent architectures with \textbf{self-attention} to enable parallel processing and efficient modeling of long-range dependencies. Given an input sequence of $N$ tokens represented as $d$-dimensional vectors, the mechanism constructs three matrices via learned linear projections: $Q = XW_Q$ (queries), $K = XW_K$ (keys), and $V = XW_V$ (values). Attention computes weighted sums:
+\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]
+Intuitively, the product $QK^T$ measures pairwise token similarities, the softmax normalizes these to probabilities, and the multiplication by $V$ aggregates relevant information. This mechanism is permutation-invariant, necessitating the use of positional encodings (discussed in Section~\ref{sec:positional-encodings}) to retain sequence order.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/transformer_attention_is_all_you_need.png}
+    \caption{The Transformer model architecture. Left: Encoder. Right: Decoder. (Source: Vaswani \textit{et al.}, 2017)}
+    \label{fig:transformer-architecture}
+\end{figure}
+
+
+To capture different aspects of the input simultaneously, the architecture employs \textbf{Multi-head attention}, which projects the input into $h$ subspaces:
+\[
+\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)W_O
+\]
+Different heads can thus focus on distinct patterns, such as short-range syntactic dependencies or long-range semantic relationships (\textit{e.g.}, matching XML tags). Each Transformer layer combines this multi-head attention with a position-wise feed-forward network (FFN), defined as $\text{FFN}(x) = \text{GELU}(xW_1 + b_1)W_2 + b_2$, and wraps these sub-layers with residual connections and layer normalization: $\text{Output} = \text{LayerNorm}(x + \text{SubLayer}(x))$.
+
+Modern LLMs (Qwen2, Gemma) use \textbf{RMSNorm} \cite{zhang2019root}, which omits mean centering for efficiency:
+\[
+\text{RMSNorm}(x) = \frac{x}{\text{RMS}(x)} \cdot \gamma, \quad \text{RMS}(x) = \sqrt{\frac{1}{d}\sum_{i=1}^d x_i^2}
+\]
+
+\subsection{SVG and the Tokenization Challenge}
+
+SVG poses a unique challenge: while syntactically XML, its semantics are encoded in \textit{numeric coordinates}. A text tokenizer splits \texttt{M 12.5 34.7 L 56.2 89.3} into \texttt{[M, 12, ., 5, 34, ., 7, ...]}, destroying coordinate unity and losing numerical continuity. A minor change ($12.5 \to 12.6$) drastically alters the rendered shape, yet the tokenizer treats these as independent tokens. This fundamental mismatch motivates the design of the SVG Path Embedder--a specialized encoder preserving the continuous geometric nature of the data, with its theoretical foundation in Fourier-based positional encodings extended to 2D spatial data (Section~\ref{sec:positional-encodings}).
+
+\section{Large Language Models: Evolution to Decoder-Only Architectures}
+\label{sec:llms-evolution}
+
+\subsection{From BERT to GPT: Encoder vs. Decoder}
+
+The fundamental divergence in Transformer architectures stems from their training objectives and masking strategies, which dictate their suitability for different classes of tasks.
+
+\textbf{BERT (Bidirectional Encoder Representations from Transformers)} \cite{devlin2018bert} employs a \textbf{Masked Language Modeling (MLM)} objective. In this paradigm, approximately 15\% of the input tokens are randomly replaced with a special \texttt{[MASK]} token (80\%), a random token (10\%), or left unchanged (10\%). The model trains to predict the original identity of these masked tokens based on the bidirectional context--that is, attending to both preceding and succeeding tokens simultaneously. Mathematically, the attention mechanism in BERT is unconstrained: the attention mask $M$ is a matrix of zeros, allowing
+\[
+A_{ij} = \text{softmax}\left(\frac{Q_i K_j^T}{\sqrt{d_k}}\right)
+\]
+to be non-zero for all pairs $(i, j)$ in the full sequence length $T$. This architecture builds deep, context-aware representations ideal for \textit{Natural Language Understanding (NLU)} tasks such as classification, named entity recognition, and question answering, where the entire input is available at once. However, this reliance on bidirectional context makes it inherently unsuitable for autoregressive generation, as the generation process is fundamentally inhibited by the look-ahead bias inherent in bidirectional models.
+
+Conversely, \textbf{GPT (Generative Pre-trained Transformer)} \cite{radford2018improving, brown2020language} is designed for \textbf{Causal Language Modeling (CLM)}. It utilizes a decoder-only architecture where self-attention is constrained by a causal mask $M$, defined as:
+\[
+M_{ij} = \begin{cases} -\infty & \text{if } j > i \\ 0 & \text{otherwise} \end{cases}
+\]
+This ensures that the prediction of token $x_t$ depends exclusively on the history $x_{<t}$. The joint probability of a sequence is factorized as:
+\[
+P(x_1, \ldots, x_T) = \prod_{t=1}^T P(x_t \mid x_{<t})
+\]
+This factorization aligns perfectly with the generation process. While early GPT models lagged behind BERT in NLU benchmarks, scaling laws \cite{kaplan2020scaling} revealed that sufficiently large decoder-only models (starting with GPT-3) develop emergent capabilities--such as \textbf{In-Context Learning} and few-shot reasoning--that rival or surpass specialized encoder models. Unlike BERT, which typically requires fine-tuning a specific classification head for each downstream task, GPT models can perform tasks essentially "zero-shot" by continuing a prompt. For SVG captioning, this generative capability is paramount, as we must produce a sequential textual description from a visual prefix.
+
+\subsection{Modern Decoder-Only LLMs}
+
+While the original GPT architecture laid the foundation, modern open-weights LLMs have introduced critical architectural refinements to improve stability, efficiency, and context handling. Three state-of-the-art backbones are utilized in this thesis, each embodying specific design philosophies:
+
+\begin{itemize}
+    \item \textbf{Llama (Meta)} \cite{touvron2023llama}: Llama 3 maintains the robust design choices that characterize the Llama family. A key feature is the use of \textbf{Rotary Positional Embeddings (RoPE)} \cite{su2024roformer} instead of absolute positional encodings. RoPE encodes position by rotating the query and key vectors in the complex plane:
+    \[
+    f_{q,k}(x_m, m) = R^d_{\Theta, m} x_m
+    \]
+    This formulation allows the attention score to depend only on the relative distance $m-n$, improving generalization to sequence lengths exceeding the training window--essential for processing verbose SVG code. Additionally, it adopts \textbf{SwiGLU} activations \cite{shazeer2020glu} in the feed-forward networks, replacing ReLU with a gated mechanism $\text{Swish}(xW) \otimes (xV)$, which offers smoother gradients and faster convergence.
+    
+    \item \textbf{Qwen2 (Alibaba)} \cite{qwen2023}: The Qwen2-7B model is optimized for efficient long-context inference. It employs \textbf{Grouped-Query Attention (GQA)} \cite{ainslie2023gqa}, which serves as an effective trade-off between the speed of Multi-Query Attention (MQA) and the quality of Multi-Head Attention (MHA). In GQA, multiple query heads share a single key-value head (\textit{e.g.}, 8 KV heads for 64 Q heads). This drastically reduces the size of the KV cache and the memory bandwidth required during decoding, enabling the processing of context windows up to 128k tokens with minimal performance degradation.
+    
+    \item \textbf{Gemma (Google)} \cite{gemma2024}: Built on Gemini technology, Gemma focuses on numerical stability at scale. It places RMSNorm \textit{after} the embedding layer and before each transformer block (Pre-Norm with offset), preventing gradient explosions in deep networks. It also utilizes \textbf{GeGLU} activations (a Gaussian Error Linear Unit variant of GLU), which provides a more complex non-linear mapping than GeLU, enhancing the model's capacity to learn subtle patterns in data.
+\end{itemize}
+
+\textbf{Scaling Laws and Emergent Capabilities}.
+Optimizing these architectures requires adhering to empirical scaling laws. While Kaplan \textit{et al.} \cite{kaplan2020scaling} initially suggested a power-law relationship favoring model size, the "Chinchilla" scaling laws \cite{hoffmann2022training} revised this, demonstrating that optimal performance for a given compute budget is achieved by scaling model parameters ($N$) and training tokens ($D$) in equal proportion ($N \approx D$). This insight drives the recent trend of highly capable "smaller" models (7B-9B parameters) trained on massive datasets (trillions of tokens). Importantly, as these models scale in accordance with these laws, they acquire \textit{emergent capabilities}--qualitative leaps in performance not predictable from smaller scales. For our specific multimodal task, the relevant emergence is the ability to map abstract vector structures (encoded by the SPE) to semantic linguistic concepts without requiring a dedicated cross-attention mechanism, effectively treating the SVG sequence as a native foreign language.
+
+
+
+\section{Vision-Language Models and Their Limitations}
+\label{sec:vision-language}
+\subsection{Vision Transformers (ViT)}
+
+The Vision Transformer (ViT) \cite{dosovitskiy2020image} marked a paradigm shift in computer vision, demonstrating that the pure Transformer architecture--without any convolutional inductive biases--could achieve state-of-the-art performance on image recognition tasks. ViT processes an image by dividing it into a grid of fixed-size patches (\textit{e.g.}, $16 \times 16$ pixels). Each patch is flattened into a 1D vector and linearly projected to the model's embedding dimension $D$. To retain spatial information, learnable position embeddings are added to these patch embeddings. A special learnable \texttt{[CLS]} token is prepended to the sequence, whose state at the output of the Transformer encoder serves as the image representation.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/architecture.png}
+    \caption{The Vision Transformer (ViT) Architecture. The image is split into patches, linearly projected, and processed by a standard Transformer encoder. (Source: Dosovitskiy \textit{et al.}, 2020)}
+    \label{fig:vit-architecture}
+\end{figure}
+
+Mathematically, if an input image $x \in \mathbb{R}^{H \times W \times C}$ is split into $N$ patches $x_p \in \mathbb{R}^{N \times (P^2 \cdot C)}$, the input sequence $z_0$ is:
+\[
+z_0 = [x_{class}; x_p^1 E; x_p^2 E; \ldots; x_p^N E] + E_{pos}
+\]
+where $E \in \mathbb{R}^{(P^2 \cdot C) \times D}$ is the projection matrix and $E_{pos} \in \mathbb{R}^{(N+1) \times D}$ are the position embeddings.
+
+\subsection{CLIP: Contrastive Language-Image Pre-training}
+
+CLIP \cite{radford2021learning} builds on ViT to learn visual representations from natural language supervision. Instead of training on fixed classes (like ImageNet), CLIP is trained on a massive dataset of 400 million image-text pairs collected from the internet. The core mechanism is \textbf{contrastive learning}. CLIP trains two encoders jointly: a vision encoder (ViT or ResNet) and a text encoder (Transformer). The goal is to maximize the cosine similarity between the embeddings of matched image-text pairs in a batch, while minimizing the similarity for unmatched pairs.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/clip_architecture_final.png}
+    \caption{Architecture of CLIP (Contrastive Language-Image Pre-training). The model learns to align raster images and text in a shared embedding space, enabling zero-shot transfer to downstream tasks.}
+    \label{fig:clip-architecture}
+\end{figure}
+
+This objective aligns the visual and textual latent spaces, enabling \textbf{zero-shot classification}: to classify an image, the model compares its embedding with the embeddings of text prompts like "a photo of a dog", "a photo of a cat", etc., and selects the highest match. However, CLIP operates fundamentally on raster inputs. Applying it to vector graphics requires rasterization, which discards the structural information inherent in the SVG code.
+
+\subsection{Generative Captioning: BLIP-2 and LLaVA}
+
+BLIP-2 \cite{li2023blip2} freezes a vision encoder (CLIP) and an LLM, training a lightweight Q-Former to bridge them. LLaVA \cite{liu2023llava} fine-tunes an LLM (Vicuna/Llama) with visual instruction data, demonstrating complex visual reasoning. While powerful, these models require raster inputs. My experiments (Chapter~\ref{chap:valutazione}) use BLIP-2 as a zero-shot baseline (rasterizing SVGs), revealing generic captions (``an icon'') lacking geometric precision.
+
+\subsection{The Vector Graphics Gap}
+
+Vision-language models designed for natural images have fundamental limitations when applied to SVG data. Specifically, they (i) require rasterization, which discards the structural information inherent in the vector format; (ii) struggle with resolution-dependent details, such as thin lines that may vanish at lower resolutions; and (iii) cannot leverage the explicit geometric relationships present in the XML markup. This gap motivates the development of the SPE--a vector-native encoder capable of processing SVG as structured, continuous geometric data.
+
+These limitations are not merely theoretical but practical. Rasterization introduces a fixed resolution ceiling, causing "staircase" artifacts on diagonal lines and blurring fine details like small text or intricate icons. Furthermore, the raster representation is opaque; the model sees a grid of pixels but loses access to the semantic hierarchy (groups, layers, object types) explicitly defined in the SVG DOM. This forces the model to relearn geometric primitives from scratch, a task that is computationally inefficient and prone to error, especially for complex technical diagrams where precision is paramount. By treating SVG as a first-class citizen--ingesting the vector code directly--we can bypass these bottlenecks and provide the LLM with a lossless, semantically rich representation of the visual content.
+
+\section{Positional and Coordinate Encodings}
+\label{sec:positional-encodings}
+
+Designing the SPE requires representing continuous 2D coordinates $(x, y)$ as dense vectors. This section traces the theory from NLP positional encodings to neural rendering.
+
+In natural language processing, positional encodings are used to inject order information into the permutation-invariant self-attention mechanism. However, for 2D vector graphics, the challenge is two-fold: we must encode not just the sequence order of the path commands, but the absolute spatial position of the control points on the 2D canvas. A naive approach of normalizing coordinates to $[0, 1]$ and feeding them as scalar values to an MLP fails due to the "spectral bias" of neural networks, which struggle to learn high-frequency functions (\textit{i.e.}, sharp edges and fine details) from low-dimensional inputs. To overcome this, we draw inspiration from the field of Neural Radiance Fields (NeRF), where high-frequency Fourier features are used to map low-dimensional coordinates to a higher-dimensional space, enabling the network to capture intricate geometric structures.
+
+\subsection{Sinusoidal Encodings in Transformers}
+
+The original Transformer \cite{vaswani2017attention} uses fixed sinusoidal encodings to inject order information into the permutation-invariant self-attention mechanism:
+\begin{equation}
+\label{eq:sinusoidal-encoding}
+\text{PE}_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{2i/d}}\right), \quad \text{PE}_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{2i/d}}\right)
+\end{equation}
+
+From a signal processing view, this is a \textit{Fourier feature mapping}. Each sine-cosine pair corresponds to a frequency band: low frequencies capture global structure; high frequencies capture fine details. This allows the model to distinguish relative positions in the sequence. In the context of SVG processing via Large Language Models, coordinates are typically serialized as text tokens (\textit{e.g.}, "1", "0", ".", "5"). Consequently, they are subject to these standard 1D positional encodings based on their token index in the sequence, treating geometric data purely as a linguistic sequence.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/positional_encoding.png}
+    \caption{Visualization of 2D Sinusoidal Positional Encodings. High-frequency components capture fine details, while low-frequency components encode global position, enabling the model to "see" the continuous geometry.}
+    \label{fig:2d-pe}
+\end{figure}
+
+\section{Parameter-Efficient Fine-Tuning (PEFT)}
+\label{sec:peft-methods}
+
+Fine-tuning billion-parameter LLMs is expensive (memory, compute) and risks catastrophic forgetting. Full fine-tuning of Qwen2-7B in FP16 requires ~56 GB GPU memory (14 GB weights + 14 GB gradients + 28 GB optimizer states). Even with sufficient memory, overfitting to the new task risks losing general capabilities. PEFT methods update only a small parameter subset to mitigate these issues. The core idea behind Parameter-Efficient Fine-Tuning is to freeze the vast majority of the pre-trained model's parameters and inject a small number of trainable weights. This hypothesis relies on the observation that the "intrinsic dimension" of the adaptation task is low--meaning that the changes required to adapt a general-purpose language model to a specific downstream task (like SVG captioning) can be captured in a low-rank subspace. This approach not only drastically reduces the memory footprint during training (since gradients are only computed for the small subset of parameters) but also facilitates the storage and deployment of multiple task-specific adapters on top of a single frozen backbone.
+
+\subsection{PEFT Methods Overview}
+
+Several PEFT strategies exist, each with distinct trade-offs. \textbf{Adapter Layers} \cite{houlsby2019parameter} insert bottleneck modules between Transformer layers; while effective, they add inference latency due to the sequential computation. \textbf{Prefix Tuning} \cite{li2021prefix} optimizes soft prompts prepended to the input, which is extremely parameter-efficient but consumes valuable context window space--a critical drawback for long SVG sequences.
+
+In contrast, \textbf{Low-Rank Adaptation (LoRA)} \cite{hu2021lora} represents weight updates as low-rank products $\Delta W = B A$, where $B \in \mathbb{R}^{d \times r}$ and $A \in \mathbb{R}^{r \times k}$ with $r \ll \min(d, k)$. During training, the pre-trained weights $W_0$ are frozen, and only $A$ and $B$ are updated. At inference, the weights are merged ($W_{\text{merged}} = W_0 + \frac{\alpha}{r} B A$), yielding zero computational overhead.
+
+For SVG captioning, LoRA is the optimal choice: it introduces no inference latency, preserves the full context window for long SVG-derived sequences, and offers proven training stability. This allows us to adapt decoder-only LLMs to the geometric modality on standard hardware while largely retaining their pre-trained linguistic capabilities.
+
+
+
+\section{Vector Graphics Generation and Understanding}
+\label{sec:vector-graphics-generation}
+
+Research on vector graphics has accelerated dramatically in recent years, driven by the desire to extend the success of deep generative models from the raster domain to the vector domain. Unlike pixels, vector graphics are non-grid-structured, variable-length, and symbolic, requiring specialized architectures. I categorize the state-of-the-art into four primary families: Autoregressive/LLM-based approaches, Diffusion-based methods, Representation Learning, and Parameter Optimization.
+
+This line of work treats SVG generation as a sequence modeling problem, leveraging the sequential nature of the SVG file format (XML text or path commands). Wu \textit{et al.} introduced \textbf{IconShop} \cite{wu2023iconshop}, which represents a significant milestone in autoregressive SVG generation. It utilizes a Transformer-based decoder to generate SVG primitives sequentially, conditioned on text prompts. The key innovation lies in its "autoregressive with instruction tuning" strategy, where the model learns not just to complete a sequence, but to follow high-level design constraints. By tokenizing the SVG commands (MoveTo, LineTo, CubicBezier) into a discrete vocabulary, IconShop frames vector generation as a language modeling task.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/screenshot_3.png}
+    \caption{Overview of Autoregressive SVG Generation (IconShop). The model predicts the next drawing command based on the history of previous commands and a text condition. (Source: Wu \textit{et al.}, 2023)}
+    \label{fig:iconshop-arch}
+\end{figure}
+\FloatBarrier
+
+Building on this, \textbf{StarVector} \cite{rodriguez2023starvector} introduces a multimodal code-visual architecture. It recognizes that SVGs are both code (XML) and visual content. StarVector employs a dual-encoder setup: a code encoder processes the raw SVG tokens, while a visual encoder (like ViT) processes the rendered image. These representations are fused to guide the generation process, allowing the model to understand complex spatial relationships that are implicit in the code but explicit in the rendering.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/screenshot_2.png}
+    \caption{StarVector Architecture. A dual-encoder system that processes both the raw SVG code and the rendered image to guide generation. (Source: Rodriguez \textit{et al.}, 2023)}
+    \label{fig:starvector-arch}
+\end{figure}
+\FloatBarrier
+
+Most recently, Zini \textit{et al.} \cite{zini2025vhector} introduced \textbf{vHector}, a system designed to improve the scalability and quality of vector generation. vHector linearizes the SVG DOM tree into a sequence of tokens but annotates them with rich geometric metadata, such as absolute/relative coordinate flags and styling cues. This "augmented tokenization" helps the LLM maintain spatial coherence over long sequences. Furthermore, the accompanying \textbf{HeisenVec} module acts as a denoising autoencoder for vector primitives, refining the output of the LLM to ensure valid and aesthetically pleasing shapes.
+\FloatBarrier
+
+Inspired by the success of Stable Diffusion and DALL-E 2, these methods adapt probabilistic diffusion processes to the vector domain. \textbf{VectorFusion} \cite{jain2023vectorfusion} was one of the first to apply \textit{Score Distillation Sampling (SDS)} to vector graphics. Instead of training a diffusion model on SVGs directly (which is hard due to the lack of large-scale vector datasets), VectorFusion optimizes a set of vector paths to match a text prompt using a pre-trained frozen image diffusion model (like Stable Diffusion) as a critic. The gradients from the image diffusion model are backpropagated through a differentiable rasterizer (DiffVG) to update the SVG parameters.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/screenshot_1.png}
+    \caption{VectorFusion Pipeline. A set of random paths is optimized via Score Distillation Sampling (SDS) from a frozen text-to-image diffusion model. The differentiable rasterizer allows gradients to flow back to the vector parameters. (Source: Jain \textit{et al.}, 2023)}
+    \label{fig:vectorfusion-arch}
+\end{figure}
+\FloatBarrier
+
+\textbf{SVGDreamer} \cite{xing2024svgdreamer} improves upon VectorFusion by addressing the "initialization problem." VectorFusion often gets stuck in local minima if initialized randomly. SVGDreamer introduces a two-stage process: first, it generates a semantic attention map to guide the placement of paths; second, it optimizes the paths using a specialized "Vectorized Score Distillation" loss that encourages cleaner geometry and better separation of foreground/background elements.
+\FloatBarrier
+
+This category focuses on learning a latent space for vector graphics that captures their structural and hierarchical properties, enabling tasks like interpolation, classification, and retrieval. \textbf{DeepSVG} \cite{carlier2020deepsvg} is a foundational work in this area. It proposes a hierarchical Transformer architecture that decomposes an SVG into a hierarchy of paths and commands. The encoder compresses the SVG into a global latent vector, while the decoder reconstructs it command-by-command. This hierarchical approach allows DeepSVG to model complex multi-path icons effectively and perform latent space arithmetic (\textit{e.g.}, morphing one icon into another).
+
+\textbf{SuperSVG} \cite{hu2024supersvg} introduces a "superpixel" concept to vector learning. It decomposes an image into superpixels (clusters of pixels with similar color/texture) and models the relationships between them using a Graph Neural Network (GNN). This graph representation is then converted into vector paths. This approach is particularly effective for vectorizing complex natural images where standard path tracing fails.
+\FloatBarrier
+
+Unlike generative models that predict new geometry, optimization approaches start with a canvas of shapes and adjust their parameters (coordinates, colors) to minimize a loss function. \textbf{LIVE} (Layer-wise Image Vectorization) \cite{ma2022live} focuses on converting raster images to SVG. It initializes a set of Bézier curves and optimizes their control points to minimize the reconstruction error against the target image. The key enabler is \textbf{DiffVG} \cite{li2020differentiable}, a differentiable rasterizer that allows gradients to flow from pixel-space loss to vector-space parameters.
+
+\textbf{ClipVG} \cite{song2023clipvg} combines differentiable rasterization with CLIP. It optimizes the parameters of SVG paths so that the rendered image maximizes the CLIP similarity with a target text prompt. This allows for "text-to-SVG" generation without a generative model, purely through optimization. However, this process is slow and often results in "messy" geometry (many overlapping paths) compared to autoregressive methods.
+
+
