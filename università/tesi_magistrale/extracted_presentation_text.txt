@@ -1,0 +1,308 @@
+MASTER'S THESIS · AI ENGINEERING
+
+
+
+
+SVG CAPTIONING WITH
+TRANSFORMER MODELS:
+ADVANCED FINE-TUNING
+TECHNIQUES
+Candidate: Emanuele Di Luzio      Supervisor: Prof. Lorenzo Baraldi
+Co-supervisor: Dott. Leonardo Zini Academic Year: 2024-2025
+
+
+
+
+University of Modena and Reggio Emilia · Department of Engineering "Enzo Ferrari"
+         01   Introduction: The Importance of Vector Graphics.
+
+
+         02   Problem Statement: Why Current Methods Fail.
+
+
+         03   Methodology I: The Decoder-Only Backbone.
+
+
+         04   Methodology II: The SPE + Decoder Architecture.
+
+
+         05   Dataset: The 90k Stratified Benchmark.
+
+
+         06   Results: Quantitative and Qualitative Analysis.
+
+
+         07   Conclusions: Future Directions.
+
+
+
+
+Agenda
+The World is Built on
+Vectors
+Key Points:
+
+Ubiquity: Icons, Logos, UI elements, Technical
+Diagrams.
+Advantage: Infinite Scalability (Resolution-
+Independent).
+Goal: Automated Semantic Understanding of
+Vectors.
+Brief Interlude: What is an
+SVG?
+Key Points:
+  Structure: SVG is XML-based textual markup.
+  The Primitive: The <path> tag is the core building
+  block.
+      M (x,y): Move to coordinates.
+      L (x,y): Draw Line to.
+      C (x1,y1, x2,y2, x,y): Cubic Bezier Curve.
+  Graphics as Code: It is not a grid of pixels; it is a
+  sequence of mathematical instructions.
+The Core Challenge: Pixels vs. Primitives
+The Inefficiency of                        The Vector-Native
+Rasterization                              Opportunity:
+
+ Information Loss: Converting XML to       Semantic: We treat SVG as Code (XML
+ Pixels is irreversible ($\text{SVG} \to   is a language).
+ \text{Image}$).
+                                           Continuous: No resolution artifacts. A
+ Structure: Grouping (<g>) and hierarchy   circle is a mathematical curve, not a grid
+ are destroyed.                            of dots.
+
+ Compute Waste: A simple diagonal line     Efficiency: Dense semantic signal (few
+ requires processing thousands of white    tokens) vs sparse pixel signal (many
+ background pixels.                        patches).
+Methodology I: The Decoder-Only
+Backbone
+Why Decoder-Only?:
+ Causal Self-Attention: Trains the model to predict the next token based on context.
+ Generative Power: Superior at producing fluent, coherent natural language compared to Encoder-
+ Decoders.
+
+
+
+Model Selection Strategy:
+ Qwen2-7B: Chosen for strictly better Reasoning & Coding capabilities (crucial for structured
+ XML data).
+ Gemma-9B: Google's efficient open model, strong on general knowledge.
+ Llama-3-8B: Meta's industry standard, used to benchmark generalization.
+Methodology I: The Decoder-Only
+Backbone
+
+The Linguistic Prior:
+ The model already knows what a "circle" or "arrow" is conceptually.
+ Our goal is to align visual features to these pre-existing linguistic concepts.
+
+
+Input Paradigm:
+ Processing: The Decoder receives the SVG (whether as Text Tokens or Visual
+ Embeddings) exactly like a sentence, processing drawing commands (M, L, C)
+ sequentially from start to finish.
+ We don't feed the 'raw' XML directly. We first preprocess it by converting all
+ absolute coordinates to relative ones. This reduces numerical variance and helps
+ the model understand local geometry better.
+Theoretical Foundation: Low-
+Rank Adaptation (LoRA)
+The Constraint: Full Fine-tuning of 7B+ parameters is
+computationally prohibitive.
+
+The Hypothesis: Weight updates have a Low Intrinsic Rank.
+
+The Method:
+   Freeze the pretrained weights $W_0$.
+   Inject trainable rank decomposition matrices: $\Delta W = B
+   \times A$.
+   Where $r \ll d$ (e.g., $rank=16$).
+
+Benefit: We train $<0.1%$ of parameters ($A$ and $B$) while
+keeping the model's general knowledge intact.
+Methodology I: Text-Only
+Fine-tuning (LoRA)
+
+
+
+ Approach: Treat SVG code purely as text (like Python/XML).
+
+ The Technique: Low-Rank Adaptation (LoRA).
+    Instead of full retraining, we inject small matrices (A times B) into the LLM.
+    Allows efficient adaptation to "SVG Language" with <1% params.
+
+ Result: Better than Zero-Shot, but suffers from "Geometric Hallucination" (blind to spatial relations).
+Methodology II: The SPE + Decoder
+Architecture
+The Missing Piece: Explicit Geometric Understanding.
+
+Our Architecture:
+   Input: Visual Embeddings from SPE (Frozen).
+   Bridge: Projection Layer (The "Middle Layer") connects SPE $\to$ LLM.
+   Backbone: The LoRA-adapted LLM from the previous step.
+
+
+Mechanism:
+The LLM now attends to both Visual Tokens (Geometry) and Text Tokens (Caption).
+SPE isn't just a random encoder; it is a pre-trained Auto-Encoder that has already learned
+to reconstruct SVG paths. We insert a Projection Layer to align its dense, pre-learned
+features with the LLM's embedding space. Now, the model doesn't just read code; it
+'sees' the geometry through an expert eye."
+Dataset Construction
+ Source: Icons8 (Consistent, high-quality style).
+ Size: ~90,000 SVG-Caption pairs.
+ Preprocessing:
+     Tag Stripping: Removing XML noise (<defs>, metadata).
+     Canonical ViewBox: Normalization to 512x512.
+     Complexity Filter: Removing paths with > 50 segments.
+Implementation Details
+We implemented a stratified split to ensure our test set covers diverse categories. A key technical optimization was
+'Dynamic Padding', which reduced training time by 40% by avoiding unnecessary padding tokens.
+
+Key Points:
+
+    Stratified Split: Test set (1000 samples) balanced across categories (Nature, UI, Arrows).
+
+    Dynamic Padding:
+       Pad to batch_max_len, NOT global max.
+       Why it matters: Transformer Attention is Quadratic ($O(N^2)$).
+       Result: 40% Training Speedup by avoiding computation on empty padding tokens.
+
+    Input Schema:
+        {"input": "<svg>...", "output": "A red arrow pointing..."}
+Experimental Setup
+ Baselines:                                                          Models:
+ 1.Raster Models (Zero-Shot): BLIP-2, Florence-2 (Vision-              1. SPE + Qwen2-7B (LoRA) vs SPE + Gemma-9B.
+   Language Models).                                                   2.Qwen2-7B (LoRA) vs Gemma-9B.
+ 2.Text-Only (LoRA): Qwen2 / Llama-3 trained on raw SVG
+   code (No SPE).
+
+
+
+
+                       Metrics:
+                        CLIPScore: Visual Semantic Alignment.
+                        BLEU/ROUGE: Textual Fluency.
+                        Composite: Weighted Mean ($\frac{CLIP}{10} + BLEU + METEOR + ROUGE$).
+Quantitative
+Results
+                                                              Text-Only Baseline: High raw CLIPScore (32.30) but
+                                                              hallucinations.
+                                                              SPE + Qwen2:
+                                                                   Best Composite Score: 4.18.
+                                                                   Superior Fluency: BLEU-1 (0.42) vs Baseline (0.24).
+                                                              Insight: Structured embeddings act as a regularizer, ensuring
+                                                              valid application of language.
+
+
+
+Our results were revealing. While the naive Text-Only baseline scored high on raw feature matching, it often
+hallucinated. The SPE + Qwen2 model achieved the best overall Composite Score and significantly higher fluency.
+The structured embedding helps the model 'ground' its language in reality
+Qualitative
+Analysis
+Case Study 1: Icon ID 38 (Graduate Emoji)
+   Our Model: "Stylized human figure... orange shape".
+   \textcolor{green}{\Checkmark (Detects Human)}
+   Baseline: "Hot cross bun". \textcolor{red}{\XSolidBrush
+   (Hallucination)}
+
+Case Study 2: Icon ID 12 (Cross/X)
+   Our Model: "Geometric figure representing an 'X'".
+   \textcolor{green}{\Checkmark (Precise Geometry)}
+   Salford
+
+
+Failure                                          However, limitations exist. A prime example is 'OCR Blindness'. If you
+                                                 feed it a vector drawing of a STOP sign, the model sees a red
+
+
+
+Modes
+                                                 octagon. It describes the geometry perfectly but fails to read the
+                                                 word 'STOP' because the text is rendered as path curves, not
+                                                 characters. It sees the shape, but misses the semantic symbol.
+
+
+
+
+OCR Blindness: Cannot read text rendered as paths
+(e.g., "STOP" sign seen as red octagon).
+The model sees the geometry (octagon) but misses
+the symbol (letters).
+Style Agnostic: Ignores specific fill colors/textures (SPE
+limitation).
+Hallucination: Over-interpreting abstract shapes.
+Salford
+
+
+Ablation                                            Our ablation studies showed that Z-Score Normalization is critical;
+                                                    without aligning the statistical distributions of the visual encoder and
+
+
+
+Studies
+                                                    the LLM, the model fails to learn. We also found that a LoRA rank of
+                                                    16 provides the perfect balance of efficiency and expressivity.
+
+
+
+
+Z-Score Normalization: Critical. Without matching
+SPE stats to LLM stats, training diverges.
+LoRA Rank: r=16 is optimal. Larger ranks yield
+diminishing returns.
+Prompting: Simple "Describe this icon" works
+best.
+    Salford
+
+Future Work: Hierarchical
+Encoding
+Key Points:
+   Limitation: Current model linearizes the SVG, treating it
+   as a flat sequence (like text).
+   The Solution: Graph Neural Networks (GNNs) or Tree-
+   Transformers.
+   Preserve the DOM Tree Structure (Parent $\to$ Child
+   relations).
+   Example: Recognize that a <circle> inside a <g
+   id="button"> is part of a UI element, not just a shape.
+   Goal: True "Scene Graph" understanding of vector
+   graphics.
+    Salford
+
+Future Work: Hierarchical
+Encoding
+Key Points:
+   Limitation: Vectors struggle with textures, gradients, and
+   embedded bitmaps.
+   The Solution: Dual-Stream Encoder.
+   Stream A (Vector): SPE process sparse geometry
+   (Precision).
+   Stream B (Raster): CNN/ViT process rendered pixels
+   (Texture/Color).
+   Fusion: Late fusion mechanisms (Cross-Attention) to
+   combine both signals.
+   Outcome: The semantic precision of code + the visual
+   richness of pixels.
+    Salford
+
+The Broader Vision: End-to-End
+Vector Systems
+Beyond Captioning:
+   Vector-Aware Editing: "Make the circle red" (Natural Language $\to$ SVG Command).
+   Style Transfer: Apply "Sketch Style" to a flat icon.
+The Holy Grail: Bidirectional Generation.
+   Use the captioned data to train Text-to-SVG generators.
+   Create a closed-loop system for vector design.
+   Salford
+
+Conclusions
+
+Key Points:
+   Thesis Statement: LLMs can learn to see structure directly, without rasterization.
+   Main Achievement: Composite Score 4.18.
+       Outperformed Text-Only (+0.23) and Raster Baselines (+0.84) in quality.
+   Efficiency: Validated LoRA for multimodal adaptation (<1% params).
+   Philosophy: Moving from "Pixels as Opaque Strings" to "Graphics as Symbolic Code".
+Thank
+Youfor your time
+   and attention
+

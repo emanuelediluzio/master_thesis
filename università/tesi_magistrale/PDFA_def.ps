@@ -1,0 +1,32 @@
+%!
+% This is a sample prefix file for creating a PDF/A-2b document.
+% Feel free to modify entries marked with "Customize".
+
+% Define entries in the document Info dictionary :
+/doc_info {
+  /Title (LLM-based SVG image captioning with conceptual embeddings)
+  /Author (Emanuele Di Luzio)
+  /Subject (Master Thesis)
+  /Keywords (SVG, LLM, Deep Learning, Transformer)
+  /Creator (Ghostscript)
+  /Producer (Ghostscript)
+  /CreationDate (D:20260113000000Z)
+  /ModDate (D:20260113000000Z)
+  /Trapped /False
+} def
+
+% Define an ICC profile :
+/ICCProfile (srgb.icc) def
+
+% Define the OutputIntent dictionary :
+/OutputIntent_PDF {
+  /Type /OutputIntent
+  /S /GTS_PDFA1
+  /DestOutputProfile {ICCProfile (r) file}
+  /OutputConditionIdentifier (sRGB)
+  /RegistryName (http://www.color.org)
+} def
+
+% Define the PDF/A compliance level :
+% 1 = PDF/A-1b, 2 = PDF/A-2b, 3 = PDF/A-3b
+/PDFA_def 2 def

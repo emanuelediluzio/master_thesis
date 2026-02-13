@@ -1,0 +1,38 @@
+[
+  {
+    "type": "Baseline",
+    "count": 4,
+    "avg_composite": 6.952500000000001,
+    "avg_clip": 27.495025000000002,
+    "avg_bleu": 0.018225,
+    "avg_meteor": 0.08109999999999999,
+    "avg_rouge": 0.11507500000000001
+  },
+  {
+    "type": "LoRA",
+    "count": 3,
+    "avg_composite": 6.55,
+    "avg_clip": 28.441533333333336,
+    "avg_bleu": 0.2144,
+    "avg_meteor": 0.3407,
+    "avg_rouge": 0.3454333333333333
+  },
+  {
+    "type": "LoRA_Quantizzato",
+    "count": 2,
+    "avg_composite": 2.9850000000000003,
+    "avg_clip": 16.90115,
+    "avg_bleu": 0.04725,
+    "avg_meteor": 0.08395,
+    "avg_rouge": 0.04725
+  },
+  {
+    "type": "SPE",
+    "count": 4,
+    "avg_composite": 8.59,
+    "avg_clip": 27.65,
+    "avg_bleu": 0.285,
+    "avg_meteor": 0.28250000000000003,
+    "avg_rouge": 0.33249999999999996
+  }
+]

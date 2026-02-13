@@ -1,0 +1,354 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Theme and Color Setup for "Black White Modern Gradient"
+\usetheme{default}
+\usefonttheme{structurebold}
+\usepackage{helvet}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+% Custom Colors
+\definecolor{MyBlack}{RGB}{20,20,20}
+\definecolor{MyGray}{RGB}{60,60,60}
+\definecolor{MyWhite}{RGB}{240,240,240}
+\definecolor{MyAccent}{RGB}{200,200,200} % Silver/Light Gray for gradients
+
+% Global Color Settings
+% Global Color Settings
+\setbeamercolor{background canvas}{bg=MyBlack} % Fallback
+\setbeamercolor{normal text}{fg=MyWhite}
+\setbeamercolor{frametitle}{fg=MyWhite}
+\setbeamercolor{title}{fg=MyWhite}
+\setbeamercolor{subtitle}{fg=MyAccent}
+\setbeamercolor{structure}{fg=MyWhite}
+\setbeamercolor{itemize item}{fg=MyAccent}
+\setbeamercolor{itemize subitem}{fg=MyAccent}
+
+% Modern Gradient Background Template
+% Uses a diagonal shading from Dark Gray (Top Left) to Black (Bottom Right)
+\setbeamertemplate{background canvas}{
+    \begin{tikzpicture}[remember picture,overlay]
+        % Main Gradient
+        \shade[top color=MyGray!60!MyBlack, bottom color=MyBlack, middle color=MyBlack!80!MyGray, shading angle=135] 
+            (current page.north west) rectangle (current page.south east);
+            
+        % Subtle Accent (Optional 'Modern' touch - faint glow)
+        \fill[white, opacity=0.03] (current page.north west) circle (5cm);
+    \end{tikzpicture}
+}
+
+% Slide Numbers
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+
+% Metadata
+\title{SVG Captioning with Transformer Models}
+\subtitle{LLM-based SVG image captioning with conceptual embeddings}
+\author{Emanuele Di Luzio}
+\institute{University of Modena and Reggio Emilia}
+\date{Thesis Defense}
+
+\begin{document}
+
+% Slide 1: Title
+\begin{frame}
+    \titlepage
+    \centering
+    \small{Supervisors: Prof. Lorenzo Baraldi, Dott. Leonardo Zini}
+\end{frame}
+
+% Slide 2: Agenda
+\begin{frame}{Agenda}
+    \begin{enumerate}
+        \item \textbf{Introduction \& Motivation}: Why Vector Graphics?
+        \item \textbf{The Challenge}: Geometry vs. Semantics
+        \item \textbf{Methodology}: SPE + LoRA Architecture
+        \item \textbf{Dataset Construction}: The 90k Stratified Corpus
+        \item \textbf{Experimental Results}: Quantitative \& Qualitative Analysis
+        \item \textbf{Conclusions \& Future Work}
+    \end{enumerate}
+\end{frame}
+
+% Slide 3: The Prevalence of Vector Graphics
+\begin{frame}{The World is Built on Vectors}
+    \begin{itemize}
+        \item \textbf{Ubiquity}: Icons, Logos, UI elements, Technical Diagrams.
+        \item \textbf{Superpower}: Resolution-Independence (Infinite Scalability).
+        \item \textbf{The Problem}: \textbf{Accessibility Gap}. Millions of SVG icons lack descriptive \texttt{alt} text.
+        \item \textbf{Goal}: Enable ai models to "read" vector graphics natively to automate semantic understanding.
+    \end{itemize}
+\end{frame}
+
+% Slide 4: The Core Problem
+\begin{frame}{The Problem: Rasterization vs. Discrete Geometry}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{Current Standard (Vision-Language Models)}
+        \begin{itemize}
+            \item Process: SVG $\to$ Pixel Image $\to$ CNN/ViT.
+            \item \textbf{Drawbacks}:
+            \begin{itemize}
+                \item Loss of structural info (groups, hierarchy).
+                \item Aliasing artifacts.
+                \item High compute for simple shapes.
+            \end{itemize}
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{My Approach: Vector-Native}
+        \begin{itemize}
+            \item Treat SVG as \textbf{Code}, not pixels.
+            \item Preserve the geometric definition.
+            \item Leverage the symbolic nature of XML.
+        \end{itemize}
+    \end{columns}
+
+    \vspace{0.5cm}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/vector_vs_raster.png}
+\end{frame}
+
+% Slide 5: Research Objective
+\begin{frame}{Research Objective}
+    \Large \centering 
+    \textit{"Can a Large Language Model learn to interpret geometric primitives directly?"}
+    
+    \vspace{1cm}
+    \normalsize
+    \textbf{Proposal}: A Vector-Native Captioning System.
+    \begin{itemize}
+        \item \textbf{Input}: Raw SVG commands (\texttt{<path d="M10 10...">}).
+        \item \textbf{Encoder}: SVG Path Embedder (SPE).
+        \item \textbf{Decoder}: LLM (Qwen2/Gemma) via LoRA.
+    \end{itemize}
+\end{frame}
+
+% Slide 6: State of the Art & Gap
+\begin{frame}{Bridging the Gap}
+    \begin{table}
+        \centering
+        \begin{tabular}{l l l}
+            \toprule
+            \textbf{Approach} & \textbf{Examples} & \textbf{Limitation} \\
+            \midrule
+            Raster VLMs & BLIP-2, LLaVA & Expensive, Raster-only \\
+            Vector Gen. & DeepSVG, Img2Vec & Good drawing, poor semantics \\
+            \midrule
+            \textbf{This Thesis} & \textbf{SPE + LLM} & \textbf{Vector-Native Understanding} \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \vspace{0.5cm}
+    Most "Vector AI" research focuses on \textit{generating} SVGs. We focus on \textit{understanding} them.
+\end{frame}
+
+% Slide 7: Methodology - Architecture
+\begin{frame}{Methodology: High-Level Architecture}
+    \begin{itemize}
+        \item \textbf{1. Visual Encoding}: SPE transforms paths into latent embeddings $V$.
+        \item \textbf{2. Dimensionality Projection}: Linear adapter aligns visual dim ($D_{spe}$) to LLM dim ($D_{llm}$).
+        \item \textbf{3. Autoregressive Generation}: $P(text \mid V)$.
+    \end{itemize}
+     \begin{figure}
+        \centering
+        \includegraphics[width=0.6\linewidth]{figures/hybrid_architecture.png} % Using hybrid as placeholder or conceptual
+        \caption{Conceptual Flow (Simplified)}
+    \end{figure}
+\end{frame}
+
+% Slide 8: The Visual Encoder (SPE)
+\begin{frame}{The Visual Encoder: SVG Path Embedder}
+    \begin{itemize}
+        \item \textbf{Input}: Discrete geometric tokens (Line, Bezier, Arc).
+        \item \textbf{Architecture}: Transformer-based Autoencoder.
+        \item \textbf{Usage}:
+            \begin{itemize}
+                \item We use the \textbf{Encoder} as a frozen feature extractor.
+                \item We \textbf{discard the Decoder} (used only for pre-training reconstruction).
+            \end{itemize}
+        \item \textbf{Key Insight}: Quantized coordinates are sufficient "words" for spatial reasoning.
+    \end{itemize}
+\end{frame}
+
+% Slide 9: LLM Backbone
+\begin{frame}{The Language Brain: LLM Backbone}
+    \textbf{Models Tested}:
+    \begin{itemize}
+        \item \textbf{Qwen2-7B}: State-of-the-art accuracy.
+        \item \textbf{Gemma-9B}: Efficient Google open model.
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    \textbf{Role}:
+    \begin{itemize}
+        \item Provides "World Knowledge" and fluency.
+        \item Translates geometric intent into natural language.
+    \end{itemize}
+\end{frame}
+
+% Slide 10: LoRA Adaptation
+\begin{frame}{Multimodal Integration: LoRA}
+    \textbf{Low-Rank Adaptation (LoRA)}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \begin{itemize}
+            \item Freezes the massive LLM weights ($\sim$7B).
+            \item Injects trainable rank-decomposition matrices ($A \times B$).
+            \item \textbf{Efficiency}: Trainable params $< 1\%$ of total.
+        \end{itemize}
+        \column{0.4\textwidth}
+        \centering
+        % \includegraphics[width=\linewidth]{figures/lora_hf_architecture.png} 
+        \textbf{Effect}:\\
+        It learns "Geometry" as a foreign language without forgetting English.
+    \end{columns}
+\end{frame}
+
+% Slide 11: Dataset Construction
+\begin{frame}{Dataset: The 90k Icon Corpus}
+    \begin{itemize}
+        \item \textbf{Source}: Icons8 (High quality, flat style).
+        \item \textbf{Size}: $\sim$90,000 SVG-Caption pairs.
+        \item \textbf{Preprocessing Pipeline}:
+            \begin{enumerate}
+                \item \textbf{Tag Stripping}: Remove XML noise.
+                \item \textbf{Canonical ViewBox}: Normalize to $0\ 0\ 512\ 512$.
+                \item \textbf{Complexity Filter}: Prune paths $> 50$ segments.
+            \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+% Slide 12: Implementation Details
+\begin{frame}{Implementation Details}
+    \begin{itemize}
+        \item \textbf{Stratified Split}:
+            \begin{itemize}
+                \item Test Set: Fixed 1000 samples.
+                \item Ensures diversity (Arrows, UI, Nature, Tools).
+            \end{itemize}
+        \item \textbf{Dynamic Padding}:
+            \begin{itemize}
+                \item Pad sequences to \texttt{batch\_max\_len} instead of global max.
+                \item Result: \textbf{$\approx$40\% training speedup}.
+            \end{itemize}
+        \item \textbf{Schema}: \texttt{\{"input": <svg>..., "output": caption\}}
+    \end{itemize}
+\end{frame}
+
+% Slide 13: Experimental Setup
+\begin{frame}{Experimental Setup}
+    \textbf{Baselines}
+    \begin{itemize}
+        \item \textbf{Text-Only}: Training LLM on raw SVG text strings (No SPE).
+        \item \textbf{Zero-Shot}: GPT-4V (Visual/Raster Oracle).
+    \end{itemize}
+    
+    \textbf{Visual-Linguistic Metrics}
+    \begin{itemize}
+        \item \textbf{Visual Alignment}: CLIPScore.
+        \item \textbf{Text Quality}: BLEU, ROUGE, METEOR.
+        \item \textbf{Composite Score}: Weighted average for holistic ranking.
+    \end{itemize}
+\end{frame}
+
+% Slide 14: Quantitative Results
+\begin{frame}{Quantitative Results}
+    \begin{itemize}
+        \item \textbf{Text-Only Baseline}: High CLIPScore (32.30) but hallucinations.
+        \item \textbf{SPE + Qwen2}:
+            \begin{itemize}
+                \item \textbf{Best Composite Score: 4.18}.
+                \item \textbf{Superior Fluency} (BLEU-4: 0.14 vs 0.08 Baseline).
+                \item Stable, descriptive captions.
+            \end{itemize}
+    \end{itemize}
+    \vspace{0.5cm}
+    \textbf{Insight}: Structured embeddings act as a \textit{regularizer}, preventing the model from outputting syntax gibberish.
+\end{frame}
+
+% Slide 15: Qualitative Success
+\begin{frame}{Qualitative Analysis: Success Cases}
+    \begin{itemize}
+        \item \textbf{UI Elements}: Correctly identifies "Hamburger Menu", "Settings Gear".
+        \item \textbf{Spatial Reasoning}: "Arrow pointing right within a circle".
+        \item \textbf{Concept}: The model deduces semantics (\textit{e.g.}, "Login") from pure geometry (square + arrow).
+    \end{itemize}
+\end{frame}
+
+% Slide 16: Failure Analysis (Limitations)
+\begin{frame}{Limitations \& Failure Modes}
+    \begin{enumerate}
+        \item \textbf{OCR Blindness}: 
+            \begin{itemize}
+                \item Text rendered as paths is seen as shapes.
+                \item \textit{E.g.}, A "STOP" sign is described as "Red octagon" (missing the text).
+            \end{itemize}
+        \item \textbf{Style Agnostic}: Low-rank encoder ignores specific fill colors/textures.
+        \item \textbf{Hallucination}: Over-interpreting abstract shapes.
+    \end{enumerate}
+\end{frame}
+
+% Slide 17: Ablation Studies
+\begin{frame}{Ablation Studies: What Matters?}
+    \begin{itemize}
+        \item \textbf{Z-Score Normalization}: \textbf{Critical}. 
+            \begin{itemize}
+                \item Adapting SPE stats to LLM stats prevents loss explosion.
+            \end{itemize}
+        \item \textbf{LoRA Rank}: 
+            \begin{itemize}
+                \item Diminishing returns after $r=16$. Small adapters work well.
+            \end{itemize}
+        \item \textbf{Prompting}: Simple "Describe this icon" $>$ Complex instructions.
+    \end{itemize}
+\end{frame}
+
+% Slide 18: Future Directions (1)
+\begin{frame}{Future Work: Hierarchical Encoding}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \textbf{Problem}: Current model sees a flat list of paths.
+        \textbf{Solution}: \textbf{Hierarchical Encoder}.
+        \begin{itemize}
+            \item Use Graph Neural Networks (GNNs) on the DOM Tree.
+            \item Preserve Group ($<g>$) relationships.
+        \end{itemize}
+        \column{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/hierarchical_encoder.png}
+    \end{columns}
+\end{frame}
+
+% Slide 19: Future Directions (2)
+\begin{frame}{Future Work: Hybrid Architecture}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \textbf{Problem}: Rasterization is sometimes necessary (textures).
+        \textbf{Solution}: \textbf{Hybrid Dual-Stream}.
+        \begin{itemize}
+            \item Stream 1: Vector (SPE) for precision.
+            \item Stream 2: Raster (CNN) for texture.
+            \item Fuse in a multimodal layer.
+        \end{itemize}
+        \column{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/hybrid_architecture.png}
+    \end{columns}
+\end{frame}
+
+% Slide 20: Conclusions
+\begin{frame}{Conclusions}
+    \begin{itemize}
+        \item \textbf{Feasibility}: Vector-Native captioning is viable and efficient.
+        \item \textbf{Efficiency}: SPE + LoRA avoids the heavy compute of Vision Encoders.
+        \item \textbf{Impact}: A foundation for automated accessibility in the scalable web.
+    \end{itemize}
+    
+    \vspace{1.5cm}
+    \centering
+    \Large \textbf{Thank You.} \\
+    \small Questions?
+\end{frame}
+
+\end{document}

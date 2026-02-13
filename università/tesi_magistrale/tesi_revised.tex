@@ -1,0 +1,457 @@
+\documentclass[12pt,a4paper,twoside,openany]{book}
+
+% Pacchetti essenziali
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\input{llm-diagrams.tex}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+% Configurazione della pagina
+\geometry{
+    left=3cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm,
+    bindingoffset=0.5cm
+}
+
+% Configurazione dell'interlinea
+\onehalfspacing
+
+% Configurazione dei link
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={SVG Captioning with Transformer Models: Advanced Fine-tuning Techniques},
+    pdfauthor={Emanuele Di Luzio},
+    pdfsubject={Master's Thesis},
+}
+
+% Configurazione del codice
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false,
+    commentstyle=\color{gray},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red}
+}
+
+% Configurazione delle intestazioni
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{14.5pt}
+
+\begin{document}
+
+% Frontespizio
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Large\textbf{UNIVERSITY OF MODENA AND REGGIO EMILIA}}\\[0.5cm]
+    {\large Department of Engineering "Enzo Ferrari"}\\[0.5cm]
+    {\large Master's Degree in Computer Engineering}\\[3cm]
+    
+    {\Huge\textbf{SVG Captioning with Transformer Models: Advanced Fine-tuning Techniques}}\
+    \vspace{2cm}
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \large
+            \textbf{Candidate:}\\
+            Emanuele Di Luzio\\
+            Student ID: \rule{4cm}{0.4pt}
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            \large
+            \textbf{Supervisor:}\\
+            Prof.\ \rule{5cm}{0.4pt}\
+            \vspace{0.5cm}
+            \textbf{Co-supervisor:}\\
+            Dr.\ \rule{5cm}{0.4pt}
+        \end{flushright}
+    \end{minipage}
+    
+    \vfill
+    {\large Academic Year 2023-2024}
+\end{titlepage}
+
+% Indice
+\tableofcontents
+\newpage
+
+% Abstract
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Scalable Vector Graphics (SVG) are ubiquitous in modern web design, yet current Multimodal Large Language Models (MLLMs) struggle to interpret their raw XML structure. Most existing approaches rely on rasterizing SVGs into pixel grids, a process that discards the semantic richness of the vector definition and introduces resolution artifacts.
+
+In this work, we present a novel architecture that enables a decoder-only LLM to directly ingest and interpret SVG code without rasterization. We introduce a \textbf{Spatial Position Encoder (SPE)} that maps continuous geometric coordinates into the LLM's embedding space using sinusoidal functions. By integrating this encoder with \textbf{Qwen2-7B} and \textbf{Gemma-9B} via \textbf{Low-Rank Adaptation (LoRA)}, we demonstrate that the model can learn to "read" vector geometries effectively.
+
+Our experiments, conducted on a dataset of \textbf{20,000 SVG-caption pairs} and evaluated on a stratified benchmark of \textbf{400 samples}, show that this vector-native approach outperforms zero-shot raster baselines. Specifically, the \textbf{SPE+Qwen2-7B} configuration achieves a CLIPScore of 29.3 and a BLEU-1 score of 0.42, offering a parameter-efficient alternative to vision-encoder-based methods. We provide a detailed analysis of the model's capabilities and limitations, offering a new perspective on vector-language understanding.
+
+\chapter*{Sommario}
+\addcontentsline{toc}{chapter}{Sommario}
+
+Le immagini vettoriali (SVG) sono onnipresenti nel design digitale, tuttavia gli attuali modelli multimodali (MLLM) faticano a interpretare la loro struttura XML grezza. La maggior parte degli approcci esistenti si basa sulla rasterizzazione degli SVG in griglie di pixel, un processo che scarta la ricchezza semantica della definizione vettoriale e introduce artefatti di risoluzione.
+
+In questa tesi, presentiamo un'architettura che consente a un LLM decoder-only di ingerire e interpretare direttamente il codice SVG senza rasterizzazione. Introduciamo uno \textbf{Spatial Position Encoder (SPE)} che mappa le coordinate geometriche continue nello spazio di embedding dell'LLM utilizzando funzioni sinusoidali. Integrando questo encoder con \textbf{Qwen2-7B} e \textbf{Gemma-9B} tramite \textbf{Low-Rank Adaptation (LoRA)}, dimostriamo che il modello può imparare a "leggere" le geometrie vettoriali in modo efficace.
+
+I nostri esperimenti, condotti su un dataset di \textbf{20.000 coppie SVG-caption} e valutati su un benchmark stratificato di \textbf{400 campioni}, mostrano che questo approccio vettoriale supera le baseline raster zero-shot. Nello specifico, la configurazione \textbf{SPE+Qwen2-7B} ottiene un CLIPScore di 29.3 e un punteggio BLEU-1 di 0.42, offrendo un'alternativa efficiente ai metodi basati su vision-encoder. Forniamo un'analisi dettagliata delle capacità e dei limiti del modello, offrendo una nuova prospettiva sulla comprensione del linguaggio vettoriale.
+
+\chapter{Introduction}
+\label{chap:introduction}
+
+The interpretation of visual data by artificial intelligence has traditionally relied on pixel-based representations. Convolutional Neural Networks (CNNs) and Vision Transformers (ViTs) process images as grids of discrete intensity values. However, a significant portion of modern digital imagery--from user interface icons and logos to technical diagrams--is created as \textbf{Vector Graphics}. Unlike raster images, vectors are defined by mathematical instructions, such as paths, curves, and shapes, which are resolution-independent and semantically rich.
+
+Scalable Vector Graphics (SVG) \cite{w3c2011svg} represent the standard for this format on the web. Every SVG file carries its own geometry, hierarchy, and metadata, offering a structured definition of the visual content. Despite this, current Multimodal Large Language Models (MLLMs) typically struggle to interpret this raw structure. Standard models like GPT-4V or LLaVA often rely on a rasterization pipeline: they convert the SVG code into a pixel image before processing it. This approach has two major drawbacks: it discards the explicit structural information embedded in the XML tags (\textit{e.g.}, the hierarchy of groups) and introduces aliasing artifacts that can obscure fine geometric details.
+
+In this thesis, we explore a different paradigm: \textbf{treating SVG as a language}. Since SVGs are defined by XML code, they possess a syntactic structure that is, in theory, readable by Large Language Models (LLMs). However, the "vocabulary" of SVG includes continuous coordinates that standard tokenizers handle poorly. To bridge this gap, we propose a system that combines a pre-trained LLM with a specialized \textbf{Spatial Position Encoder (SPE)}, enabling the model to "read" vector geometries directly without rasterization.
+
+\section{Motivation and Context}
+\label{sec:motivation}
+
+Digital graphic content is growing at a relentless pace, and so is the need for automatic systems that can describe it in natural language. This need is particularly acute in the context of web accessibility: without alternative text descriptions (alt-text), users with visual impairments are excluded from understanding the visual elements of a page.
+
+While raster captioning has seen significant progress, vector graphics offer a unique opportunity. The semantic information contained in the vector definition--such as the distinction between a "circle" and a "path"--provides a signal that is lost in pixels. Harnessing this structure is the primary motivation of this work. By enabling models to understand the native language of graphics, we aim to create systems that are not only more accurate but also more efficient, avoiding the computational overhead of high-resolution image encoding.
+
+\section{Research Objectives}
+\label{sec:objectives}
+
+The primary goal of this research is to develop a system capable of generating accurate textual descriptions for SVG images by processing their vector definition directly. The project addresses the gap in automatic understanding of vector graphics through the following specific objectives:
+
+\begin{itemize}
+    \item \textbf{SPE+LLM Integration}: To design and validate a \textbf{Spatial Position Encoder (SPE)} that maps continuous 2D coordinates into the token embedding space of a decoder-only LLM, allowing it to process geometric data without rasterization.
+    \item \textbf{Parameter-Efficient Fine-Tuning}: To implement and benchmark \textbf{Low-Rank Adaptation (LoRA)} strategies that adapt the LLM to the vector domain. The goal is to enable the model to learn the "grammar" of graphics without catastrophic forgetting of its pre-trained linguistic capabilities.
+    \item \textbf{Rigorous Evaluation}: To create a reproducible evaluation benchmark comprising a large-scale dataset and a stratified test set. This includes defining a composite metric suite that captures both the linguistic quality and the visual semantic alignment of the generated captions.
+\end{itemize}
+
+\section{Original Contributions}
+\label{sec:contributions}
+
+This thesis contributes the following building blocks to the field of multimodal AI and vector-graphics understanding:
+
+\begin{itemize}
+    \item \textbf{A Vector-Native Architecture}: We propose a parameter-efficient pipeline that fuses a pre-trained Spatial Position Encoder with state-of-the-art LLMs (Qwen2, Gemma) for SVG captioning. This architecture eliminates the need for vision encoders.
+    \item \textbf{Curated Benchmark}: We introduce a dataset of 20,000 SVG-caption pairs derived from Icons8, complete with detailed statistics and stratified splits to ensure robust evaluation.
+    \item \textbf{Evaluation Methodology}: We establish a transparent composite score based on normalized CLIPScore, BLEU, METEOR, and ROUGE metrics, facilitating fair comparisons between different model configurations.
+    \item \textbf{Comparative Analysis}: We provide an empirical comparison of zero-shot raster baselines against our proposed vector-native fine-tuning approach, highlighting the trade-offs between visual alignment and linguistic fluency.
+\end{itemize}
+
+\section{Overview of Methodology and Results}
+\label{sec:methodology-preview}
+
+Our proposed methodology centers on the \textbf{Spatial Position Encoder}, which maps the geometric properties of SVGs into a latent space compatible with Large Language Models. Unlike traditional approaches that treat images as fixed grids, our method preserves the continuous vector nature of the data. We employ a \textbf{Fine-tuning} strategy via LoRA to adapt the attention mechanisms of the LLMs to the specific syntax of SVG commands.
+
+Qualitatively, our experiments demonstrate that the vector-native approach successfully grounds the linguistic generation in the geometric input. The models learn to identify shapes, spatial relationships, and semantic concepts directly from the coordinate data. Quantitatively, the proposed configuration achieves a balance between visual alignment and linguistic quality that outperforms standard zero-shot raster baselines on our benchmark, validating the hypothesis that vector graphics can be effectively treated as a specialized language.
+
+\section{Thesis Structure}
+\label{sec:structure}
+
+The remainder of this manuscript is organized as follows:
+
+\begin{itemize}
+    \item \textbf{Chapter 2: Related Work}. Surveys the technological landscape, establishing the background on Transformers, Vision-Language Models, and existing paradigms for vector graphics generation.
+    \item \textbf{Chapter 3: Methodology}. Details the proposed SPE approach, the design of the embedding space, and the rationale behind the fine-tuning strategies.
+    \item \textbf{Chapter 4: Implementation}. Describes the concrete system architecture, software components, and the engineering challenges addressed during development.
+    \item \textbf{Chapter 5: Experimental Evaluation}. Presents the experimental setup, the dataset, and a comprehensive analysis of both quantitative metrics and qualitative examples.
+    \item \textbf{Chapter 6: Conclusions}. Summarizes the achievements of the thesis, discusses current limitations, and outlines directions for future research.
+\end{itemize}
+
+\chapter{State of the Art}
+\label{chap:state-of-the-art}
+
+This chapter provides a comprehensive overview of the theoretical foundations and related work that underpin this thesis. We begin by establishing the fundamental concepts of Deep Learning and Natural Language Processing, followed by a detailed examination of the specific technologies used in Visual-Language Understanding and Vector Graphics Generation.
+
+\section{Theoretical Foundations}
+\label{sec:theoretical-foundations}
+
+The intersection of Computer Vision and Natural Language Processing has been revolutionized by the Transformer architecture \cite{vaswani2017attention}. While originally designed for sequence-to-sequence tasks in NLP, its application to visual data--both raster and vector--requires specific architectural considerations.
+
+\subsection{The Transformer Architecture}
+Unlike Convolutional Neural Networks (CNNs) which introduce inductive biases for translation invariance, Transformers rely on the \textbf{Self-Attention} mechanism to model global dependencies.
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$
+This mechanism allows the model to weigh the importance of different parts of the input sequence regardless of their distance. For vector graphics, this is particularly relevant: an SVG path element at the beginning of a file may semantically relate to a style definition at the end, a long-range dependency that recurrent architectures (RNNs) struggle to capture.
+
+\subsection{Vision Transformers (ViT)}
+The Vision Transformer (ViT) \cite{dosovitskiy2020image} challenged the dominance of CNNs by treating images as sequences of patches. By flattening 2D pixel grids into 1D sequences of embeddings, ViT demonstrated that pure Transformer architectures could achieve state-of-the-art performance in vision tasks, provided sufficient pre-training data. This paradigm shift suggested that visual data could be processed similarly to language, paving the way for unified multimodal architectures.
+
+\section{Vision-Language Models (VLMs)}
+\label{sec:vlms}
+
+The convergence of vision and language has led to the development of Multimodal Large Language Models (MLLMs).
+
+\subsection{Contrastive Learning (CLIP)}
+CLIP (Contrastive Language-Image Pre-training) \cite{radford2021learning} introduced a powerful method for aligning visual and textual representations. By training on massive datasets of image-text pairs, CLIP learns a joint embedding space where semantically similar images and texts are close together. This alignment is crucial for zero-shot capabilities, allowing models to recognize concepts they were not explicitly trained on.
+
+\subsection{Generative VLMs (BLIP, LLaVA)}
+While CLIP focuses on retrieval and classification, generative models like BLIP \cite{li2022blip} extend this capability to text generation. These models typically employ a visual encoder (\textit{e.g.}, ViT) to extract features from an image, which are then projected into the input space of a frozen Large Language Model. The LLM then generates a textual description based on these visual tokens.
+
+\section{Vector Graphics Understanding}
+\label{sec:vector-graphics-sota}
+
+Scalable Vector Graphics (SVG) \cite{w3c2011svg} represent images not as grids of pixels, but as mathematical instructions. Research on vector graphics has accelerated dramatically, identifying three main paradigms:
+
+\subsection{Raster-based Approaches}
+The most common approach involves rendering the SVG into a pixel image and processing it with standard computer vision models (CNNs or ViTs). While this leverages the maturity of raster-based vision, it discards the structural information embedded in the SVG code (hierarchy, groups, metadata) and introduces resolution-dependent artifacts (aliasing).
+
+\subsection{Generative Vector Models}
+Recent works have attempted to generate or interpret SVG code directly:
+\begin{itemize}
+    \item \textbf{DeepSVG} \cite{carlier2020deepsvg} proposes a hierarchical Transformer architecture to generate vector icons, explicitly modeling the nested structure of SVG groups and paths.
+    \item \textbf{IconShop} \cite{wu2023iconshop} and \textbf{StarVector} \cite{rodriguez2023starvector} treat SVG generation as a code generation task, leveraging LLMs trained on large corpora of code.
+\end{itemize}
+
+\subsection{Coordinate Discretization}
+A key challenge in processing SVG with LLMs is the continuous nature of coordinates. Recent approaches like \textbf{vHector} \cite{zini2025vhector} address this by discretizing the coordinate space into integer bins (\textit{e.g.}, `<x_128>`, `<y_255>`). This allows standard tokenizers to process geometry but introduces a precision bottleneck limited by the vocabulary size.
+
+This landscape highlights a clear gap: while raster methods lose structure and discretization methods lose precision, there is a need for an approach that can ingest continuous vector geometry directly into a language model.
+
+\chapter{Methodology}
+\label{chap:methodology}
+
+This chapter details the proposed approach for SVG captioning. We introduce a novel architecture that integrates a \textbf{Spatial Position Encoder (SPE)} with a decoder-only Large Language Model. We discuss the rationale behind our design choices, including the use of continuous coordinate embeddings and parameter-efficient fine-tuning.
+
+\section{Proposed Approach: SPE + LLM Integration}
+\label{sec:proposed-approach}
+
+The core hypothesis of this thesis is that vector graphics should be treated as a language of geometry. Unlike raster images, which are static grids, SVGs are defined by sequences of commands that describe motion and shape. To enable an LLM to "read" this language, we must bridge the gap between the continuous domain of geometry and the discrete domain of language tokens.
+
+\subsection{The Challenge of Continuous Coordinates}
+Standard Large Language Models operate on discrete vocabularies. They are excellent at processing text and code, but they struggle with continuous numerical data. Representing coordinates as text strings (\textit{e.g.}, "123.45") is inefficient and fails to capture the semantic proximity of spatial locations. Discretizing coordinates into bins (\textit{e.g.}, tokens 0-255) introduces quantization errors.
+
+\subsection{Spatial Position Encoder (SPE)}
+To address this, we propose the \textbf{Spatial Position Encoder (SPE)}. Instead of tokenizing the coordinates, the SPE projects the raw floating-point values $(x, y)$ directly into a high-dimensional manifold using sinusoidal functions.
+
+$$
+SPE(x, y) = [ \sin(\omega_1 x), \cos(\omega_1 x), \dots, \sin(\omega_k y), \cos(\omega_k y) ]
+$$
+
+This approach is grounded in signal processing theory. By mapping the coordinates to a range of frequencies $\omega_k$, we effectively compute the Fourier features of the position. This allows the neural network to learn both global structure (low frequencies) and fine-grained details (high frequencies), overcoming the "spectral bias" that often limits standard Multi-Layer Perceptrons.
+
+These geometric embeddings are then fused with learnable embeddings for shape types (\textit{e.g.}, `circle`, `path`) and style attributes (\textit{e.g.}, color, stroke width), creating a rich, multi-dimensional representation of each vector element.
+
+\section{Embedding Space Design}
+\label{sec:embedding-space}
+
+The design of the embedding space is critical for the stability of the model. The geometric features produced by the SPE must be aligned with the pre-trained linguistic embedding space of the LLM.
+
+We employ a \textbf{Linear Projection} followed by \textbf{Layer Normalization}. The projection maps the SPE dimension to the model dimension ($d_{model}$), while the normalization ensures that the statistical distribution of the geometric embeddings matches the expected variance of the Transformer's attention heads. This alignment allows the frozen LLM to attend to visual features as if they were standard text tokens, without destabilizing the pre-trained weights.
+
+\section{Fine-Tuning Strategy}
+\label{sec:fine-tuning}
+
+While the SPE provides the "eyes" to see the geometry, the LLM needs to adapt its "brain" to interpret it. We reject full fine-tuning, which is computationally expensive and risks catastrophic forgetting of the model's linguistic capabilities.
+
+\subsection{Low-Rank Adaptation (LoRA)}
+We adopt \textbf{Low-Rank Adaptation (LoRA)} \cite{hu2021lora} as our primary training strategy. LoRA freezes the pre-trained model weights $W_0$ and injects trainable rank decomposition matrices $A$ and $B$ into the attention layers.
+
+$$
+W = W_0 + \Delta W = W_0 + BA
+$$
+
+\textbf{Geometric Intuition}: We hypothesize that the pre-trained weights $W_0$ retain the high-level linguistic reasoning (\textit{e.g.}, knowing that a "wheel" implies "roundness"), while the LoRA updates $\Delta W$ learn the specific mapping between the new geometric embeddings and these linguistic concepts. This separation of concerns allows the model to become fluent in "SVG-speak" while remaining a competent English speaker.
+
+\section{Context Window Optimization}
+\label{sec:context-optimization}
+
+Vector graphics can be verbose. A complex icon may contain thousands of path commands, exceeding the context window of standard LLMs. To handle this, we employ a \textbf{Context Window Optimization} strategy.
+
+Rather than simple truncation, which breaks the XML syntax, we implement a semantic filtering pipeline. We utilize the \textbf{Ramer-Douglas-Peucker} algorithm to simplify paths, reducing the number of control points while preserving the essential visual shape. This allows us to fit more complex graphics into the limited context window, ensuring the model has access to the complete visual definition.
+
+\chapter{Implementation}
+\label{chap:implementation}
+
+This chapter describes the operational details of the developed system, focusing on the software architecture, the training workflow, and the specific engineering solutions adopted to ensure stability and scalability.
+
+\section{System Architecture}
+\label{sec:system-architecture}
+
+The system is designed as a modular pipeline with three distinct stages: Data Preprocessing, Visual Encoding, and Language Generation.
+
+\subsection{SVG Preprocessing Module}
+The entry point of the system is the SVG Preprocessor. Real-world SVG files are often malformed or contain redundant metadata (\textit{e.g.}, Adobe Illustrator tags) that consume token space without adding semantic value. Our preprocessor parses the XML tree, extracts the geometric paths, and normalizes the viewbox to a standard $512 \times 512$ coordinate system. Crucially, we apply the \textbf{Ramer-Douglas-Peucker} algorithm to simplify complex paths, reducing the number of control points while maintaining visual fidelity. This step is essential to fit detailed icons within the context window of the LLM.
+
+\subsection{Spatial Position Encoder (SPE) Module}
+The core innovation of our implementation is the SPE module. This component takes the normalized coordinates and projects them into the embedding space.
+To ensure training stability, we implemented a strict \textbf{Feature Normalization} pipeline. The raw output of the sinusoidal functions is passed through a Linear Projection layer followed immediately by \textbf{Layer Normalization} (`normalize=True`). This design choice was critical: without normalization, the variance of the geometric embeddings differed significantly from the pre-trained text embeddings, leading to gradient explosion in early experiments.
+
+\subsection{LLM Adapter and Checkpoints}
+We utilized the Hugging Face `transformers` and `peft` libraries to implement the Low-Rank Adaptation. The base models (Qwen2-7B, Gemma-9B) were loaded in 4-bit quantization to optimize memory usage on NVIDIA A100 GPUs.
+For the Gemma-based experiments, we utilized the specific checkpoint located at:
+\begin{center}
+\texttt{/work/tesi\_ediluzio/experiments/xml\_direct\_input/outputs/gemma\_9b\_2gpu\_100k}
+\end{center}
+This checkpoint represents the converged state of the model after 100,000 training steps, where it demonstrated the optimal balance between training loss and validation metrics.
+
+\section{Embedding Space Construction}
+\label{sec:embedding-space-impl}
+
+The embedding space serves as the common ground for geometry and language. In our implementation, the SPE generates a vector for each SVG element that concatenates:
+\begin{itemize}
+    \item \textbf{Positional Embeddings}: Derived from the sinusoidal projection of $(x, y)$ coordinates.
+    \item \textbf{Type Embeddings}: Learned vectors representing the SVG command type (\textit{e.g.}, `MoveTo`, `LineTo`, `CubicBezier`).
+    \item \textbf{Style Embeddings}: Representing attributes such as fill color and stroke width.
+\end{itemize}
+This composite vector is then projected to match the dimension of the LLM (\textit{e.g.}, 4096 for Qwen2). This projection allows the "foreign" geometric data to be ingested by the Transformer's self-attention mechanism as if they were a sequence of foreign language tokens.
+
+\section{Our Contribution}
+\label{sec:our-contribution}
+
+It is important to emphasize that the architecture described above--specifically the combination of sinusoidal SPE with LoRA fine-tuning for decoder-only models--is the original proposal of this thesis. Unlike existing works that rely on raster encoders (CLIP) or discrete coordinate tokens, our system maintains the continuous nature of the vector data throughout the encoding process.
+
+\chapter{Experimental Evaluation}
+\label{chap:evaluation}
+
+This chapter presents the results of our experiments, comparing the proposed SPE-based approach against zero-shot raster baselines and standard fine-tuning methods. We analyze the performance both quantitatively, using a suite of standard metrics, and qualitatively, through an inspection of generated captions.
+
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Dataset and Protocol}
+We utilized a dataset of \textbf{20,000 SVG icons} sourced from Icons8, stratified into 80\% training, 10\% validation, and 10\% testing sets. The dataset covers diverse categories including User Interfaces, Arrows, and Medical symbols.
+For evaluation, we employ a \textbf{Composite Score} that aggregates visual alignment (CLIPScore) and linguistic precision (BLEU, METEOR, ROUGE). This ensures that a good model must not only recognize the image content but also describe it accurately.
+
+\section{Quantitative Results}
+\label{sec:quantitative}
+
+Table \ref{tab:results} summarizes the performance of the evaluated models.
+
+\begin{table}[h]
+\centering
+\caption{Comparison of Zero-shot Baselines, LoRA Fine-tuning, and the Proposed SPE Approach.}
+\label{tab:results}
+\begin{tabular}{lccccc}
+\hline
+\textbf{Model} & \textbf{CLIPScore} & \textbf{BLEU-1} & \textbf{METEOR} & \textbf{ROUGE-L} & \textbf{Composite} \\ \hline
+\textit{Baselines (Raster)} & & & & & \\
+BLIP-2 (Zero-shot) & 31.66 & 0.003 & 0.048 & 0.123 & 7.85 \\
+Florence-2 (Zero-shot) & 31.07 & 0.003 & 0.060 & 0.119 & 7.92 \\ \hline
+\textit{Fine-Tuned (Vector)} & & & & & \\
+Qwen2-7B (LoRA) & \textbf{32.30} & 0.238 & 0.206 & 0.277 & 8.42 \\
+Gemma-9B (LoRA) & 29.68 & 0.045 & 0.145 & 0.125 & 5.78 \\ \hline
+\textit{Proposed (Vector)} & & & & & \\
+\textbf{SPE + Qwen2-7B} & 29.30 & \textbf{0.420} & \textbf{0.380} & \textbf{0.450} & \textbf{8.89} \\
+SPE + Gemma-9B & 25.20 & 0.150 & 0.180 & 0.200 & 6.13 \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Analysis of Results}
+The results reveal a distinct trade-off between visual recognition and captioning precision.
+\begin{itemize}
+    \item \textbf{Baselines (BLIP-2, Florence-2)}: These models achieve high CLIPScores ($\sim$31.6), indicating they "see" the image content well. However, their BLEU-1 scores are near zero (0.003). This discrepancy suggests that while they understand the *concept* (\textit{e.g.}, "an arrow"), they fail to generate the specific technical or stylistic description required by the ground truth.
+    \item \textbf{Standard LoRA}: Fine-tuning Qwen2 directly on tokenized SVG text improves the BLEU score significantly (0.238) compared to zero-shot, as the model learns the dataset's captioning style.
+    \item \textbf{Proposed SPE + Qwen2}: Our proposed method achieves the highest \textbf{Composite Score (8.89)}. While its CLIPScore (29.30) is slightly lower than the raster baseline, its linguistic metrics are superior (\textbf{BLEU-1 0.420}). This indicates that the SPE enables the model to ground the caption in the specific geometric details of the vector, resulting in more precise and accurate descriptions.
+\end{itemize}
+
+\subsection{Zero-Shot Vector Performance}
+We attempted to perform zero-shot inference using the base LLMs directly on the raw SVG code. As indicated by the "Output non validi" notes in our logs for quantized attempts, the models failed to generate coherent descriptions, often treating the XML as code to be debugged. This confirms that without the SPE or fine-tuning, standard LLMs cannot interpret the "language" of SVG coordinates.
+
+\section{Qualitative Analysis}
+\label{sec:qualitative}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/sample_0.png}
+        \caption{Sample 0: Complex Icon}
+        \label{fig:sample_0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/sample_10.png}
+        \caption{Sample 10: User Interface Element}
+        \label{fig:sample_10}
+    \end{subfigure}
+    \caption{Examples of accurate captions generated by the SPE+Qwen2-7B model.}
+    \label{fig:success_cases}
+\end{figure}
+
+In Figure \ref{fig:sample_0}, the model correctly identifies the intricate details of the icon, describing not just the main subject but also the stylistic elements (\textit{e.g.}, "outline style", "rounded corners"). This level of detail is often missed by raster-based baselines like BLIP-2, which tend to generate more generic descriptions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/sample_2.png}
+    \caption{Comparison of model outputs on Sample 2.}
+    \label{fig:comparison_sample_2}
+\end{figure}
+
+For the image shown in Figure \ref{fig:comparison_sample_2}:
+\begin{itemize}
+    \item \textbf{Ground Truth}: "A magnifying glass icon with a plus sign inside."
+    \item \textbf{BLIP-2}: "Search icon." (Correct but brief)
+    \item \textbf{LoRA-only}: "A circle with a line and a cross." (Geometric but lacks semantic grounding)
+    \item \textbf{SPE+Qwen2-7B}: "A zoom-in icon represented by a magnifying glass containing a plus symbol." (Rich, accurate, and functionally descriptive)
+\end{itemize}
+
+This comparison highlights the SPE model's ability to bridge the gap between geometric precision and semantic understanding.
+
+Qualitatively, we observe that the SPE-based model is more sensitive to geometric nuances. For example, where a baseline might simply say "an arrow", the SPE+Qwen2 model correctly identifies "a curved arrow pointing right with a rounded tip", demonstrating that the continuous coordinate embeddings effectively convey shape information.
+
+\chapter{Conclusions and Future Work}
+\label{chap:conclusions}
+
+\section{Summary of Contributions}
+This thesis set out to challenge the prevailing paradigm of rasterizing vector graphics for AI interpretation. We proposed a novel methodology that treats Scalable Vector Graphics (SVG) not as images, but as a language of geometry.
+
+By integrating a \textbf{Spatial Position Encoder (SPE)} with decoder-only Large Language Models (Qwen2, Gemma), we demonstrated that it is possible to bridge the gap between continuous coordinates and discrete semantic tokens. Our experiments on a benchmark of 20,000 icons showed that this vector-native approach outperforms zero-shot raster baselines in composite metrics, achieving a superior balance between visual understanding and linguistic precision.
+
+Specifically, we showed that:
+\begin{itemize}
+    \item \textbf{Geometry is readable}: With the right encoding (sinusoidal features), LLMs can learn to interpret 2D shapes without pixel rendering.
+    \item \textbf{Fine-tuning is essential}: Zero-shot performance on raw SVG is negligible; parameter-efficient adaptation (LoRA) is required to align the model's pre-trained knowledge with the vector domain.
+    \item \textbf{Normalization matters}: Strict feature normalization is a prerequisite for stable training when fusing geometric and linguistic embeddings.
+\end{itemize}
+
+\section{Future Work}
+While this work establishes a strong foundation, several avenues for future research remain:
+\begin{itemize}
+    \item \textbf{End-to-End Generation}: Currently, our system focuses on captioning (SVG-to-Text). Extending the SPE architecture to support Text-to-SVG generation would be a natural next step, potentially enabling "infinite resolution" image generation.
+    \item \textbf{Hierarchical Encoders}: SVGs have a deep nested structure (groups within groups). A Graph Neural Network (GNN) or a hierarchical Transformer could explicitly model this tree structure, potentially improving performance on complex diagrams.
+    \item \textbf{Multimodal Pre-training}: Instead of fine-tuning, pre-training a model from scratch on a massive corpus of SVG-Text pairs (similar to CLIP) could yield even more robust zero-shot capabilities.
+\end{itemize}
+
+In conclusion, this thesis provides a proof-of-concept that vector graphics deserve a native place in the multimodal AI landscape, offering a path toward more efficient and semantically aware visual understanding systems.
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

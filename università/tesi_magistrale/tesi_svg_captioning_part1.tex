@@ -1,0 +1,439 @@
+\documentclass[12pt,a4paper,twoside,openright]{book}
+
+% Pacchetti essenziali
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+% Configurazione della pagina
+\geometry{
+    left=3cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm,
+    bindingoffset=0.5cm
+}
+
+% Configurazione dell'interlinea
+\onehalfspacing
+
+% Configurazione dei link
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={SVG Captioning with Transformer Models: Part I},
+    pdfauthor={Emanuele Di Luzio},
+    pdfsubject={Master's Thesis Extract},
+}
+
+% Configurazione del codice
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false,
+    commentstyle=\color{gray},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red}
+}
+
+% Configurazione delle intestazioni
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{14.5pt}
+
+\begin{document}
+
+% Frontespizio
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Large\textbf{UNIVERSITY OF MODENA AND REGGIO EMILIA}}\\[0.5cm]
+    {\large Department of Engineering "Enzo Ferrari"}\\[0.5cm]
+    {\large Master's Degree in Computer Engineering}\\[3cm]
+    {\Huge\textbf{SVG Captioning with Transformer Models:\\Advanced Fine-tuning Techniques}}\\[2cm]
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \large
+            \textbf{Candidate:}\\
+            Emanuele Di Luzio\\
+            Student ID: \rule{4cm}{0.4pt}
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            \large
+            \textbf{Supervisor:}\\
+            Prof.\ \rule{5cm}{0.4pt}\\[0.5cm]
+            \textbf{Co-supervisor:}\\
+            Dr.\ \rule{5cm}{0.4pt}
+        \end{flushright}
+    \end{minipage}
+    \vfill
+    {\large Academic Year 2023-2024}
+\end{titlepage}
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Questa tesi affronta la generazione automatica di testo per immagini SVG (Scalable Vector Graphics), un formato sempre piu' diffuso in interfacce e librerie di icone ma ancora marginale nei lavori di visual captioning. L'obiettivo e' capire come produrre descrizioni accurate e leggibili direttamente a partire da contenuti vettoriali, senza passare da rappresentazioni raster.
+
+Il progetto nasce dalla messa a punto di un fine-tuning LoRA dedicato che riadatta Qwen2-7B, Gemma-9B e Llama-8B al dominio vettoriale senza toccare l'intero modello. Questo primo passo dimostra che un adattamento leggero permette gia' di recuperare caption piu' allineate e di innalzare il CLIPScore fino a 32.3 punti (Qwen2-7B + LoRA) rispetto alle baseline generiche. Nella seconda tappa lo stesso backbone viene arricchito con uno Spatial Position Encoder (SPE) specializzato, dando vita a una pipeline SPE+LLM capace di ragionare direttamente sui token vettoriali.
+
+Su un benchmark da 400 SVG annotati la progressione e' chiara: la configurazione LoRA rappresenta un solido salto in avanti rispetto ai modelli out-of-the-box, mentre l'aggiunta dello SPE porta la combinazione SPE+Qwen2-7B al punteggio composito piu' alto (5.39 su scala 0--10 derivata da CLIPScore normalizzato, BLEU-1, METEOR e ROUGE-L) e a metriche linguistiche equilibrate (BLEU-1: 0.42, METEOR: 0.38, ROUGE-L: 0.45). Nel complesso, la pipeline mostra come un percorso graduale---prima il fine-tuning LoRA, poi l'integrazione con SPE---possa migliorare in modo concreto le pipelines di captioning pensate per l'accessibilita'.
+
+\chapter*{Abstract (English)}
+\addcontentsline{toc}{chapter}{Abstract (English)}
+
+This thesis investigates how to automatically produce high-quality captions for SVG graphics, a format that dominates icon systems and design libraries yet receives far less attention than raster imagery. The goal is to let captioning models reason on vector content directly, preserving structure and semantics without intermediate rasterisation.
+
+The journey starts with a LoRA fine-tuning programme that retargets Qwen2-7B, Gemma-9B, and Llama-8B to the SVG domain while keeping the base models frozen. This stage alone boosts alignment, with Qwen2-7B + LoRA peaking at a 32.3 CLIPScore and delivering more grounded captions than off-the-shelf baselines. Building on top of that foundation, the work plugs in a specialised Spatial Position Encoder (SPE) so that the language model can reason directly on vector tokens instead of rasterised proxies.
+
+Experiments on a 400-sample benchmark highlight the step-by-step gains: the LoRA adapters provide the initial lift, and the SPE+Qwen2-7B configuration then reaches the best composite score (5.39 on a 0--10 scale derived from normalised CLIPScore, BLEU-1, METEOR, and ROUGE-L) with balanced language metrics (BLEU-1: 0.42, METEOR: 0.38, ROUGE-L: 0.45). Together these results show how a staged approach---LoRA first, SPE integration next---translates into measurable improvements for accessibility-oriented captioning pipelines.
+
+\tableofcontents
+\newpage
+
+\chapter{Introduction}
+\label{chap:introduzione}
+
+\section{Motivation and Context}
+\label{sec:motivazione}
+
+Every design system, dashboard, or documentation site now relies on icons and diagrams to compress information. For someone navigating with a screen reader, those same assets become blank spots unless a good alternative description is present. Crafting alt-text by hand does not scale, which explains the enthusiasm around automatic captioning for accessibility-minded products.
+
+SVG (Scalable Vector Graphics) files are an interesting corner of this landscape \cite{w3c2011svg}. They encode geometry, text nodes, layers, and metadata explicitly, offering rich structure for a model to interpret. At the same time, the variety of authoring styles and the absence of a canonical raster view make them harder to tackle with pipelines designed for photographs. This tension between opportunity and complexity motivated the research questions behind this thesis.
+
+\section{Current Landscape of Vector Graphics Generation}
+\label{sec:current-landscape}
+
+Research on vector graphics has accelerated in the last few years thanks to the availability of design-centric datasets and the push from creative tooling. Despite the differences across papers, four families of approaches emerge, each emphasising a specific trade-off between control, visual fidelity, and ease of editing.
+
+\textbf{LLM/Autoregressive Approaches} leverage the sequential generation capabilities of Large Language Models to produce SVG code token by token. Models like IconShop \cite{wu2023iconshop}, LLM4SVG \cite{xing2023llm4svg}, and StarVector \cite{rodriguez2023starvector} demonstrate excellent semantic understanding and direct text-to-SVG generation capabilities, making them particularly suitable for applications requiring high editability and intuitive code-based manipulation.
+
+\textbf{Diffusion-based Methods} adapt pre-trained diffusion models for vector graphics generation, with VectorFusion \cite{jain2023vectorfusion} and SVGDreamer \cite{xing2024svgdreamer} showing exceptional visual quality and strong visual-semantic alignment. These approaches excel in producing aesthetically pleasing outputs by leveraging large pre-trained visual models, though they typically require multi-step generation processes.
+
+\textbf{Representation Learning with Transformers} focuses on learning structured representations for vector graphics, with SuperSVG \cite{hu2024supersvg}, DeepSVG \cite{carlier2020deepsvg}, and DeepIcon \cite{bing2024deepicon} emphasizing hierarchical structure learning and layer-wise organization. These methods provide excellent editability and efficient direct prediction capabilities.
+
+\textbf{Parameter Optimization Approaches} directly optimize SVG parameters to satisfy specific criteria, with ClipVG \cite{song2023clipvg} and LIVE \cite{ma2022live} offering fine-grained control and high editability without requiring large training datasets.
+
+Across these directions we can observe recurring themes: stronger multimodal grounding, an obsession with editability, extensive reuse of large pre-trained checkpoints, and more hybrid pipelines that glue together complementary techniques. The work presented in this thesis zooms in on the captioning side of the problem, aiming to turn those broader trends into practical gains for accessibility-oriented descriptions.
+
+\section{Research Objectives}
+\label{sec:obiettivi}
+
+Starting from this context, the thesis pursues five objectives structured around a two-stage roadmap: first specialise decoder-only language models through LoRA, then extend them with the Spatial Position Encoder to push caption quality further. In detail:
+
+\begin{enumerate}
+    \item \textbf{Parameter-efficient LoRA fine-tuning}: Compare full-precision and quantised LoRA variants on a curated dataset to balance caption quality against training and inference costs.
+    \item \textbf{SPE+LLM integration}: Understand whether a Spatial Position Encoder can effectively ground decoder-only Large Language Models without falling back to raster backbones.
+    \item \textbf{Reproducible evaluation}: Describe dataset preparation, licensing, and metric computation in enough detail for other researchers to repeat or extend the experiments.
+    \item \textbf{Quantitative and qualitative analysis}: Combine a transparent composite metric with a lightweight error taxonomy to expose both strengths and recurring failure modes.
+    \item \textbf{Accessibility outlook}: Connect the experimental findings to real accessibility workflows, highlighting the remaining blockers for adoption.
+\end{enumerate}
+
+\section{Original Contributions}
+\label{sec:contributi}
+
+The research journey led to a set of tangible contributions for the multimodal AI and vector-understanding community:
+
+\begin{itemize}
+    \item \textbf{LoRA-first baselines}: Adapter recipes that reshape Qwen2-7B, Gemma-9B, and Llama-8B for SVG captioning without full fine-tuning, quantifying how much quality comes from this lightweight step alone.
+    \item \textbf{SPE+Qwen2-7B pipeline}: An end-to-end, parameter-efficient captioning stack that grafts a Spatial Position Encoder onto the best LoRA adapters so the language model can reason on vector tokens.
+    \item \textbf{Curated benchmark}: A 20k-sample split derived from the Icons8 collection, complete with statistics, licensing notes, and stratified train/validation/test partitions.
+    \item \textbf{Evaluation methodology}: A composite metric built on normalised CLIPScore, BLEU-1, METEOR, and ROUGE-L that makes cross-model comparison more transparent.
+    \item \textbf{Qualitative insights}: A manual review of representative samples that surfaces error modes (for instance alphanumeric hallucinations) and guides the proposed future work.
+\end{itemize}
+
+\section{Thesis Structure}
+\label{sec:struttura}
+
+The remainder of the document follows a narrative arc that starts from related work and ends with practical takeaways:
+
+\begin{itemize}
+    \item \textbf{Chapter 2 -- State of the Art}: positions the thesis within the broader landscape of multimodal learning for vector graphics.
+    \item \textbf{Chapter 3 -- System Architecture}: details the SPE+LLM pipeline, from data ingestion to serving.
+    \item \textbf{Chapter 4 -- Fine-tuning Techniques}: motivates the chosen parameter-efficient strategies and their practical configuration.
+    \item \textbf{Chapter 5 -- Multimodal Extensions}: explores integrations with vision encoders and complementary modalities.
+    \item \textbf{Chapter 6 -- Experimental Methodology}: documents datasets, preprocessing, and evaluation protocols.
+    \item \textbf{Chapter 7 -- Results and Analysis}: interprets quantitative metrics and qualitative observations.
+    \item \textbf{Chapter 8 -- Applications and Impact}: discusses how the findings translate into accessibility and documentation workflows.
+    \item \textbf{Chapter 9 -- Conclusions and Future Developments}: wraps up the contributions and outlines future directions.
+    \item \textbf{Appendix -- Source Code}: collects implementation details and references to the released assets.
+\end{itemize}
+
+\chapter{State of the Art}
+\label{chap:stato-arte}
+
+\section{Visual-Language Understanding}
+\label{sec:visual-language}
+
+Visual-language research took a decisive turn once transformer architectures and web-scale multimodal datasets entered the picture \cite{vaswani2017attention}. Suddenly it became possible to share a single representation space across words and pixels, unlocking retrieval, tagging, and captioning workflows that previously required specialised pipelines.
+
+CLIP \cite{radford2021learning} is the canonical example: through contrastive pre-training on noisy Internet data it builds a joint embedding that works surprisingly well across downstream tasks. That success story seeded an entire generation of models capable of both understanding and generating multimodal content without bespoke feature engineering.
+
+Vector graphics soon joined the conversation. Autoregressive Large Language Models such as IconShop \cite{wu2023iconshop} and LLM4SVG \cite{xing2023llm4svg} treat SVG instructions as a sequence to decode, while StarVector \cite{rodriguez2023starvector} extends the idea by conditioning on both textual and visual cues.
+
+Diffusion-inspired pipelines are exploring the other side of the design space. VectorFusion \cite{jain2023vectorfusion} distils pre-trained diffusion checkpoints into vector-capable generators, and SVGDreamer \cite{xing2024svgdreamer} layers semantic vectorisation to keep outputs editable. These strands form the backdrop against which the thesis positions its captioning-oriented contribution.
+
+\subsection{Multimodal Generative Models}
+\label{subsec:modelli-generativi}
+
+BLIP (Bootstrapping Language-Image Pre-training) \cite{li2022blip} framed a pragmatic recipe: pair an encoder-decoder transformer with a caption bootstrapping loop so that the model can iteratively clean and extend its own training corpus. The result is a system equally comfortable at understanding and producing multimodal content.
+
+BLIP-2 \cite{li2023blip2} revisits the architecture with Q-Former, a lightweight module that negotiates between a frozen vision encoder and a frozen language model. That mediation keeps the computational footprint manageable while letting practitioners reuse best-in-class checkpoints from both domains.
+
+Florence-2 \cite{xiao2023florence} pushes the unification further, casting disparate computer-vision tasks as sequence-to-sequence problems. Object detection, dense captioning, and segmentation all flow through the same interface, showcasing how far a carefully trained multimodal backbone can stretch.
+
+\subsection{Vector Representation and Optimization}
+\label{subsec:rappresentazione-vettoriale}
+
+Representation-learning papers tackle vector content by leaning into structure. SuperSVG \cite{hu2024supersvg} reinterprets SVGs through a superpixel lens and trains in two stages, which markedly improves vectorisation efficiency on large datasets.
+
+DeepSVG \cite{carlier2020deepsvg} offers a hierarchical generator that cleanly separates high-level shapes from low-level commands, avoiding common occlusion artefacts. That design rule--keep layout and drawing instructions distinct--has influenced many follow-up works.
+
+DeepIcon \cite{bing2024deepicon} keeps the hierarchy but organises it at the layer level, producing SVGs that designers can edit without wrestling with tangled groups.
+
+Other researchers sidestep generative models entirely and optimise SVG parameters directly. ClipVG \cite{song2023clipvg} uses CLIP feedback to steer manipulations via text prompts, whereas LIVE \cite{ma2022live} learns a layer-wise topology so that gradient-based optimisation yields clean, editable assets.
+
+\section{Comparative Analysis of Vector Graphics Generation Approaches}
+\label{sec:comparative-analysis}
+
+Surveying the literature reveals four recurring gameplay styles for vector generation, each with its own rhythm and compromise between control and quality. Mapping them side by side helps clarify where the proposed captioning pipeline fits and what gaps remain unaddressed.
+
+\subsection{Paradigmatic Categories}
+\label{subsec:paradigmatic-categories}
+
+\subsubsection{LLM/Autoregressive Decoder Approaches}
+
+This category includes models like IconShop \cite{wu2023iconshop}, LLM4SVG \cite{xing2023llm4svg}, and StarVector \cite{rodriguez2023starvector}. These approaches leverage the sequential generation capabilities of Large Language Models to produce SVG code token by token.
+
+\textbf{Key Characteristics:}
+\begin{itemize}
+    \item Sequential token generation paradigm
+    \item End-to-end generation from textual prompts
+    \item Strong semantic understanding capabilities
+    \item Native editability through code manipulation
+\end{itemize}
+
+\textbf{Advantages:} Excellent semantic comprehension, direct text-to-SVG generation, high editability, and intuitive code-based manipulation.
+
+\textbf{Limitations:} Constrained by maximum sequence length, difficulties with highly complex graphics, and potential inconsistencies in long sequences.
+
+\subsubsection{Diffusion-based Approaches}
+
+VectorFusion \cite{jain2023vectorfusion} and SVGDreamer \cite{xing2024svgdreamer} extend diffusion principles to vector graphics, achieving high visual fidelity by distilling raster-trained generators into vector-capable decoders.
+
+\textbf{Key Characteristics:}
+\begin{itemize}
+    \item Progressive denoising paradigm
+    \item Leveraging of pre-trained visual models
+    \item High visual quality output
+    \item Multi-step generation process
+\end{itemize}
+
+\textbf{Advantages:} High visual quality, exploitation of large pre-trained models, good diversity in outputs, and strong visual-semantic alignment.
+
+\textbf{Limitations:} Multi-step computational process, limited native editability (improved in SVGDreamer), and dependency on intermediate representations.
+
+\subsubsection{Representation Learning with Transformers}
+
+SuperSVG \cite{hu2024supersvg}, DeepSVG \cite{carlier2020deepsvg}, and DeepIcon \cite{bing2024deepicon} focus on learning structured representations for vector graphics.
+
+\textbf{Key Characteristics:}
+\begin{itemize}
+    \item Hierarchical latent spaces
+    \item Explicit structural priors
+    \item Non-autoregressive decoding strategies
+\end{itemize}
+
+\textbf{Advantages:} Efficient generation, strong structural consistency, and high editability.
+
+\textbf{Limitations:} Dependence on curated datasets and complex training pipelines.
+
+\subsubsection{Parameter Optimization Approaches}
+
+ClipVG \cite{song2023clipvg} and LIVE \cite{ma2022live} optimise SVG parameters directly to satisfy specific criteria.
+
+\textbf{Key Characteristics:}
+\begin{itemize}
+    \item Direct parameter optimisation
+    \item Iterative refinement process
+    \item Fine-grained control on vector attributes
+    \item Objective-driven generation
+\end{itemize}
+
+\textbf{Advantages:} Fine-grained control, high editability, no requirement for large training datasets, and precise objective satisfaction.
+
+\textbf{Limitations:} Computationally intensive optimisation, sensitivity to initialisation, limited semantic understanding, and scalability challenges.
+
+\subsection{Comparative Capabilities Analysis}
+\label{subsec:comparative-capabilities}
+
+\begin{table}[H]
+    \centering
+    \caption{Comparative analysis of vector graphics generation approaches}
+    \label{tab:comparative-approaches}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Capability} & \textbf{LLM/Auto.} & \textbf{Diffusion} & \textbf{Repr. Learn.} & \textbf{Param. Opt.} \\
+        \hline
+        Text Generation & High & High & Low & Medium \\
+        Image Vectorization & Medium & Low & High & High \\
+        Editability & High & Medium & High & High \\
+        Semantic Understanding & High & Medium & Medium & Low \\
+        Layer-wise Structure & Medium & Low & High & High \\
+        Computational Efficiency & High & Low & High & Low \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Evolutionary Trends and Synergies}
+\label{subsec:evolutionary-trends}
+
+Analysis of the temporal evolution reveals several key trends:
+
+\begin{enumerate}
+    \item \textbf{Multimodal Integration}: Evolution from unimodal approaches to systems supporting both text and image inputs
+    \item \textbf{Enhanced Editability}: Progressive focus on output editability with layer-wise organization and semantic structure
+    \item \textbf{Pre-trained Model Leverage}: Increasing tendency to exploit large pre-trained models rather than training from scratch
+    \item \textbf{Hybrid Approaches}: Emergence of methods combining elements from different paradigms
+\end{enumerate}
+
+\textbf{Potential Synergies:}
+\begin{itemize}
+    \item \textbf{LLM + Representation Learning}: Combining semantic understanding with structured layer-wise organization
+    \item \textbf{Diffusion + Parameter Optimization}: Using diffusion for initialization followed by fine-grained parameter optimization
+    \item \textbf{Multimodal Fusion}: Integrating text understanding with visual processing capabilities
+\end{itemize}
+
+Taken together, the categories hint at obvious mashups: pair the reasoning skills of language models with the structure learned by representation-focused encoders, or warm-start optimisation methods with diffusion-generated drafts. The thesis borrows from that intuition by marrying LLM semantics with a geometry-aware encoder tailored to accessibility goals.
+
+\section{Fine-tuning and Optimization Techniques}
+\label{sec:fine-tuning}
+
+\subsection{Parameter-Efficient Fine-tuning}
+\label{subsec:peft}
+
+Parameter-Efficient Fine-tuning (PEFT) has become the practical way to bend large language models toward niche domains without paying the full cost of updating every weight. The idea is simple: freeze the expensive backbone and learn compact adapters that steer the model where needed.
+
+LoRA (Low-Rank Adaptation) \cite{hu2021lora} embodies this philosophy. By factorising weight updates into low-rank matrices, it injects the necessary flexibility while keeping the number of trainable parameters manageable. The recipe has proved especially effective for transformers tackling specialised tasks.
+
+\subsubsection{LoRA Mathematical Foundation}
+
+LoRA decomposes the weight update matrix $\Delta W$ into two low-rank matrices:
+$$\Delta W = BA$$
+where $B \in \mathbb{R}^{d \times r}$ and $A \in \mathbb{R}^{r \times k}$ with rank $r \ll \min(d,k)$.
+
+The forward pass becomes:
+$$h = W_0x + \Delta Wx = W_0x + BAx$$
+where $W_0$ are the frozen pre-trained weights.
+
+\subsubsection{LoRA Configuration for SVG Captioning}
+
+The optimal configuration identified through extensive experimentation is:
+
+\begin{itemize}
+    \item \textbf{Rank (r)}: 16 - Optimal balance between expressive capacity and efficiency
+    \item \textbf{Alpha}: 32 - Scaling factor to control adaptation intensity
+    \item \textbf{Target modules}: Query, Key, Value, Output projections in attention layers
+    \item \textbf{Dropout}: 0.1 - Regularization to prevent overfitting
+    \item \textbf{Scaling factor}: $\alpha/r = 2.0$ - Controls the magnitude of adaptations
+\end{itemize}
+
+\subsubsection{LoRA Advantages in Multimodal Settings}
+
+LoRA demonstrates particular advantages in multimodal applications:
+\begin{itemize}
+    \item \textbf{Memory efficiency}: Reduces trainable parameters by 99.9\% compared to full fine-tuning
+    \item \textbf{Task-specific adaptation}: Allows specialized adaptations for visual-language tasks
+    \item \textbf{Modular deployment}: Multiple LoRA adapters can be swapped for different tasks
+    \item \textbf{Stability}: Preserves pre-trained knowledge while enabling domain adaptation
+\end{itemize}
+
+\subsection{Spatial Position Encoder (SPE)}
+\label{subsec:spe}
+
+The Spatial Position Encoder (SPE) represents a specialized architecture designed for understanding spatial and structural relationships in vector graphics. Unlike traditional PEFT techniques that focus on parameter efficiency, SPE addresses the unique challenges of processing structured visual content.
+
+\subsubsection{SPE Architecture and Design}
+
+SPE is specifically designed to handle the hierarchical and geometric nature of SVG documents:
+
+\begin{itemize}
+    \item \textbf{Spatial Awareness}: Encodes positional relationships between SVG elements
+    \item \textbf{Structural Understanding}: Processes the hierarchical DOM structure of SVG files
+    \item \textbf{Geometric Reasoning}: Interprets mathematical relationships between shapes and paths
+\end{itemize}
+
+\subsubsection{SPE Pre-training Objectives}
+
+The pre-training regime typically combines:
+
+\begin{itemize}
+    \item \textbf{Masked element prediction}: Randomly mask paths, shapes, or attributes and train the model to recover them
+    \item \textbf{Geometric consistency loss}: Encourage consistent reconstruction of coordinates and transformations
+    \item \textbf{Hierarchy-aware contrastive loss}: Differentiate between structurally similar but semantically distinct SVG arrangements
+\end{itemize}
+
+\section{SVG Processing and Computer Vision}
+\label{sec:svg-processing}
+
+\subsection{Unique Characteristics of SVGs}
+\label{subsec:svg-caratteristiche}
+
+SVG files present unique characteristics that distinguish them from traditional raster images:
+
+\begin{itemize}
+    \item \textbf{Hierarchical structure}: SVG elements are organized in a tree structure that reflects spatial and semantic relationships
+    \item \textbf{Explicit geometric information}: Shapes, paths, and transformations are mathematically defined
+    \item \textbf{Embedded metadata}: Possibility to include semantic information through attributes and metadata elements
+    \item \textbf{Scalability}: Resolution independence that allows rendering at any size
+\end{itemize}
+
+\subsection{Existing Approaches for SVG Analysis}
+\label{subsec:svg-analysis}
+
+The existing literature on automatic SVG analysis is relatively limited compared to raster image processing. The main approaches include:
+
+\begin{itemize}
+    \item \textbf{Structural parsing}: Analysis of the DOM tree to extract semantic information
+    \item \textbf{Rasterization and traditional processing}: Conversion to raster images to apply standard computer vision techniques
+    \item \textbf{Hybrid approaches}: Combination of structural and visual information
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

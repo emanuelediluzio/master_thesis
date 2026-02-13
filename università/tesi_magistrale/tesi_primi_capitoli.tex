@@ -1,0 +1,155 @@
+\documentclass[12pt,a4paper,twoside,openany]{book}
+
+% Pacchetti essenziali
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta, positioning, calc, chains, decorations.pathreplacing, shadows, fit, backgrounds}
+\input{llm-diagrams.tex}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+
+% Configurazione della pagina
+\geometry{
+    portrait,
+    left=3cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm,
+    bindingoffset=0.5cm
+}
+
+% Configurazione dell'interlinea
+\onehalfspacing
+
+% Configurazione dei link
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    citecolor=blue,
+    pdftitle={SVG Captioning with Transformer Models: Advanced Fine-tuning Techniques - PART 1},
+    pdfauthor={Emanuele Di Luzio},
+    pdfsubject={Master's Thesis - Chapters 1-3},
+}
+
+% Configurazione del codice
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    showstringspaces=false,
+    commentstyle=\color{gray},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red}
+}
+
+% Configurazione delle intestazioni
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{14.5pt}
+
+\begin{document}
+
+% Frontespizio
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Large\textbf{UNIVERSITY OF MODENA AND REGGIO EMILIA}}\\[0.5cm]
+    {\large Department of Engineering "Enzo Ferrari"}\\[0.5cm]
+    {\large Master's Degree in Computer Engineering}\\[3cm]
+    
+    {\Huge\textbf{SVG Captioning with Transformer Models: Advanced Fine-tuning Techniques}}\\[0.5cm]
+    {\Large\textit{PART 1: Chapters 1-3}}
+    \vspace{2cm}
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft}
+            \large
+            \textbf{Candidate:}\\
+            Emanuele Di Luzio\\
+            Student ID: \rule{4cm}{0.4pt}
+        \end{flushleft}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright}
+            \large
+            \textbf{Supervisor:}\\
+            Prof.\ \rule{5cm}{0.4pt}\\
+            \vspace{0.5cm}
+            \textbf{Co-supervisor:}\\
+            Dr.\ \rule{5cm}{0.4pt}
+        \end{flushright}
+    \end{minipage}
+    
+    \vfill
+    {\large Academic Year 2023-2024}
+\end{titlepage}
+
+% Indice
+\tableofcontents
+\newpage
+
+% Abstract
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Scalable Vector Graphics (SVG) are ubiquitous in modern web design, yet current Multimodal Large Language Models (MLLMs) struggle to interpret their raw XML structure. Most existing approaches rely on rasterizing SVGs into pixel grids, a process that discards the semantic richness of the vector definition and introduces resolution artifacts.
+
+In this work, I present a novel architecture that enables a decoder-only LLM to directly ingest and interpret SVG code without rasterization. I integrate a \textbf{Spatial Position Encoder (SPE)}--originally developed by Zini \textit{et al.}--that maps continuous geometric coordinates into the LLM's embedding space using sinusoidal functions. By combining this encoder with \textbf{Qwen2-7B} and \textbf{Gemma-9B} via \textbf{Low-Rank Adaptation (LoRA)}, I demonstrate that the model can learn to "read" vector geometries effectively.
+
+My experiments, conducted on a dataset of \textbf{20,000 SVG-caption pairs} and evaluated on a stratified benchmark of \textbf{400 samples}, show that this vector-native approach outperforms zero-shot raster baselines. Specifically, the \textbf{SPE+Qwen2-7B} configuration achieves a CLIPScore of 29.3 and a BLEU-1 score of 0.42, offering a parameter-efficient alternative to vision-encoder-based methods. I provide a detailed analysis of the model's capabilities and limitations, offering a new perspective on vector-language understanding.
+
+\chapter*{Sommario}
+\addcontentsline{toc}{chapter}{Sommario}
+
+Le immagini vettoriali (SVG) sono onnipresenti nel design digitale, tuttavia gli attuali modelli multimodali (MLLM) faticano a interpretare la loro struttura XML grezza. La maggior parte degli approcci esistenti si basa sulla rasterizzazione degli SVG in griglie di pixel, un processo che scarta la ricchezza semantica della definizione vettoriale e introduce artefatti di risoluzione.
+
+In questa tesi, presento un'architettura che consente a un LLM decoder-only di ingerire e interpretare direttamente il codice SVG senza rasterizzazione. Integro uno \textbf{Spatial Position Encoder (SPE)}--originariamente sviluppato da Zini \textit{et al.}--che mappa le coordinate geometriche continue nello spazio di embedding dell'LLM utilizzando funzioni sinusoidali. Combinando questo encoder con \textbf{Qwen2-7B} e \textbf{Gemma-9B} tramite \textbf{Low-Rank Adaptation (LoRA)}, dimostro che il modello può imparare a "leggere" le geometrie vettoriali in modo efficace.
+
+I miei esperimenti, condotti su un dataset di \textbf{20.000 coppie SVG-caption} e valutati su un benchmark stratificato di \textbf{400 campioni}, mostrano che questo approccio vettoriale supera le baseline raster zero-shot. Nello specifico, la configurazione \textbf{SPE+Qwen2-7B} ottiene un CLIPScore di 29.3 e un punteggio BLEU-1 di 0.42, offrendo un'alternativa efficiente ai metodi basati su vision-encoder. Fornisco un'analisi dettagliata delle capacità e dei limiti del modello, offrendo una nuova prospettiva sulla comprensione del linguaggio vettoriale.
+
+% ============================================
+% CAPITOLI 1-3
+% ============================================
+
+\input{chapter1_expanded}
+\input{chapter2_expanded}
+\input{chapter3_expanded}
+
+% ============================================
+% BIBLIOGRAFIA
+% ============================================
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}

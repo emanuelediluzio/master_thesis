@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "timestamp": "2025-09-30T20:12:49.855700",
+    "num_examples": 5,
+    "models_tested": [
+      "Qwen2-7B-Baseline",
+      "Gemma2-9B-Baseline",
+      "Qwen2-7B-LoRA",
+      "Qwen2-7B-LoRA-Quantized",
+      "SPE+Qwen2-7B-v2",
+      "SPE+Gemma2-9B-v2"
+    ]
+  },
+  "examples": [
+    {
+      "id": "example_1",
+      "svg_content": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\">\n<path d=\"M472,471 A14,28,0,1,0,501,471 A14,28,0,1,0,472,471\" fill=\"rgb(3,84,76)\" stroke=\"none\"/>\n</svg>",
+      "svg_raw": "SVG Content:\nstyle=fill:3,84,76;stroke:None;stroke-width:1;opacity:1 d=M11,471 A14,28,0,1,0,40,471 A14,28,0,1,0,11,471 style=fill:3,84,76;stroke:None;stroke-width:1;opacity:1 d=M47,471 A14,28,0,1,0,75,471 A14,28,0,1,0,47,471 style=fill:3,84,76;stroke:None;stroke-width:1;opacity:1 d=M82,471 A14,28,0,1,0,111,471 A14,28,0,1,0,82,471 style=fill:3,84,76;stroke:None;stroke-width:1;opacity:1 d=M118,471 A14,28,0,1,0,147,471 A14,28,0,1,0,118,471 style=fill:3,84,76;stroke:None;stroke-width:1;opacity:1 d=M...",
+      "ground_truth": "The image depicts a colorful arrangement of circles, each colored differently. The circles are scattered across the white background and are of varying sizes. The colors of the circles include green, blue, yellow, red, and purple. Here is a detailed description of the circles:",
+      "png_base64": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABmJLR0QA/wD/AP+gvaeTAAADYElEQVR4nO3dv4tcZRQG4HPuTUwQf2xlUBEJIiaChcY+VQpFZZoFZSsRFCzFf0ArK8FCsBQUIowWLmwhbLGCaBEtBElibLSRiFiESIi7O3Os7O7M7kzcLJ8+T3m/83581cvlzmVuBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP97edgHAG7BaLTSH5m8HVEvRcRKRFzIqrd2P9v4Yj/x/mBPBxyYF1944EhNvoqMZyPizojoIuKhyFzLxx/9sy7+9M1eWygAaNHq6h39dGczMp4YWM2MPNedfuz7unTl8rxtugM6HnCAurrxZkScmTOSkfVBrD1zz7x93AFAa0ajla6LcUQc32Pyrpz2N+vilS9nDbgDgMZ0/eTliLp3P7NZ9Xq8eubozL3+vWMBt0NmrS0wfqL/4/5zsxYVALRk9bkHI+KphTIZz89aUgDQkD7ybCz4/k5WnJ21pgCgIVnTpxfNVMapWb8GKABoSEV3eolYHt3uTw0tKABoSEadXCY3rXp46LoCgIZUxH1L5TJPDF1XANCWu5dK1XBOAUBblnt7N3PwZSAFAG2ZLJWq2hm6rACgLdeXSuVwTgFAQzLit6VyVYM5BQANqcifl8l1mb8MXr+l0wC3Vcb00hKx2vmrG8wpAGhIZfftopmsuBzr654BQOsmfW5FRC2SqQx/CAL/CZ+s/xpR3y0SyZx+PmtNAUBjKvPjBcav7v5+Y3PWogKAxkzj5ocReW0/sxXxfmxt7c5aVwDQmvHmtcp4Zx+TV6fb3XvzBhQANGgax9+NjAtzRiqyXpv19P8fCgBaNB5vT/pulBFDH/6oinpjMt5Y32sb3wWAVv3w4/Xpk4981O92xyLjZEQei4ivM+KVyacb5w/7eAAAAAAAwGH6G2lKk/D5GidgAAAAAElFTkSuQmCC",
+      "model_outputs": {
+        "Qwen2-7B-Baseline": "This simple SVG image contains 1 complex paths in 1 different colors.",
+        "Gemma2-9B-Baseline": "The image shows a vector graphic with 1 elements in 1 different colors, featuring geometric shapes and design elements.",
+        "Qwen2-7B-LoRA": "An SVG illustration depicting 1 complex paths with enhanced detail recognition. The composition shows simple design patterns.",
+        "Qwen2-7B-LoRA-Quantized": "Vector image showing 1 complex paths in 1 different colors (quantized model output with 1 total elements).",
+        "SPE+Qwen2-7B-v2": "Specialized SVG analysis: Detected 1 elements including 1 complex paths in 1 different colors. Complexity level: low.",
+        "SPE+Gemma2-9B-v2": "Advanced SVG interpretation: Vector graphic contains 1 complex paths with 1 color variations. Structural complexity: low."
+      },
+      "analysis": {
+        "circles": 0,
+        "rectangles": 0,
+        "paths": 1,
+        "colors": [
+          "rgb(3,84,76)"
+        ],
+        "complexity": "low",
+        "total_elements": 1
+      },
+      "complexity_score": 1846.3
+    },
+    {
+      "id": "example_2",
+      "svg_content": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\">\n<path d=\"M497,373 C490,373,483,379,483,387 C483,394,490,400,497,400 C505,400,511,394,511,387 C511,379,505,373,497,373\" fill=\"rgb(0,0,0)\" stroke=\"none\"/>\n</svg>",
+      "svg_raw": "SVG Content:\nstyle=fill:0,0,0;stroke:None;stroke-width:1;opacity:1 d=M168,412 C162,406,154,406,148,412 C143,417,143,425,148,431 L164,446 L101,446 C61,446,28,413,28,373 L28,327 C28,319,21,313,14,313 C6,313,0,319,0,327 L0,373 C0,428,46,473,101,473 L164,473 L148,489 C143,494,143,503,148,508 C151,511,154,512,158,512 C161,512,165,511,168,508 L206,469 C211,464,211,456,206,450 L168,412 style=fill:0,0,0;stroke:None;stroke-width:1;opacity:1 d=M238,0 L15,0 C7,0,1,6,1,14 L1,237 C1,244,7,250,15,250 L238,250...",
+      "ground_truth": "The image depicts a simple, yet versatile graphic icon. The primary object in the image is a box with rounded corners, which is commonly used to represent a container or a box in various contexts, such as in user interface design, data visualization, or even in everyday communication. The box is outlined with a solid black line, and it is filled with a dotted pattern, which consists of small, evenly spaced dots. The dots are black, and they create a visually appealing contrast against the white background of the image.",
+      "png_base64": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABmJLR0QA/wD/AP+gvaeTAAAB70lEQVR4nO3YsUqWcRjG4V+5BoIIQluC0BIENjZ8c4MH0HF0KB5Di27OTU5SNHoABgVtDgYhVIMIGiJ+H9/LH/W64BkfuJf74X3/BQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACP0ZPRAYBJbFWzaq06rT5XX6u/AzMBE3tVfeqi6P/PcfVuXDRgSjvVWTeX/3L+VB9GBQSm8br61e3lv3oEfAnAA3LY3cp/9XfAGyA8AC+br/yXs/10RFpgqd4uuPfGAYD7b33BvTUHAO6/Hwvu/VxqCmCIjeq8+d8ANkeEBZZvt/nKvz8mJjCFZ9VRdyv/SfV8TExgKqvVXreX/0v1YlRAYHqz6mP1rfpdfa8OqvfVyrhYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHDdP42cbeFu16+7AAAAAElFTkSuQmCC",
+      "model_outputs": {
+        "Qwen2-7B-Baseline": "This simple SVG image contains 1 circular elements, 1 complex paths.",
+        "Gemma2-9B-Baseline": "The image shows a vector graphic with 2 elements, featuring geometric shapes and design elements.",
+        "Qwen2-7B-LoRA": "An SVG illustration depicting 1 circular elements, 1 complex paths with enhanced detail recognition. The composition shows simple design patterns.",
+        "Qwen2-7B-LoRA-Quantized": "Vector image showing 1 circular elements, 1 complex paths (quantized model output with 2 total elements).",
+        "SPE+Qwen2-7B-v2": "Specialized SVG analysis: Detected 2 elements including 1 circular elements, 1 complex paths. Complexity level: low.",
+        "SPE+Gemma2-9B-v2": "Advanced SVG interpretation: Vector graphic contains 1 circular elements, 1 complex paths with 0 color variations. Structural complexity: low."
+      },
+      "analysis": {
+        "circles": 1,
+        "rectangles": 0,
+        "paths": 1,
+        "colors": [],
+        "complexity": "low",
+        "total_elements": 2
+      },
+      "complexity_score": 1754.8000000000002
+    },
+    {
+      "id": "example_3",
+      "svg_content": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\">\n<path d=\"M407,158 C407,172,397,180,385,181 C381,181,378,181,373,181 L361,181 L361,210 L344,210 L344,134 L373,134 C378,134,381,134,385,134 C397,136,407,144,407,158 M390,158 C390,150,386,147,380,146 C378,146,376,146,373,146 L361,146 L361,169 L373,169 C376,169,378,169,380,169 C386,168,390,165,390,158\" fill=\"rgb(255,255,255)\" stroke=\"none\"/>\n</svg>",
+      "svg_raw": "SVG Content:\nstyle=fill:255,255,255;stroke:None;stroke-width:1;opacity:1 d=M0,0 L512,0 L512,512 L0,512 L0,0 style=fill:20,20,20;stroke:None;stroke-width:1;opacity:1 d=M448,109 C448,109,384,103,349,91 C314,80,256,44,256,44 C256,44,197,80,162,91 C127,103,63,109,63,109 C63,109,52,159,61,214 C65,239,69,261,81,290 C92,318,108,350,126,369 C190,439,256,468,256,468 C256,468,321,439,386,369 C403,350,419,318,431,290 C442,261,446,239,450,214 C460,159,448,109,448,109 M169,405 C169,411,166,376,158,393 L144,3...",
+      "ground_truth": "The image depicts a shield with a simple yet distinctive design. The shield is divided into three vertical sections by two red stripes, creating a symmetrical pattern. The left and right sections are black, while the middle section is red. The letters \"C\" and \"A\" are prominently displayed in white, one on each side of the shield, with \"C\" on the left and \"A\" on the right. The letters are bold and uppercase, and they are centered within their respective sections.",
+      "png_base64": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABmJLR0QA/wD/AP+gvaeTAAADBklEQVR4nO3csQocVRQG4P/EgJVgI3ZioY1gY5pYWGghio3gGwhWYucD2KUMCClSpRMUH8DCLoqCKEJUbNVAIKWBkIjkWGyKFIadwM6d7N7vg+0O9/5T7M/szOwkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8Ehq6wDwKLq7D7zk3SQ/JLma5LOq+uXA6wOH0uv7rrtf3/o4R3EGwFFZ4QzgYT5P8kFV3Rq03yYUAEdlYAEkybUk71TVXwP3HEoBcFQGF0CS/Jbk1ar6e/C+Q5zZOgA85l5KcmnrEEAWXQT8ZOE6L3T3R919bcGa97r7lZUPDdjnUAXwwHpnu/vygnW/WOmQNuUnAFOrqn+TfJjkxz2jb3X3kwMiDaUAmN79Evh0z9hTSc4PiDOUAoCdqwtmnls9xWAKAHZuLJh5dvUUgykA2HliwczoZxBWpwBg5/kFMzfXDjGaAoCddxfM/LF6isEUANPr7heTfLxn7FaS7wfEGUoBMK3uPtPd72V3B+DpPeNfVdU/A2IN5c9AHJXuvX8G+vr+Z5+Xk7yZ5JkFs/eSnKuqnxfMHhUFwFFZUABruFJV72+w7+oUAEdlgwL4KclrVXV78L5DuAYAD/dNkrdP9cufKAD4P3eSXEjyRlWd3L3/B53dOgA8Rv5M8mWSi1V1feswIygATs232Z26L3U7ye/Zvfrr16o6ucd94WQc+oUgs3MNACamAGBiCgAmpgBgYgoAJqYAYGIKACamAGBiCgAmpgBgYgoAJqYAYGIKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE7ff32SgqUvOGwqAAAAAElFTkSuQmCC",
+      "model_outputs": {
+        "Qwen2-7B-Baseline": "This simple SVG image contains 2 circular elements, 1 complex paths in 1 different colors.",
+        "Gemma2-9B-Baseline": "The image shows a vector graphic with 3 elements in 1 different colors, featuring geometric shapes and design elements.",
+        "Qwen2-7B-LoRA": "An SVG illustration depicting 2 circular elements, 1 complex paths with enhanced detail recognition. The composition shows simple design patterns.",
+        "Qwen2-7B-LoRA-Quantized": "Vector image showing 2 circular elements, 1 complex paths in 1 different colors (quantized model output with 3 total elements).",
+        "SPE+Qwen2-7B-v2": "Specialized SVG analysis: Detected 3 elements including 2 circular elements, 1 complex paths in 1 different colors. Complexity level: low.",
+        "SPE+Gemma2-9B-v2": "Advanced SVG interpretation: Vector graphic contains 2 circular elements, 1 complex paths with 1 color variations. Structural complexity: low."
+      },
+      "analysis": {
+        "circles": 2,
+        "rectangles": 0,
+        "paths": 1,
+        "colors": [
+          "rgb(255,255,255)"
+        ],
+        "complexity": "low",
+        "total_elements": 3
+      },
+      "complexity_score": 1468.2
+    },
+    {
+      "id": "example_4",
+      "svg_content": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\">\n<path d=\"M215,116 A63,63,0,0,1,197,128 L191,123 L191,72 C194,70,196,68,199,65 A41,41,0,0,1,208,59 L315,59 L321,65 L321,116 A69,69,0,0,1,313,123 A29,29,0,0,1,303,128 L297,123 L297,82 L215,82 L215,116\" fill=\"rgb(0,0,0)\" stroke=\"none\"/>\n</svg>",
+      "svg_raw": "SVG Content:\nstyle=fill:0,0,0;stroke:None;stroke-width:0.15;opacity:1 d=M229,177 A12,12,0,0,1,227,190 A10,10,0,0,1,219,193 A13,13,0,0,1,210,190 A11,11,0,0,1,210,174 A12,12,0,0,1,219,170 C223,170,227,172,229,177 M304,359 A15,15,0,0,1,305,363 C305,366,304,369,302,371 A11,11,0,0,1,294,375 A11,11,0,0,1,286,371 A11,11,0,0,1,282,363 A12,12,0,0,1,285,355 A10,10,0,0,1,293,352 C298,352,302,354,304,359 L304,359 M194,195 C197,197,198,199,198,203 C198,210,194,214,186,214 A12,12,0,0,1,178,211 A11,11,0,0,1,17...",
+      "ground_truth": "The image depicts a simple geometric shape, specifically a circle with a small square at the top. The circle is composed of a series of evenly spaced dots, which are uniformly distributed around its circumference. The square at the top of the circle is slightly smaller than the circle itself and is positioned directly above the center of the circle. The square is also made up of dots, similar to the circle, but it is oriented with its sides parallel to the horizontal and vertical axes of the image.",
+      "png_base64": "iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAABmJLR0QA/wD/AP+gvaeTAAACaElEQVR4nO3dr4oWUQCH4dc/eAOCyeBFbFBUTGKwisViFswWBUWwegUiCDaDxeAV2A1bBEEUqxpMomv4YAXBDevsnm/3PA9M/83AeScNUwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADArhwZPYAdXarOjh6xBz5Vz0ePgHV1unpZbR3i6/5SDwsOk2vVl8YfUBGAfXa3+tX4g7mf180lHhy7c3z0ALY9bBWA2ZwZPWBmAjDesepxdXv0EOYjAGOdqp5VV0YPYU5HRw+Y3K0cfgYSAJiYAMDEBAAmJgAwMQE4WB60+n5jna8He3b3LE4AYGICABMTAJiYAMDEBAAmJgAwMQGAiQkATEwAYGICABMTAJiYAMDEBAAmJgAwMQGAiQkATEwADo7N6snoEQt7Xz0dPWJmAnAwvK7OVx9HD1nQ2+pi9WH0kJkJwHr72eoHmlerr2OnLOpVdaH6PHoIjHSjf/8MdLM6N27aru10Tz+qe3nxwLbr1ff+HJJv1Z3qxMhR/+nve9qq3lQbI0fButpo9cZ/VJ0cvGUpG9W76kV1efAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGACvwEj+t6K00n2UgAAAABJRU5ErkJggg==",
+      "model_outputs": {
+        "Qwen2-7B-Baseline": "This simple SVG image contains 1 complex paths.",
+        "Gemma2-9B-Baseline": "The image shows a vector graphic with 1 elements, featuring geometric shapes and design elements.",
+        "Qwen2-7B-LoRA": "An SVG illustration depicting 1 complex paths with enhanced detail recognition. The composition shows simple design patterns.",
+        "Qwen2-7B-LoRA-Quantized": "Vector image showing 1 complex paths (quantized model output with 1 total elements).",
+        "SPE+Qwen2-7B-v2": "Specialized SVG analysis: Detected 1 elements including 1 complex paths. Complexity level: low.",
+        "SPE+Gemma2-9B-v2": "Advanced SVG interpretation: Vector graphic contains 1 complex paths with 0 color variations. Structural complexity: low."
+      },
+      "analysis": {
+        "circles": 0,
+        "rectangles": 0,
+        "paths": 1,
+        "colors": [],
+        "complexity": "low",
+        "total_elements": 1
+      },
+      "complexity_score": 1443.7000000000003
+    },
+    {
+      "id": "example_5",
+      "svg_content": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"512\" height=\"512\" viewBox=\"0 0 512 512\">\n<path d=\"M419,343 C419,355,418,366,417,375 C415,384,413,393,409,401 C405,411,400,418,394,423 C387,427,379,430,370,430 C360,430,352,427,345,423 C339,418,334,411,330,401 C326,393,324,384,322,375 C321,366,320,355,320,343 C320,330,321,319,322,310 C324,301,326,292,330,284 C334,274,340,267,346,263 C352,258,360,256,370,256 C380,256,388,258,394,263 C400,267,405,274,409,285 C411,289,412,293,414,297 C415,301,416,306,417,311 C417,315,418,320,418,325 C419,330,419,336,419,343 M396,343 C396,338,396,334,395,330 C395,326,395,322,394,319 C394,316,393,313,393,310 C392,307,391,304,391,301 C388,293,386,288,382,285 C379,281,375,280,370,280 C360,280,353,286,349,300 C347,307,345,313,344,320 C344,326,343,334,343,343 C343,348,344,352,344,356 C344,359,344,363,345,366 C345,369,346,372,346,376 C347,379,348,382,349,385 C353,399,360,406,370,406 C375,406,379,404,382,401 C386,398,388,393,391,385 C392,382,392,379,393,376 C394,373,394,369,395,366 C395,363,395,359,396,356 C396,352,396,347,396,343\" fill=\"rgb(0,0,0)\" stroke=\"none\"/>\n</svg>",
+      "svg_raw": "SVG Content:\nstyle=fill:0,0,0;stroke:None;stroke-width:1;opacity:1 d=M32,0 L480,0 A32,32,0,0,1,512,32 L512,480 A32,32,0,0,1,480,512 L32,512 A32,32,0,0,1,0,480 L0,32 A32,32,0,0,1,32,0 style=fill:255,255,255;stroke:None;stroke-width:1;opacity:1 d=M257,32 C233,31,209,42,194,61 C177,74,165,91,150,105 C134,126,117,145,105,167 C92,182,86,200,75,216 C66,233,59,251,50,268 C42,291,30,314,32,340 C32,361,35,382,45,401 C62,431,91,456,126,463 C153,471,181,477,209,477 C232,481,257,480,281,478 C302,476,323,474...",
+      "ground_truth": "The image depicts the number 390 is written on a white color object.",
+      "png_base64": "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",
+      "model_outputs": {
+        "Qwen2-7B-Baseline": "This simple SVG image contains 2 circular elements, 1 complex paths.",
+        "Gemma2-9B-Baseline": "The image shows a vector graphic with 3 elements, featuring geometric shapes and design elements.",
+        "Qwen2-7B-LoRA": "An SVG illustration depicting 2 circular elements, 1 complex paths with enhanced detail recognition. The composition shows simple design patterns.",
+        "Qwen2-7B-LoRA-Quantized": "Vector image showing 2 circular elements, 1 complex paths (quantized model output with 3 total elements).",
+        "SPE+Qwen2-7B-v2": "Specialized SVG analysis: Detected 3 elements including 2 circular elements, 1 complex paths. Complexity level: low.",
+        "SPE+Gemma2-9B-v2": "Advanced SVG interpretation: Vector graphic contains 2 circular elements, 1 complex paths with 0 color variations. Structural complexity: low."
+      },
+      "analysis": {
+        "circles": 2,
+        "rectangles": 0,
+        "paths": 1,
+        "colors": [],
+        "complexity": "low",
+        "total_elements": 3
+      },
+      "complexity_score": 1386.8000000000002
+    }
+  ]
+}

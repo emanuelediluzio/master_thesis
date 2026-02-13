@@ -1,0 +1,145 @@
+{
+  "BLIP-2": {
+    "type": "Baseline",
+    "CLIPScore": 31.6611,
+    "BLEU-1": 0.003,
+    "METEOR": 0.0478,
+    "ROUGE-L": 0.1232,
+    "Composite": 7.85,
+    "Ranking": "4",
+    "Note": "Migliore qualit\u00e0 visiva",
+    "Esempi_Processati": 400
+  },
+  "Florence-2": {
+    "type": "Baseline",
+    "CLIPScore": 31.0721,
+    "BLEU-1": 0.0027,
+    "METEOR": 0.0603,
+    "ROUGE-L": 0.1194,
+    "Composite": 7.92,
+    "Ranking": "5",
+    "Note": "Secondo per qualit\u00e0 visiva",
+    "Esempi_Processati": 400
+  },
+  "Idefics3": {
+    "type": "Baseline",
+    "CLIPScore": 23.8748,
+    "BLEU-1": 0.067,
+    "METEOR": 0.1795,
+    "ROUGE-L": 0.111,
+    "Composite": 6.15,
+    "Ranking": "6",
+    "Note": "Migliore qualit\u00e0 semantica",
+    "Esempi_Processati": 400
+  },
+  "BLIP-1-CPU": {
+    "type": "Baseline",
+    "CLIPScore": 23.3721,
+    "BLEU-1": 0.0002,
+    "METEOR": 0.0368,
+    "ROUGE-L": 0.1067,
+    "Composite": 5.89,
+    "Ranking": "7",
+    "Note": "Per deployment CPU",
+    "Esempi_Processati": 400
+  },
+  "Qwen2-7b": {
+    "type": "LoRA",
+    "CLIPScore": 32.3,
+    "BLEU-1": 0.238,
+    "METEOR": 0.206,
+    "ROUGE-L": 0.277,
+    "Composite": 8.42,
+    "Ranking": "3",
+    "Note": "Modello testato - radar chart generato 09/09/2025",
+    "Esempi_Processati": 400
+  },
+  "Gemma 9b instruct": {
+    "type": "LoRA",
+    "CLIPScore": 29.68,
+    "BLEU-1": 0.045,
+    "METEOR": 0.145,
+    "ROUGE-L": 0.125,
+    "Composite": 5.78,
+    "Ranking": "8",
+    "Note": "Bilanciato visivo-linguistico",
+    "Esempi_Processati": 400
+  },
+  "Llama-8b": {
+    "type": "LoRA",
+    "CLIPScore": 23.3446,
+    "BLEU-1": 0.3602,
+    "METEOR": 0.6711,
+    "ROUGE-L": 0.6343,
+    "Composite": 5.45,
+    "Ranking": "9",
+    "Note": "Migliore qualit\u00e0 linguistica",
+    "Esempi_Processati": 400
+  },
+  "Llama-9b-Quantized": {
+    "type": "LoRA_Quantizzato",
+    "CLIPScore": 18.5678,
+    "BLEU-1": 0.0789,
+    "METEOR": 0.1234,
+    "ROUGE-L": 0.0945,
+    "Composite": 3.12,
+    "Ranking": "10",
+    "Note": "Training interrotto - Prompt residui",
+    "Esempi_Processati": 400
+  },
+  "Gemma-9b-Quantized": {
+    "type": "LoRA_Quantizzato",
+    "CLIPScore": 15.2345,
+    "BLEU-1": 0.0156,
+    "METEOR": 0.0445,
+    "ROUGE-L": 0.0,
+    "Composite": 2.85,
+    "Ranking": "11",
+    "Note": "Training interrotto - Prompt residui",
+    "Esempi_Processati": 400
+  },
+  "SPE+Qwen2-7b": {
+    "type": "SPE",
+    "CLIPScore": 29.3,
+    "BLEU-1": 0.42,
+    "METEOR": 0.38,
+    "ROUGE-L": 0.45,
+    "Composite": 8.89,
+    "Ranking": "1",
+    "Note": "Modello SPE con Qwen2 - radar chart generato 14/09/2025",
+    "Esempi_Processati": 400
+  },
+  "SPE+Gemma 9b instruct": {
+    "type": "SPE",
+    "CLIPScore": 25.2,
+    "BLEU-1": 0.15,
+    "METEOR": 0.18,
+    "ROUGE-L": 0.2,
+    "Composite": 6.13,
+    "Ranking": "2",
+    "Note": "Modello SPE con Gemma - radar chart generato 14/09/2025",
+    "Esempi_Processati": 400
+  },
+  "SPE+Qwen2-7b v2(con normalizzazione delle features)": {
+    "type": "SPE",
+    "CLIPScore": 29.3,
+    "BLEU-1": 0.42,
+    "METEOR": 0.38,
+    "ROUGE-L": 0.48,
+    "Composite": 8.89,
+    "Ranking": "1",
+    "Note": "Checkpoint-16869, versione migliorata SPE+Qwen2",
+    "Esempi_Processati": 400
+  },
+  "SPE+Gemma 9b v2(con normalizzazione delle features)": {
+    "type": "SPE",
+    "CLIPScore": 26.8,
+    "BLEU-1": 0.15,
+    "METEOR": 0.19,
+    "ROUGE-L": 0.2,
+    "Composite": 10.45,
+    "Ranking": "2",
+    "Note": "Best model checkpoint, versione migliorata SPE+Gemma",
+    "Esempi_Processati": 400
+  }
+}

@@ -4,7 +4,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
-\usepackage[a-2b]{pdfx}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{graphicx}
 \usepackage{float}
@@ -15,7 +14,7 @@
 \usepackage{multirow}
 \usepackage{multicol}
 \usepackage{url}
-%\usepackage{hyperref}
+\usepackage{hyperref}
 \usepackage{cite}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -34,7 +33,7 @@
 \usepackage{fancyhdr}
 \usepackage{setspace}
 
-% Removed frontespizio package - using standard titlepage now
+\usepackage{frontespizio}
 
 % Configurazione della pagina
 \geometry{
@@ -53,9 +52,9 @@
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    filecolor=black,
-    urlcolor=black,
-    citecolor=black,
+    filecolor=magenta,
+    urlcolor=blue,
+    citecolor=blue,
     pdftitle={SVG Captioning with Transformer Models: LLM-based SVG image captioning with conceptual embeddings - EXPANDED},
     pdfauthor={Emanuele Di Luzio},
     pdfsubject={Master's Thesis},
@@ -84,40 +83,25 @@
 
 \begin{document}
 
-% Frontespizio (centered, no binding offset)
-\newgeometry{left=3cm, right=3cm, top=3cm, bottom=3cm}
-\begin{titlepage}
-    \begin{center}
-        \includegraphics[width=8cm]{Logo_A_Positivo_Colore.png}
-        \vspace{1cm}
-
-        {\Large\bfseries\mbox{UNIVERSITY OF MODENA AND REGGIO EMILIA}\\}
-        {\large{ "Enzo Ferrari" Department of Engineering \\}}
-        {\large{ Master's Degree in Artificial Intelligence Engineering (LM-32) \\}}
-        \vspace{3cm}
-        {\Large { \textbf{LLM-based SVG Image Captioning with \\ Conceptual Embeddings} }}\\
-        \vspace{3cm}
-    \end{center}
-    
-    \noindent
-    \begin{minipage}[t]{0.47\textwidth}
-    	{\large{\bf Supervisor:}\\} 
-    	{\large Prof. Lorenzo Baraldi\\}
-        {\large{\bf Co-supervisor:}\\} 
-    	{\large Dott. Leonardo Zini}
-    \end{minipage}\hfill\begin{minipage}[t]{0.47\textwidth}\raggedleft
-    	{\large{\bf Candidate:}\\}
-        {\large Emanuele Di Luzio}\\
-        {\large Student ID 191901}
-    \end{minipage}
-    
-    \vfill
-    \begin{center}
-        \rule{0.8\textwidth}{0.4pt}\\
-        {\large{\bf ACADEMIC YEAR 2024/2025 }}
-    \end{center}
-\end{titlepage}
-\restoregeometry
+% Frontespizio
+\begin{frontespizio}
+	\begin{Preambolo*}
+		% Ridotto font size da 25 a 22 per far stare il titolo su una riga
+		\renewcommand{\fronttitlefont}{\fontsize{22}{30}\bfseries}
+	\end{Preambolo*}
+    \NCandidato{Candidate}{}
+    \NRelatore{Supervisor}{Supervisors}
+    \NCorrelatore{Co-supervisor}{Co-supervisors}
+	\Istituzione{University of Modena and Reggio Emilia}
+	\Divisione{Department of Engineering ``Enzo Ferrari''}
+	\Scuola{Master's Degree in Artificial Intelligence Engineering}
+	\Titolo{LLM-based SVG image captioning with conceptual embeddings}
+	\Candidato{Emanuele Di Luzio}
+	\Relatore{Prof. Lorenzo Baraldi}
+	\Correlatore{Dott. Leonardo Zini}
+	\Piede{Academic Year 2024-2025}
+	\Margini{2.5cm}{2.5cm}{2.5cm}{3cm}
+\end{frontespizio}
 
 % Indice
 \tableofcontents

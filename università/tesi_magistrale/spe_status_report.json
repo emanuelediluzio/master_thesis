@@ -1,0 +1,667 @@
+{
+  "timestamp": "2025-09-16T19:12:21.323676",
+  "checkpoints": {
+    "SPE_31_checkpoint-350000": {
+      "path": "/work/tesi_ediluzio/SPE/SPE_31/checkpoint-350000",
+      "status": "complete",
+      "size_mb": 557.82,
+      "files": [
+        "space_stats.safetensors",
+        "scheduler.pt",
+        "training_args.bin",
+        "spiece.model",
+        "tokenizer_config.json",
+        "model.safetensors",
+        "trainer_state.json"
+      ],
+      "last_modified": "2025-09-15T18:39:52",
+      "issues": []
+    },
+    "SPE_31_checkpoint-360000": {
+      "path": "/work/tesi_ediluzio/SPE/SPE_31/checkpoint-360000",
+      "status": "complete",
+      "size_mb": 557.83,
+      "files": [
+        "space_stats.safetensors",
+        "scheduler.pt",
+        "training_args.bin",
+        "spiece.model",
+        "tokenizer_config.json",
+        "model.safetensors",
+        "trainer_state.json"
+      ],
+      "last_modified": "2025-09-15T18:39:52",
+      "issues": []
+    },
+    "qwen_lora_checkpoint-12000": {
+      "path": "/work/tesi_ediluzio/outputs/qwen_lora_spe_local/checkpoint-12000",
+      "status": "incomplete",
+      "size_mb": 477.61,
+      "files": [
+        "adapter_model.safetensors",
+        "scheduler.pt",
+        "training_args.bin",
+        "README.md",
+        "chat_template.jinja",
+        "added_tokens.json",
+        "tokenizer_config.json",
+        "scaler.pt",
+        "rng_state.pth",
+        "merges.txt",
+        "optimizer.pt",
+        "tokenizer.json",
+        "trainer_state.json",
+        "adapter_config.json",
+        "special_tokens_map.json",
+        "vocab.json"
+      ],
+      "last_modified": "2025-09-16T12:03:36",
+      "issues": [
+        "File mancanti: ['model.safetensors']"
+      ]
+    },
+    "qwen_lora_checkpoint-12500": {
+      "path": "/work/tesi_ediluzio/outputs/qwen_lora_spe_local/checkpoint-12500",
+      "status": "incomplete",
+      "size_mb": 477.61,
+      "files": [
+        "adapter_model.safetensors",
+        "scheduler.pt",
+        "training_args.bin",
+        "README.md",
+        "chat_template.jinja",
+        "added_tokens.json",
+        "tokenizer_config.json",
+        "scaler.pt",
+        "rng_state.pth",
+        "merges.txt",
+        "optimizer.pt",
+        "tokenizer.json",
+        "trainer_state.json",
+        "adapter_config.json",
+        "special_tokens_map.json",
+        "vocab.json"
+      ],
+      "last_modified": "2025-09-16T12:59:59",
+      "issues": [
+        "File mancanti: ['model.safetensors']"
+      ]
+    },
+    "qwen_lora_checkpoint-13000": {
+      "path": "/work/tesi_ediluzio/outputs/qwen_lora_spe_local/checkpoint-13000",
+      "status": "incomplete",
+      "size_mb": 477.61,
+      "files": [
+        "adapter_model.safetensors",
+        "scheduler.pt",
+        "training_args.bin",
+        "README.md",
+        "chat_template.jinja",
+        "added_tokens.json",
+        "tokenizer_config.json",
+        "scaler.pt",
+        "rng_state.pth",
+        "merges.txt",
+        "optimizer.pt",
+        "tokenizer.json",
+        "trainer_state.json",
+        "adapter_config.json",
+        "special_tokens_map.json",
+        "vocab.json"
+      ],
+      "last_modified": "2025-09-16T13:56:09",
+      "issues": [
+        "File mancanti: ['model.safetensors']"
+      ]
+    },
+    "qwen_lora_checkpoint-13500": {
+      "path": "/work/tesi_ediluzio/outputs/qwen_lora_spe_local/checkpoint-13500",
+      "status": "incomplete",
+      "size_mb": 0.0,
+      "files": [],
+      "last_modified": "2025-09-16T14:52:15",
+      "issues": [
+        "File mancanti: ['model.safetensors', 'trainer_state.json']"
+      ]
+    },
+    "gemma_lora_checkpoint-1000": {
+      "path": "/work/tesi_ediluzio/outputs/gemma_lora_spe_local/checkpoint-1000",
+      "status": "incomplete",
+      "size_mb": 655.63,
+      "files": [
+        "adapter_model.safetensors",
+        "scheduler.pt",
+        "training_args.bin",
+        "README.md",
+        "chat_template.jinja",
+        "tokenizer_config.json",
+        "scaler.pt",
+        "tokenizer.model",
+        "rng_state.pth",
+        "optimizer.pt",
+        "tokenizer.json",
+        "trainer_state.json",
+        "adapter_config.json",
+        "special_tokens_map.json"
+      ],
+      "last_modified": "2025-09-15T15:34:19",
+      "issues": [
+        "File mancanti: ['model.safetensors']"
+      ]
+    },
+    "gemma_lora_checkpoint-1500": {
+      "path": "/work/tesi_ediluzio/outputs/gemma_lora_spe_local/checkpoint-1500",
+      "status": "incomplete",
+      "size_mb": 655.64,
+      "files": [
+        "adapter_model.safetensors",
+        "scheduler.pt",
+        "training_args.bin",
+        "README.md",
+        "chat_template.jinja",
+        "tokenizer_config.json",
+        "scaler.pt",
+        "tokenizer.model",
+        "rng_state.pth",
+        "optimizer.pt",
+        "tokenizer.json",
+        "trainer_state.json",
+        "adapter_config.json",
+        "special_tokens_map.json"
+      ],
+      "last_modified": "2025-09-15T16:52:48",
+      "issues": [
+        "File mancanti: ['model.safetensors']"
+      ]
+    }
+  },
+  "inference_results": {
+    "spe_gemma_final_results.jsonl": {
+      "path": "/work/tesi_ediluzio/outputs/inference/spe_gemma_final_results.jsonl",
+      "status": "incomplete",
+      "size_mb": 0.01,
+      "entries": 3,
+      "last_modified": "2025-09-14T20:54:46",
+      "issues": [
+        "Solo 3 entries (potrebbe essere incompleto)"
+      ]
+    },
+    "spe_gemma_results.json": {
+      "path": "/work/tesi_ediluzio/outputs/inference/spe_gemma_results.json",
+      "status": "complete",
+      "size_mb": 0.07,
+      "entries": 50,
+      "last_modified": "2025-09-14T19:24:52",
+      "issues": []
+    },
+    "spe_qwen2_results.json": {
+      "path": "/work/tesi_ediluzio/outputs/inference/spe_qwen2_results.json",
+      "status": "complete",
+      "size_mb": 0.11,
+      "entries": 50,
+      "last_modified": "2025-09-14T19:24:44",
+      "issues": []
+    },
+    "spe_qwen2_final_results.jsonl": {
+      "path": "/work/tesi_ediluzio/outputs/inference/spe_qwen2_final_results.jsonl",
+      "status": "complete",
+      "size_mb": 0.11,
+      "entries": 50,
+      "last_modified": "2025-09-14T20:02:09",
+      "issues": []
+    },
+    "spe_gemma_light_results.jsonl": {
+      "path": "/work/tesi_ediluzio/outputs/inference/spe_gemma_light_results.jsonl",
+      "status": "incomplete",
+      "size_mb": 0.01,
+      "entries": 3,
+      "last_modified": "2025-09-14T20:53:40",
+      "issues": [
+        "Solo 3 entries (potrebbe essere incompleto)"
+      ]
+    }
+  },
+  "training_logs": {
+    "gemma_no_quant_2625595.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/gemma_no_quant_2625595.log",
+      "size_mb": 0.0,
+      "last_modified": "2025-09-15T19:06:24",
+      "errors": [],
+      "warnings": [],
+      "status": "ok"
+    },
+    "gemma_no_quant_2625101.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/gemma_no_quant_2625101.log",
+      "size_mb": 0.01,
+      "last_modified": "2025-09-15T10:25:41",
+      "errors": [
+        {
+          "line": 112,
+          "content": "2025-09-15 10:25:40,144 - ERROR - Training failed: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1"
+        },
+        {
+          "line": 113,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 123,
+          "content": "raise ValueError("
+        },
+        {
+          "line": 124,
+          "content": "ValueError: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1` or by launching with `python {{myscri"
+        }
+      ],
+      "warnings": [
+        {
+          "line": 107,
+          "content": "/work/tesi_ediluzio/scripts/training/robust_training_launcher.py:289: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `StableTrainer.__init__`. Use `processing_class`"
+        },
+        {
+          "line": 125,
+          "content": "[rank0]:[W915 10:25:40.636664776 ProcessGroupNCCL.cpp:1479] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://py"
+        }
+      ],
+      "status": "error"
+    },
+    "qwen_8bit_2625102.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/qwen_8bit_2625102.log",
+      "size_mb": 0.0,
+      "last_modified": "2025-09-15T10:15:13",
+      "errors": [
+        {
+          "line": 19,
+          "content": "2025-09-15 10:15:11,752 - ERROR - Training failed: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1"
+        },
+        {
+          "line": 20,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 30,
+          "content": "raise ValueError("
+        },
+        {
+          "line": 31,
+          "content": "ValueError: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1` or by launching with `python {{myscri"
+        }
+      ],
+      "warnings": [
+        {
+          "line": 14,
+          "content": "/work/tesi_ediluzio/scripts/training/robust_training_launcher.py:289: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `StableTrainer.__init__`. Use `processing_class`"
+        },
+        {
+          "line": 32,
+          "content": "[rank0]:[W915 10:15:12.640305019 ProcessGroupNCCL.cpp:1479] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://py"
+        }
+      ],
+      "status": "error"
+    },
+    "qwen_no_quant_2625102.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/qwen_no_quant_2625102.log",
+      "size_mb": 0.0,
+      "last_modified": "2025-09-15T10:13:50",
+      "errors": [
+        {
+          "line": 19,
+          "content": "2025-09-15 10:13:48,506 - ERROR - Training failed: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1"
+        },
+        {
+          "line": 20,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 30,
+          "content": "raise ValueError("
+        },
+        {
+          "line": 31,
+          "content": "ValueError: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1` or by launching with `python {{myscri"
+        }
+      ],
+      "warnings": [
+        {
+          "line": 14,
+          "content": "/work/tesi_ediluzio/scripts/training/robust_training_launcher.py:289: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `StableTrainer.__init__`. Use `processing_class`"
+        },
+        {
+          "line": 32,
+          "content": "[rank0]:[W915 10:13:49.445520344 ProcessGroupNCCL.cpp:1479] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://py"
+        }
+      ],
+      "status": "error"
+    },
+    "gemma_multigpu_2625100.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/gemma_multigpu_2625100.log",
+      "size_mb": 0.0,
+      "last_modified": "2025-09-15T10:12:21",
+      "errors": [],
+      "warnings": [],
+      "status": "ok"
+    },
+    "gemma_8bit_2625100.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/gemma_8bit_2625100.log",
+      "size_mb": 0.01,
+      "last_modified": "2025-09-15T10:11:47",
+      "errors": [
+        {
+          "line": 4,
+          "content": "2025-09-15 10:11:46,358 - ERROR - Training failed: You are trying to access a gated repo."
+        },
+        {
+          "line": 6,
+          "content": "401 Client Error. (Request ID: Root=1-68c7ca42-1b2009f549bff74406d1a3c8;f80d52fb-2fbe-468e-8a1d-5f46625b77b1)"
+        },
+        {
+          "line": 10,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 14,
+          "content": "raise HTTPError(http_error_msg, response=self)"
+        },
+        {
+          "line": 15,
+          "content": "requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/google/gemma-2-9b-it/resolve/main/config.json"
+        },
+        {
+          "line": 17,
+          "content": "The above exception was the direct cause of the following exception:"
+        },
+        {
+          "line": 19,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 29,
+          "content": "_raise_on_head_call_error(head_call_error, force_download, local_files_only)"
+        },
+        {
+          "line": 30,
+          "content": "File \"/homes/ediluzio/.local/lib/python3.11/site-packages/huggingface_hub/file_download.py\", line 1658, in _raise_on_head_call_error"
+        },
+        {
+          "line": 31,
+          "content": "raise head_call_error"
+        },
+        {
+          "line": 32,
+          "content": "File \"/homes/ediluzio/.local/lib/python3.11/site-packages/huggingface_hub/file_download.py\", line 1546, in _get_metadata_or_catch_error"
+        },
+        {
+          "line": 47,
+          "content": "raise _format(GatedRepoError, message, response) from e"
+        },
+        {
+          "line": 48,
+          "content": "huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-68c7ca42-1b2009f549bff74406d1a3c8;f80d52fb-2fbe-468e-8a1d-5f46625b77b1)"
+        },
+        {
+          "line": 53,
+          "content": "The above exception was the direct cause of the following exception:"
+        },
+        {
+          "line": 55,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 75,
+          "content": "raise OSError("
+        },
+        {
+          "line": 76,
+          "content": "OSError: You are trying to access a gated repo."
+        },
+        {
+          "line": 78,
+          "content": "401 Client Error. (Request ID: Root=1-68c7ca42-1b2009f549bff74406d1a3c8;f80d52fb-2fbe-468e-8a1d-5f46625b77b1)"
+        }
+      ],
+      "warnings": [],
+      "status": "error"
+    },
+    "gemma_no_quant_2625100.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/gemma_no_quant_2625100.log",
+      "size_mb": 0.01,
+      "last_modified": "2025-09-15T10:11:04",
+      "errors": [
+        {
+          "line": 4,
+          "content": "2025-09-15 10:11:03,441 - ERROR - Training failed: You are trying to access a gated repo."
+        },
+        {
+          "line": 6,
+          "content": "401 Client Error. (Request ID: Root=1-68c7ca17-55fa666430243d8e61449198;2bdad9af-8c4d-4de4-b616-fa406df3a6fa)"
+        },
+        {
+          "line": 10,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 14,
+          "content": "raise HTTPError(http_error_msg, response=self)"
+        },
+        {
+          "line": 15,
+          "content": "requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/google/gemma-2-9b-it/resolve/main/config.json"
+        },
+        {
+          "line": 17,
+          "content": "The above exception was the direct cause of the following exception:"
+        },
+        {
+          "line": 19,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 29,
+          "content": "_raise_on_head_call_error(head_call_error, force_download, local_files_only)"
+        },
+        {
+          "line": 30,
+          "content": "File \"/homes/ediluzio/.local/lib/python3.11/site-packages/huggingface_hub/file_download.py\", line 1658, in _raise_on_head_call_error"
+        },
+        {
+          "line": 31,
+          "content": "raise head_call_error"
+        },
+        {
+          "line": 32,
+          "content": "File \"/homes/ediluzio/.local/lib/python3.11/site-packages/huggingface_hub/file_download.py\", line 1546, in _get_metadata_or_catch_error"
+        },
+        {
+          "line": 47,
+          "content": "raise _format(GatedRepoError, message, response) from e"
+        },
+        {
+          "line": 48,
+          "content": "huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-68c7ca17-55fa666430243d8e61449198;2bdad9af-8c4d-4de4-b616-fa406df3a6fa)"
+        },
+        {
+          "line": 53,
+          "content": "The above exception was the direct cause of the following exception:"
+        },
+        {
+          "line": 55,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 75,
+          "content": "raise OSError("
+        },
+        {
+          "line": 76,
+          "content": "OSError: You are trying to access a gated repo."
+        },
+        {
+          "line": 78,
+          "content": "401 Client Error. (Request ID: Root=1-68c7ca17-55fa666430243d8e61449198;2bdad9af-8c4d-4de4-b616-fa406df3a6fa)"
+        }
+      ],
+      "warnings": [],
+      "status": "error"
+    },
+    "qwen_8bit_2625069.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/qwen_8bit_2625069.log",
+      "size_mb": 0.0,
+      "last_modified": "2025-09-15T09:45:27",
+      "errors": [
+        {
+          "line": 26,
+          "content": "2025-09-15 09:45:25,502 - ERROR - Training failed: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1"
+        },
+        {
+          "line": 27,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 37,
+          "content": "raise ValueError("
+        },
+        {
+          "line": 38,
+          "content": "ValueError: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1` or by launching with `python {{myscri"
+        }
+      ],
+      "warnings": [
+        {
+          "line": 21,
+          "content": "/work/tesi_ediluzio/scripts/training/robust_training_launcher.py:289: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `StableTrainer.__init__`. Use `processing_class`"
+        },
+        {
+          "line": 39,
+          "content": "[rank0]:[W915 09:45:26.450101016 ProcessGroupNCCL.cpp:1479] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://py"
+        }
+      ],
+      "status": "error"
+    },
+    "qwen_no_quant_2625069.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/qwen_no_quant_2625069.log",
+      "size_mb": 0.01,
+      "last_modified": "2025-09-15T09:44:06",
+      "errors": [
+        {
+          "line": 132,
+          "content": "2025-09-15 09:44:04,974 - ERROR - Training failed: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1"
+        },
+        {
+          "line": 133,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 143,
+          "content": "raise ValueError("
+        },
+        {
+          "line": 144,
+          "content": "ValueError: You can't train a model that has been loaded with `device_map='auto'` in any distributed mode. Please rerun your script specifying `--num_processes=1` or by launching with `python {{myscri"
+        }
+      ],
+      "warnings": [
+        {
+          "line": 127,
+          "content": "/work/tesi_ediluzio/scripts/training/robust_training_launcher.py:289: FutureWarning: `tokenizer` is deprecated and will be removed in version 5.0.0 for `StableTrainer.__init__`. Use `processing_class`"
+        },
+        {
+          "line": 145,
+          "content": "[rank0]:[W915 09:44:05.670613836 ProcessGroupNCCL.cpp:1479] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://py"
+        }
+      ],
+      "status": "error"
+    },
+    "gemma_gradcheck_2625068.log": {
+      "path": "/work/tesi_ediluzio/logs/slurm/gemma_gradcheck_2625068.log",
+      "size_mb": 0.01,
+      "last_modified": "2025-09-15T09:42:20",
+      "errors": [
+        {
+          "line": 4,
+          "content": "2025-09-15 09:42:19,267 - ERROR - Training failed: You are trying to access a gated repo."
+        },
+        {
+          "line": 6,
+          "content": "401 Client Error. (Request ID: Root=1-68c7c35b-53b77f2559bbe986238c763a;6e4e8163-63b4-4c9b-bc4e-6312b8cda0ad)"
+        },
+        {
+          "line": 10,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 14,
+          "content": "raise HTTPError(http_error_msg, response=self)"
+        },
+        {
+          "line": 15,
+          "content": "requests.exceptions.HTTPError: 401 Client Error: Unauthorized for url: https://huggingface.co/google/gemma-2-9b-it/resolve/main/config.json"
+        },
+        {
+          "line": 17,
+          "content": "The above exception was the direct cause of the following exception:"
+        },
+        {
+          "line": 19,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 29,
+          "content": "_raise_on_head_call_error(head_call_error, force_download, local_files_only)"
+        },
+        {
+          "line": 30,
+          "content": "File \"/homes/ediluzio/.local/lib/python3.11/site-packages/huggingface_hub/file_download.py\", line 1658, in _raise_on_head_call_error"
+        },
+        {
+          "line": 31,
+          "content": "raise head_call_error"
+        },
+        {
+          "line": 32,
+          "content": "File \"/homes/ediluzio/.local/lib/python3.11/site-packages/huggingface_hub/file_download.py\", line 1546, in _get_metadata_or_catch_error"
+        },
+        {
+          "line": 47,
+          "content": "raise _format(GatedRepoError, message, response) from e"
+        },
+        {
+          "line": 48,
+          "content": "huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-68c7c35b-53b77f2559bbe986238c763a;6e4e8163-63b4-4c9b-bc4e-6312b8cda0ad)"
+        },
+        {
+          "line": 53,
+          "content": "The above exception was the direct cause of the following exception:"
+        },
+        {
+          "line": 55,
+          "content": "Traceback (most recent call last):"
+        },
+        {
+          "line": 75,
+          "content": "raise OSError("
+        },
+        {
+          "line": 76,
+          "content": "OSError: You are trying to access a gated repo."
+        },
+        {
+          "line": 78,
+          "content": "401 Client Error. (Request ID: Root=1-68c7c35b-53b77f2559bbe986238c763a;6e4e8163-63b4-4c9b-bc4e-6312b8cda0ad)"
+        }
+      ],
+      "warnings": [],
+      "status": "error"
+    }
+  },
+  "issues_found": [],
+  "summary": {
+    "total_checkpoints": 8,
+    "complete_checkpoints": 2,
+    "incomplete_checkpoints": 6,
+    "total_inference_files": 5,
+    "complete_inference_files": 3,
+    "incomplete_inference_files": 2,
+    "logs_with_errors": 8,
+    "total_issues": 82,
+    "overall_status": "major_issues"
+  }
+}

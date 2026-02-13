@@ -1,0 +1,246 @@
+{
+  "model": "SPE+Qwen2-7b v2",
+  "timestamp": "2025-10-21T19:28:04.416847",
+  "results": [
+    {
+      "sample_id": 17,
+      "filename": "ssl_231992.svg",
+      "ground_truth": "The image depicts a stylized representation of the sun, a celestial body that is the center of our solar system. The sun is depicted as a large, round shape with a bright yellow core, which is the source of light and heat for the solar system. The core is surrounded by a series of triangular, radiating lines that extend outward from the center, resembling the sun's rays. These rays are also yellow, and they are arranged in a symmetrical pattern around the sun, giving the impression of light emanating from the center.",
+      "generated_caption": "The image depicts a stylized logo consisting of two interconnected circles. The circles are positioned vertically and share a common center point. Each circle is divided into two segments by a horizontal line that runs through its center. The top segment of each circle is colored green, while the bottom segment is white. The horizontal lines dividing the circles are also green, creating a symmetrical and balanced design. The overall shape resembles a stylized infinity symbol, where the two circles are intertwined, forming a continuous loop. The color scheme is simple, with green and white being the primary colors used.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 26,
+      "filename": "wd_2086927.svg",
+      "ground_truth": "The image depicts the image contains a simple line drawing of a chemical structure. The structure consists of a straight line segment with three dashes on the left side, followed by a single vertical line segment, and then another straight line segment with three dashes on the right side. The structure is enclosed within a pair of parentheses, which are slightly tilted to the right. The entire structure is drawn in black on a white background.",
+      "generated_caption": "The image depicts a simple line graph with two lines plotted on a Cartesian coordinate system. The x-axis is horizontal, extending from left to right, and the y-axis is vertical, extending from bottom to top. The graph has a grid pattern, which helps in visualizing the data points more clearly.\n\nThere are two lines plotted on this graph. The first line, colored black, is a straight line that starts from the bottom of the y-axis and extends horizontally across the entire width of the graph. This line appears to be a constant value, as it does not fluctuate vertically or horizontally.\n\nThe second line, also colored black, is a zigzag line. It starts from the bottom of the y-axis and then moves upward, forming a zigzag pattern. This line shows fluctuations in the y-direction, indicating changes in the data being represented by this line.\n\nBoth lines intersect at the point where they both touch the y-axis. The first line intersects the y-axis at the origin (0,0), while the second line intersects the y-axis at a different point, indicating that the starting point of this line is not at the origin.\n\nThe overall appearance of the graph suggests that one line represents a constant value, while the other line represents varying data. The zigzag pattern",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 12,
+      "filename": "wd_955382.svg",
+      "ground_truth": "The image depicts a symbol that is composed of two distinct parts: a circle and a cross. The circle is divided into four equal quadrants by two perpendicular lines that intersect at the center, creating a cross-like shape. The cross is formed by two horizontal and two vertical lines that intersect at the center of the circle. The lines are black, and the background of the circle is yellow.",
+      "generated_caption": "The image depicts a simple, symmetrical, four-petal flower-like shape. The petals of the flower are arranged in a circular pattern around a central point. Each petal is identical in size and shape, forming a perfect circle when viewed from above. The petals are connected by a single line that runs through their centers, creating a star-like structure. The entire figure appears to be drawn with a single continuous line, suggesting it might be a stylized representation rather than a real flower.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 11,
+      "filename": "ki_0196804.svg",
+      "ground_truth": "The image depicts a vintage telephone, characterized by its classic design. The telephone is depicted in a simplified, cartoon-like style, with a focus on its main components. The main body of the telephone is cylindrical and dark blue in color, with a circular dial at the top. The dial is also dark blue and has a central hole in the middle, which is a common feature of rotary telephones. Below the dial, there is a horizontal bar that extends from the main body, which is also dark blue. This bar is connected to a smaller, circular base that is light blue with white dots around its perimeter. The base is the lowest part of the telephone and appears to be resting on a flat surface.",
+      "generated_caption": "The image depicts a simple, abstract design consisting of two primary shapes: a circle and a rectangle. The circle is positioned above the rectangle, and both shapes are colored in a gradient pattern. The circle is filled with a teal color that transitions from a darker shade at the top to a lighter shade towards the bottom. The rectangle below the circle is also filled with a similar gradient pattern, but it has a slightly different hue. It starts with a darker shade at the left end and transitions to a lighter shade towards the right end.\n\nThe circle and rectangle are aligned vertically, with the circle placed directly above the rectangle. The shapes appear to be symmetrical, with the circle's center aligned directly above the rectangle's center. There is no text or additional elements present in the image, making it a minimalist composition focused solely on the interaction between the two shapes.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 22,
+      "filename": "wd_1229923.svg",
+      "ground_truth": "The image depicts a stylized figure that appears to be a human silhouette. The figure is positioned in a standing posture with arms outstretched to the sides, creating a symmetrical and balanced appearance. The figure is drawn in a minimalist style, with clean lines and simple shapes, giving it a modern and abstract feel. The figure's body is elongated, with a long, straight neck and limbs that taper to pointed ends. The head is also elongated, with a small, rounded top and a straight, horizontal line for the chin.",
+      "generated_caption": "The image depicts a stylized letter \"A\" in black color. The letter is designed in a modern, bold font with a unique twist. The letter \"A\" is presented in a cursive style, with a smooth, flowing curve that gives it a dynamic appearance. The design of the letter is asymmetrical, with the top part of the \"A\" being more elongated than the bottom part. The letter is oriented vertically, with the top pointing upwards and the bottom pointing downwards.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 18,
+      "filename": "ki_0272820.svg",
+      "ground_truth": "The image depicts a black rectangular shape with a white heart symbol and the percentage sign (",
+      "generated_caption": "The described image depicts a single black symbol that appears to be a letter or a character. The symbol is positioned in the center of the image. The background of the image is white, providing a stark contrast to the black symbol, making it easily distinguishable. The symbol itself is composed of two distinct parts: a vertical line extending from the top left to the bottom right, and a horizontal line extending from the top right to the bottom left. These lines intersect at a 90-degree angle, forming a cross-like structure.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 25,
+      "filename": "ki_0308719.svg",
+      "ground_truth": "The image depicts a stylized, minimalist design of a tablet. The tablet is held in a hand, with the hand and tablet forming a central focus of the image. The tablet is black, and the hand holding it is also black, suggesting a monochromatic color scheme. The tablet's screen displays a dollar sign (",
+      "generated_caption": "The image depicts a simple, minimalistic design featuring two black circles arranged vertically against a white background. The circles are positioned side by side, with one slightly taller than the other. The larger circle is located above the smaller one. Both circles have a uniform thickness and are filled with a solid black color. The smaller circle is placed directly below the larger one, creating a slight overlap where they touch. The overall composition of the image is symmetrical, with the vertical alignment of the circles being the focal point.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 15,
+      "filename": "wd_1855325.svg",
+      "ground_truth": "The image depicts step 1: Identify the geometric shape in the image.",
+      "generated_caption": "The image depicts a simple geometric shape, specifically a square, enclosed within a larger square frame. The outer square is outlined by four red lines, while the inner square is outlined by two black lines. The inner square is positioned slightly off-center towards the top-left corner of the outer square. The intersection points of the lines form a diamond shape, which is characteristic of a rhombus. The lines are straight and sharp, indicating a clean, precise drawing style. The background of the image is white, providing a stark contrast to the bold colors of the lines.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 16,
+      "filename": "ki_0118030.svg",
+      "ground_truth": "The image depicts a piece of luggage, specifically a suitcase. The suitcase is designed to be portable and is equipped with wheels, which are visible at the bottom of the image. The suitcase has a handle at the top, which is likely used for carrying the luggage. The handle is positioned at the top center of the suitcase, extending upwards and slightly backwards, giving it a handle-like appearance. The suitcase is rectangular in shape and has a flat top surface, which is typical for luggage designed to be easily stacked or placed on top of other luggage.",
+      "generated_caption": "The image depicts a simple, single symbol consisting of two distinct parts. The symbol is enclosed within a square frame. The upper part of the symbol features a horizontal line that extends across the top of the square, while the lower part consists of a vertical line that extends from the bottom of the square. Both lines intersect at the center of the square, forming an \"X\" shape. The entire symbol is black, and the background is white, making the symbol stand out clearly against the background.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 24,
+      "filename": "sr_098493.svg",
+      "ground_truth": "The image depicts a simple, abstract design that resembles a shield or a box with a grid pattern. The design consists of a central square shape with four smaller squares arranged symmetrically around it. Each of these smaller squares is divided into two equal parts by a horizontal and a vertical line, creating a total of eight smaller rectangles within the larger square.",
+      "generated_caption": "The image depicts a simple geometric figure consisting of two main components: a large triangle and a smaller triangle inside it. The larger triangle is positioned above the smaller one. Both triangles are outlined by straight lines, and they are filled with black color. The larger triangle has three sides, while the smaller triangle has two sides that are part of the larger triangle's base.\n\nThe larger triangle is oriented with its base pointing upwards, and the smaller triangle is positioned below it, sharing part of the base of the larger triangle. The smaller triangle is also oriented with its base pointing downwards, creating a V-shape within the larger triangle. The two triangles share a common vertex at the top of the larger triangle, where the smaller triangle begins.\n\nThe overall structure resembles a double triangle, with the smaller triangle nested inside the larger one. The lines forming the triangles are straight and sharp, indicating a clean, precise design. The colors used are monochromatic, with both triangles colored in black, which makes them stand out against any background.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 27,
+      "filename": "ssl_258779.svg",
+      "ground_truth": "The image depicts a car with a charging station icon. The car is a simple, two-dimensional representation with a black outline and a white interior. The car has a rectangular shape with a rounded top and a flat bottom. The front of the car is visible, showing the hood and the front bumper. The charging station icon is located to the left of the car. It is a circular shape with a black border and a white lightning bolt inside, indicating an electric charging station.",
+      "generated_caption": "The image depicts a simple, minimalistic graphic icon that appears to be a bookmark or a flag. The icon is black and white, with a rectangular shape. Inside the rectangle, there is a downward-pointing arrow. The arrow is also black and is positioned centrally within the rectangle. The background of the icon is white, providing a stark contrast to the black elements, making the arrow stand out clearly.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 9,
+      "filename": "ki_0260248.svg",
+      "ground_truth": "The image depicts a paper with lines on it.",
+      "generated_caption": "The image depicts a simple calendar icon. The calendar is rectangular in shape and has a black border. Inside the rectangle, there is a small square with a white background. This square contains two horizontal lines that represent the days of the week. The top line is slightly longer than the bottom line, indicating the days of the week in ascending order from Monday to Sunday. The calendar also includes three vertical lines on the left side, which could represent the months of the year. These lines are evenly spaced and extend from the top to the bottom of the square.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 14,
+      "filename": "wd_1548996.svg",
+      "ground_truth": "The image depicts the number 527 is written on a white background.",
+      "generated_caption": "The image depicts a simple geometric figure consisting of two main components: a large triangle and a smaller triangle. The larger triangle is positioned above the smaller one. Both triangles share a common base, which is horizontal and extends from left to right across the entire width of the image.\n\nThe larger triangle has three sides, each of which is straight and equal in length. Its top vertex is slightly curved, forming a gentle arc that connects the two sides. This gives the larger triangle a rounded appearance at its apex.\n\nThe smaller triangle is also composed of three straight sides, but it is positioned directly below the larger triangle. It shares the same base as the larger triangle, meaning both triangles have the same horizontal base line. The smaller triangle's height is shorter than the larger triangle's height, making it appear lower in the image.\n\nThe background of the image is white, providing a stark contrast to the black lines that define the triangles. The lines are clean and sharp, indicating a clear and precise drawing technique. There are no other objects or elements present in the image, focusing solely on the geometric figures.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 21,
+      "filename": "ki_0209566.svg",
+      "ground_truth": "The image depicts import requests",
+      "generated_caption": "The image depicts a rectangular shape divided into two distinct sections by a horizontal line. The top section is colored light gray, while the bottom section is colored dark green. There is a vertical line that divides the rectangle horizontally, creating two equal parts. The top part of the rectangle has a lighter shade of gray, and the bottom part has a darker shade of green. The division between the two colors is sharp and clean, indicating a clear separation between the two sections.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 13,
+      "filename": "wd_2012272.svg",
+      "ground_truth": "The image depicts the number 50 is written on the black color object.",
+      "generated_caption": "The image depicts a simple geometric shape, specifically a circle divided into two equal parts by a straight line that runs from the top left to the bottom right. The circle is black, and the line is also black, creating a clear contrast against the white background. The division of the circle is symmetrical, meaning that each half of the circle is identical in size and shape. The circle itself is a closed loop without any additional features or decorations.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 19,
+      "filename": "wd_1027328.svg",
+      "ground_truth": "The image depicts a green street sign with the text \"A 423\" prominently displayed in yellow. The sign is rectangular in shape and has a white border. The background of the sign is a solid green color, and the text \"A 423\" is written in bold, yellow capital letters. The sign is mounted on a white background, and the edges of the sign are slightly curved, giving it a rounded appearance.",
+      "generated_caption": "The image depicts a logo that consists of a large yellow circle with a black outline. Inside the yellow circle, there is a stylized letter \"A\" in green. The letter \"A\" is positioned centrally within the circle and is oriented vertically. The circle itself has a black border that encloses the green letter \"A.\" The background of the image is white, providing a stark contrast to the vibrant colors of the logo.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 10,
+      "filename": "ki_0202123.svg",
+      "ground_truth": "The image depicts a simple, minimalist design of a smartphone. The smartphone is represented by a rectangular shape with rounded edges, which is a common design feature in modern smartphones. The top and bottom edges of the phone are slightly curved, giving it a sleek and modern look. The front of the phone is shown with a small circular hole at the top, which is likely the camera lens. The back of the phone is not visible in this image.",
+      "generated_caption": "The image depicts a simple geometric shape consisting of two rectangles connected by a curved line. The larger rectangle is positioned horizontally, while the smaller rectangle is vertically oriented and placed below the larger one. Both rectangles have rounded corners, giving them a smooth, soft appearance. The larger rectangle is significantly wider than the smaller one, and it is positioned above the smaller rectangle. The curved line connecting the two rectangles is smooth and continuous, forming a gentle arc that connects the top right corner of the larger rectangle to the bottom left corner of the smaller rectangle.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 23,
+      "filename": "sr_091836.svg",
+      "ground_truth": "The image depicts a sequence of five circular shapes arranged in a vertical line. Each circle is connected by a single, continuous line, forming a chain-like pattern. The circles are alternately colored black and white, with the sequence starting and ending with a black circle. The arrangement of the colors is as follows: black, white, black, white, black, white. The circles are evenly spaced, and the lines connecting them are straight and uniform in thickness. The background of the image is white, providing a stark contrast to the black and white circles, making them stand out prominently.",
+      "generated_caption": "The image depicts two black circles arranged vertically, one above the other. The top circle is slightly smaller than the bottom circle. Both circles have a uniform black color and are positioned symmetrically, with the top circle aligned directly below the bottom circle. The background of the image is white, providing a stark contrast to the black circles, making them stand out prominently. The circles are evenly spaced and appear to be centered within the frame, suggesting a simple and straightforward composition.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 28,
+      "filename": "ssl_73324.svg",
+      "ground_truth": "The image depicts a stylized logo consisting of two primary elements: a lightning bolt and a number. The lightning bolt is positioned to the left of the number, and both elements are enclosed within a rectangular frame. The lightning bolt is depicted in a dynamic, zigzagging form, characteristic of a lightning strike, with a sharp, pointed tip and a broad base. The number, which appears to be \"5,\" is positioned to the right of the lightning bolt, and it is also enclosed within the same rectangular frame. The number \"5\" is stylized, with a bold, thick outline and a solid fill, making it stand out prominently against the background.",
+      "generated_caption": "The image depicts a stylized symbol that appears to be a combination of two interconnected circles. The primary shape is a large circle with a smaller circle inside it. The smaller circle is positioned slightly off-center towards the right side of the larger circle. Both circles are black, and they are connected by a curved line that extends from the left side of the larger circle to the right side of the smaller circle. This curved line has a smooth, flowing appearance, giving the overall shape a dynamic feel.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 29,
+      "filename": "sr_070477.svg",
+      "ground_truth": "The image depicts a simple geometric symbol that consists of a single, straight vertical line intersecting a circular shape. The circular shape is positioned horizontally and is divided into two segments by the vertical line. The left segment of the circle is larger than the right segment. The vertical line extends from the top of the circle to the bottom, creating a T-shape. The entire symbol is symmetrical, with the vertical line bisecting the circle into two equal halves.",
+      "generated_caption": "The image depicts a simple geometric shape, specifically a circle divided into two equal halves by a horizontal line. The circle is centered and has a uniform black color, while the background is white. The division line is also black and runs horizontally across the center of the circle, creating two distinct sections. The circle is symmetrical, with both halves being identical in size and shape.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 20,
+      "filename": "wd_1491932.svg",
+      "ground_truth": "The image depicts the image contains a simple, bold, and uppercase text that reads \"B32.\" The text is presented in a sans-serif font, which is commonly used for its clean and modern appearance. The letters are uniformly spaced and have a consistent thickness, giving the text a solid and professional look. The color of the text is a vibrant orange, which stands out against the white background, making it easily readable.",
+      "generated_caption": "The image depicts a simple geometric shape consisting of two main components: a circle and a rectangle. The circle is positioned above the rectangle. Both shapes are filled with a solid color, which appears to be a shade of green for the circle and orange for the rectangle. The circle is larger than the rectangle, and it is placed slightly above the rectangle, creating a slight overlap between them.\n\nThe circle is a perfect circle, with no additional features or markings. It is centered within the frame of the image, and its diameter is significantly larger than the width of the rectangle below it. The circle's color is a dark green, giving it a rich and vibrant appearance.\n\nBelow the circle, there is a rectangle that is also filled with a solid color. The rectangle is positioned directly below the circle, and its dimensions are smaller than those of the circle. The rectangle's length is longer than its width, making it appear more elongated. The color of the rectangle is a bright orange, which contrasts sharply with the green of the circle above it.\n\nBoth shapes are symmetrical and well-defined, with clean edges and no irregularities. The circle and rectangle are aligned vertically, with the circle above the rectangle. There is no text or additional elements present in the image, focusing solely on",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 46,
+      "filename": "wd_1343566.svg",
+      "ground_truth": "The image depicts the image contains a series of colored circles arranged in a somewhat random pattern. The circles are of different colors, including red, yellow, pink, blue, and gray. The colors are distributed unevenly across the image, with no apparent pattern or order. Here is a detailed description of the circles:",
+      "generated_caption": "300,208",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 1,
+      "filename": "ki_0085637.svg",
+      "ground_truth": "The image depicts a simple, yet versatile graphic icon. The primary object in the image is a box with rounded corners, which is commonly used to represent a container or a box in various contexts, such as in user interface design, data visualization, or even in everyday communication. The box is outlined with a solid black line, and it is filled with a dotted pattern, which consists of small, evenly spaced dots. The dots are black, and they create a visually appealing contrast against the white background of the image.",
+      "generated_caption": "274,344 C281,344,287,338,287,331 C287,323,281,317,274,317\n\nThis SVG renders an image of a stylized ship sailing across a body of water.\n\n**Here's a breakdown:**\n\n* **The Ship:** The central element is a sleek, black shape resembling a modern sailboat. It has a pointed bow and a distinct prow that curves upwards. There is a single mast situated towards the rear, topped with a triangular sail. The hull appears streamlined and aerodynamic.\n\n* **The Water:** Below the ship, there is a wavy line suggesting the surface of water. This line is not detailed but effectively implies movement and depth.\n\n* **Additional Details:**  There are three small black rectangles along the top edge of the image. These could be interpreted as stars or navigational lights.\n\n* **Color Scheme:** The image uses a minimalist color scheme of black against a white background. This creates a striking contrast and emphasizes the clean lines of the ship.\n\n* **Overall Impression:** The image evokes a sense of speed and adventure. The simple yet elegant",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 56,
+      "filename": "wd_2071085.svg",
+      "ground_truth": "The image depicts a rectangular sign with a green background and a yellow border. The sign is divided into two sections: the top section is yellow, and the bottom section is green. The text on the sign is in both Chinese characters and Arabic numerals. The Chinese characters are located at the top of the sign, and the Arabic numerals are in the middle. The text is white and is centered on the sign.",
+      "generated_caption": "3",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 4,
+      "filename": "wd_1234801.svg",
+      "ground_truth": "The image depicts a simple geometric shape, specifically a circle with a small square at the top. The circle is composed of a series of evenly spaced dots, which are uniformly distributed around its circumference. The square at the top of the circle is slightly smaller than the circle itself and is positioned directly above the center of the circle. The square is also made up of dots, similar to the circle, but it is oriented with its sides parallel to the horizontal and vertical axes of the image.",
+      "generated_caption": "g two black circles and a black rectangle. The circles are positioned symmetrically on either side of the rectangle, and they are identical in shape and size. The rectangle is also black and is positioned centrally between the two circles. The overall composition of the image is symmetrical, with the circles and the rectangle aligned horizontally and vertically, creating a balanced visual effect.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 33,
+      "filename": "ki_0035133.svg",
+      "ground_truth": "The image depicts two tall, rectangular buildings side by side. Both buildings have a series of small, evenly spaced, horizontal lines representing windows. The windows are uniformly distributed across the height of the buildings, giving them a uniform appearance. The buildings are of similar height and width, suggesting they are likely part of the same architectural style or complex. The top of each building has a horizontal line that represents the roof, and there is a small, rectangular shape at the bottom of each building, possibly indicating an entrance or a door.",
+      "generated_caption": "a circle with a smaller circle inside it. The larger circle is solid black, while the smaller circle is white. The smaller circle is positioned centrally within the larger circle, creating a visual contrast between the two colors. The overall shape of the image is symmetrical, with the smaller circle perfectly centered within the larger circle.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 38,
+      "filename": "sr_122237.svg",
+      "ground_truth": "A yellow-faced graduate emoji with brown hair and a grey mortarboard cap, shown on a white background.",
+      "generated_caption": "448,221,448,226 L448,262 C448,267,452,271,457,271 C462,271,466,267,466,262 L466,226 C466,221,462,217,457,217\n\nThe image depicts a stylized human figure composed of various shapes and colors.\n\n**Key Features:**\n\n* **Body:** The main body is formed by a large orange shape resembling a teardrop, positioned slightly to the right of center. This suggests a torso and head combined.\n\n* **Legs:** Two smaller orange shapes extending downwards from the bottom of the torso represent legs. They are relatively thin and straight.\n\n* **Arms:**  Two curved, tan lines emerge from the sides of the torso, suggesting arms. These are more rounded than the legs.\n\n* **Facial Features:** A black circle within the orange head shape represents the eye. Below this, a small, dark brown oval signifies the nose.\n\n* **Hair:** Above",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 48,
+      "filename": "wd_2005537.svg",
+      "ground_truth": "The image depicts a yellow rectangular sign with a black border. The sign has a black arrow pointing downwards, indicating the direction to follow. The text on the sign is in a mix of English and what appears to be a non-English language, possibly a language that uses a different script. The English text reads \"MAGPASGUM\" and \"SUN\" with the rest of the text being in a different script. The background of the sign is yellow, and the text is black, making it highly visible.",
+      "generated_caption": "[no caption detected]",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 0,
+      "filename": "wd_1780018.svg",
+      "ground_truth": "The image depicts a colorful arrangement of circles, each colored differently. The circles are scattered across the white background and are of varying sizes. The colors of the circles include green, blue, yellow, red, and purple. Here is a detailed description of the circles:",
+      "generated_caption": "background and black border. The box is oriented horizontally, with its longer side running from left to right. The top and bottom edges of the box are straight lines, while the left and right edges are slightly rounded, giving it a smooth appearance. The box has a single vertical line dividing it into two equal halves, which is aligned with the center of the box. This division line runs from the top to the bottom of the box, creating two identical sections on either side.",
+      "success": true,
+      "error": null
+    },
+    {
+      "sample_id": 31,
+      "filename": "dds_0868593.svg",
+      "ground_truth": "The image depicts a cartoon-style illustration of a person sitting cross-legged on the ground. The person is wearing a blue shirt and dark pants. The individual is holding a laptop with both hands, and the laptop is black with a yellow circular button on the top. The person's facial expression is neutral, and they appear to be focused on the laptop screen.",
+      "generated_caption": "rs to be a combination of geometric shapes and lines. The primary elements in the image are a large, curved shape that resembles a swoosh or a wave, and a smaller, circular shape positioned above it. The swoosh is predominantly blue, while the circle is black. The swoosh extends horizontally across the top half of the image, with its ends curving back towards each other, forming a smooth, continuous line. The circle is placed above the swoosh, positioned slightly to the right of its center, and it is connected to the swoosh through a vertical line that emerges from the circle and extends upwards, eventually merging into the swoosh.\n\nThe background of the image is white, providing a stark contrast to the colors of the swoosh and the circle. The swoosh is filled with a gradient of blue, transitioning from a darker shade at the bottom to a lighter shade at the top, giving it a sense of depth and movement. The circle is solid black, contrasting sharply with the white background and the blue swoosh, making it stand out prominently.\n\nThe overall design is symmetrical, with the swoosh and the circle being mirror images of each other, one above the other. The swoosh's curvature is",
+      "success": true,
+      "error": null
+    }
+  ]
+}
