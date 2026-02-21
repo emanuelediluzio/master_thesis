@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<path style="fill:0,87,184;stroke:None;stroke-width:1;opacity:1" d="d=M0,0 L0,512 L376,512 L512,266 L512,0 L0,0 Z" />
-<path style="fill:255,255,255;stroke:None;stroke-width:1;opacity:1" d="d=M318,259 L243,287 C222,295,209,312,209,333 L209,426 L157,426 L157,333 C157,287,189,249,231,236 L308,207 C326,201,341,182,341,162 L341,139 L104,139 L104,86 L393,86 L393,139 L393,162 C393,208,360,244,318,259Z" />
-</svg>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<path style="fill:0,0,0;stroke:None;stroke-width:1;opacity:1" d="d=M0,32 C0,14,14,0,32,0 L480,0 C498,0,512,14,512,32 L512,480 C512,498,498,512,480,512 L32,512 C14,512,0,498,0,480 L0,32 M153,64 L158,448 L276,335 L426,322 L153,64Z" />
-</svg>

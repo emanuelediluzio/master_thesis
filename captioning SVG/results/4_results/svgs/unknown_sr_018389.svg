@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
-<path style="fill:none;stroke:0,0,0;stroke-width:1;opacity:1" d="d=M293,421 L443,421 A21,21,0,0,0,464,400 L464,112 A21,21,0,0,0,443,91 L69,91 A21,21,0,0,0,48,112 L48,176 Z" />
-<path style="fill:none;stroke:0,0,0;stroke-width:1;opacity:1" d="d=M48,347 L48,347 A75,75,0,0,1,123,421 L123,421 L48,421 L48,347 Z" />
-<path style="fill:none;stroke:0,0,0;stroke-width:1;opacity:1" d="d=M251,421 L251,421 A203,203,0,0,0,48,219 L48,219 Z" />
-<path style="fill:none;stroke:0,0,0;stroke-width:1;opacity:1" d="d=M185,421 L185,421 A137,137,0,0,0,48,285 L48,285Z" />
-</svg>
