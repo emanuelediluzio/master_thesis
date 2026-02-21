@@ -1,0 +1,315 @@
+
+    <!DOCTYPE html>
+    <html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Esempi Qualitativi Visuali - BLIP 2.7B</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+            .header {
+                text-align: center;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 30px;
+                border-radius: 15px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            .stats {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .example-container {
+                background: white;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>🎨 Esempi Qualitativi Visuali</h1>
+            <h2>BLIP 2.7B</h2>
+            <p>Confronto SVG + Caption Generated vs Ground Truth</p>
+        </div>
+
+        <div class="stats">
+            <h3>📊 Statistiche Generali:</h3>
+            <ul>
+                <li><strong>Esempi totali con SVG:</strong> 200</li>
+                <li><strong>Esempi selezionati:</strong> 5</li>
+                <li><strong>Quality score medio:</strong> 0.0721</li>
+                <li><strong>Migliore score:</strong> 0.4444</li>
+                <li><strong>Peggiore score:</strong> 0.0000</li>
+            </ul>
+        </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 1</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 BLIP 2.7B - Esempio ID: unknown_wd_422335</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:242,168,0;stroke:None;stroke-width:1;opacity:1" d="M0,0 L512,0 L512,512 L0,512 L0,0 Z" />
+<path style="fill:0,51,160;stroke:None;stroke-width:1;opacity:1" d="M0,0 L512,0 L512,341 L0,341 L0,0 Z" />
+<path style="fill:217,0,18;stroke:None;stroke-width:1;opacity:1" d="M0,0 L512,0 L512,171 L0,171 L0,0Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts the flag of Armenia"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (BLIP 2.7B):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"the flag of armenia"</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.444</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 7 words, Gen: 4 words</li>
+                        <li><strong>Parole comuni:</strong> of, flag, the, armenia</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 2</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 BLIP 2.7B - Esempio ID: unknown_wd_258323</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:0,0,0;stroke:222,161,100;stroke-width:100;opacity:1" d="M0,256 L410,256 M538,205 L538,246 M538,266 L538,307 Z" />
+<path style="fill:222,161,100;stroke:None;stroke-width:1;opacity:1" d="M154,256 A102,102,0,1,0,358,256 A102,102,0,1,0,154,256 Z" />
+<path style="fill:none;stroke:128,160,128;stroke-width:50;opacity:1" d="M0,128 L425,128 M425,384 L0,384 M402,112 A3072,1024,0,0,1,402,400Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts a simple geometric shape, specifically a parallelogram with rounded corners"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (BLIP 2.7B):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"a green and orange icon with a white background"</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.074</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 13 words, Gen: 9 words</li>
+                        <li><strong>Parole comuni:</strong> a, with</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 3</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 BLIP 2.7B - Esempio ID: unknown_wd_31687</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:0,0,0;stroke:215,127,126;stroke-width:100;opacity:1" d="M256,0 L256,512 Z" />
+<path style="fill:0,0,0;stroke:190,45,44;stroke-width:100;opacity:1" d="M-256,512 C-256,256,256,256,256,0 Z" />
+<path style="fill:0,0,0;stroke:128,160,128;stroke-width:50;opacity:1" d="M384,512 L384,0 M128,0 C128,128,-384,174,-384,512 M128,512 L128,333 L-20,410Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts a geometric design featuring a combination of shapes and colors"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (BLIP 2.7B):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"the logo for the national association of the united states"</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.074</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 13 words, Gen: 10 words</li>
+                        <li><strong>Parole comuni:</strong> of, the</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 4</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 BLIP 2.7B - Esempio ID: unknown_wd_462057</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:173,216,230;stroke:None;stroke-width:6;opacity:1" d="M512,0 L0,0 L0,512 L512,512 L512,0 M333,26 L333,102 L179,102 L179,26 L333,26 M333,154 L333,230 L179,230 L179,154 L333,154 M333,282 L333,358 L179,358 L179,282 L333,282 M333,410 L333,486 L179,486 L179,410 L333,410Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts "</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (BLIP 2.7B):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"a white square with a diagonal pattern"</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.000</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 3 words, Gen: 7 words</li>
+                        <li><strong>Parole comuni:</strong> Nessuna</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 5</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 BLIP 2.7B - Esempio ID: unknown_wd_480944</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:255,255,255;stroke:None;stroke-width:1;opacity:1" d="M16,256 A240,240,0,1,0,496,256 A240,240,0,1,0,16,256 Z" />
+<path style="fill:255,179,0;stroke:None;stroke-width:1;opacity:1" d="M256,16 C123,16,16,123,16,256 C16,389,123,496,256,496 C389,496,496,389,496,256 C496,123,389,16,256,16 M300,372 L256,293 L209,372 L153,372 L228,254 L157,140 L215,140 L256,216 L299,140 L355,140 L284,252 L359,372 L300,372Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts a simple, yet distinctive graphic element"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (BLIP 2.7B):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"xamal logo yellow png"</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.000</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 9 words, Gen: 4 words</li>
+                        <li><strong>Parole comuni:</strong> Nessuna</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </body>
+    </html>
+    

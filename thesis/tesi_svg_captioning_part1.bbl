@@ -1,0 +1,107 @@
+\begin{thebibliography}{10}
+
+\bibitem{bing2024deepicon}
+Hao Bing et~al.
+\newblock Deepicon: Layer-wise icon vectorization via deep neural networks.
+\newblock {\em arXiv preprint arXiv:2410.15760}, 2024.
+
+\bibitem{carlier2020deepsvg}
+Alexandre Carlier, Martin Danelljan, Alexandre Alahi, and Radu Timofte.
+\newblock Deepsvg: A hierarchical generative network for vector graphics
+  animation.
+\newblock {\em Advances in Neural Information Processing Systems},
+  33:16346--16356, 2020.
+
+\bibitem{hu2021lora}
+Edward~J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean
+  Wang, Lu~Wang, and Weizhu Chen.
+\newblock Lora: Low-rank adaptation of large language models.
+\newblock {\em arXiv preprint arXiv:2106.09685}, 2021.
+
+\bibitem{hu2024supersvg}
+Jiaxi Hu et~al.
+\newblock Supersvg: Superpixel-based scalable vector graphics synthesis.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 8891--8900, 2024.
+
+\bibitem{jain2023vectorfusion}
+Ajay Jain et~al.
+\newblock Vectorfusion: Text-to-svg by abstracting pixel-based diffusion
+  models.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 1204--1213, 2023.
+
+\bibitem{li2023blip2}
+Junnan Li, Dongxu Li, Savarese Silvio, and Steven Hoi.
+\newblock Blip-2: Bootstrapping language-image pre-training with frozen image
+  encoders and large language models.
+\newblock {\em arXiv preprint arXiv:2301.12597}, 2023.
+
+\bibitem{li2022blip}
+Junnan Li, Dongxu Li, Caiming Xiong, and Steven Hoi.
+\newblock Blip: Bootstrapping language-image pre-training for unified
+  vision-language understanding and generation.
+\newblock {\em arXiv preprint arXiv:2201.12086}, 2022.
+
+\bibitem{ma2022live}
+Xu~Ma, Yuqian Zhou, Xingqian Xu, Bin Sun, Dimitar Filev, Nikita Orlov, Yanzhi
+  Yuan, and Humphrey Shi.
+\newblock Towards layer-wise image vectorization.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 16314--16323, 2022.
+
+\bibitem{radford2021learning}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  et~al.
+\newblock Learning transferable visual representations from natural language
+  supervision.
+\newblock {\em arXiv preprint arXiv:2103.00020}, 2021.
+
+\bibitem{rodriguez2023starvector}
+Juan Rodriguez et~al.
+\newblock Starvector: Generating scalable vector graphics code from images.
+\newblock {\em arXiv preprint arXiv:2412.11102}, 2023.
+
+\bibitem{song2023clipvg}
+Jiaxi Song et~al.
+\newblock Clipvg: Text-guided vector graphics manipulation.
+\newblock {\em Computer Graphics Forum}, 42(7):e14912, 2023.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock {\em Advances in neural information processing systems}, 30, 2017.
+
+\bibitem{w3c2011svg}
+{W3C}.
+\newblock Scalable vector graphics (svg) 1.1 (second edition).
+\newblock \url{https://www.w3.org/TR/SVG11/}, 2011.
+\newblock Accessed: 2024-01-15.
+
+\bibitem{wu2023iconshop}
+Ronghang Wu et~al.
+\newblock Iconshop: Text-based vector icon synthesis with autoregressive
+  transformers.
+\newblock {\em arXiv preprint arXiv:2304.14400}, 2023.
+
+\bibitem{xiao2023florence}
+Bin Xiao, Haiping Wu, and Yue Wei.
+\newblock Florence-2: Advancing a unified representation for a variety of
+  vision tasks.
+\newblock {\em arXiv preprint arXiv:2311.06242}, 2023.
+
+\bibitem{xing2024svgdreamer}
+Ximing Xing et~al.
+\newblock Svgdreamer: Text guided svg generation with diffusion model.
+\newblock In {\em Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition}, pages 7717--7727, 2024.
+
+\bibitem{xing2023llm4svg}
+Yiming Xing et~al.
+\newblock Llm4svg: Large language models for scalable vector graphics
+  generation.
+\newblock {\em arXiv preprint arXiv:2312.11556}, 2023.
+
+\end{thebibliography}

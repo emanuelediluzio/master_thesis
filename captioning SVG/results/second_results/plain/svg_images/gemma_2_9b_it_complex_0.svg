@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<defs>
+    <pattern id="pattern1" patternUnits="userSpaceOnUse" width="20" height="20">
+        <circle cx="10" cy="10" r="5" style="fill:rgb(0,0,255);stroke:none" />
+    </pattern>
+</defs>
+<rect x="128" y="128" width="256" height="256" style="fill:url(#pattern1);stroke:rgb(0,0,0);stroke-width:2" />
+</svg>

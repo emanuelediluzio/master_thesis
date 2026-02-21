@@ -1,0 +1,370 @@
+\relax 
+\providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
+\@nameuse{bbl@beforestart}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\providecommand \oddpage@label [2]{}
+\babel@aux{english}{}
+\@writefile{toc}{\contentsline {chapter}{Abstract}{5}{chapter*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Sommario}{6}{chapter*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:introduzione}{{1}{7}{Introduction}{chapter.1}{}}
+\citation{w3c2011svg}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces Visual representation of the simple SVG magnifying glass defined by the XML code.}}{8}{figure.caption.4}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:intro_magnifying_glass}{{1.1}{8}{Visual representation of the simple SVG magnifying glass defined by the XML code}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}The Challenge of Vector Graphics Captioning}{8}{section.1.1}\protected@file@percent }
+\newlabel{sec:challenge-vector-captioning}{{1.1}{8}{The Challenge of Vector Graphics Captioning}{section.1.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Accessibility, Search, and the Need for Automatic Captions}{9}{section.1.2}\protected@file@percent }
+\newlabel{sec:motivation-accessibility}{{1.2}{9}{Accessibility, Search, and the Need for Automatic Captions}{section.1.2}{}}
+\citation{zini2025vhector}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Research Hypothesis: Treating SVG as a Structured Language}{10}{section.1.3}\protected@file@percent }
+\newlabel{sec:hypothesis}{{1.3}{10}{Research Hypothesis: Treating SVG as a Structured Language}{section.1.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}The Role of Large Language Models in the Proposed Approach}{11}{section.1.4}\protected@file@percent }
+\newlabel{sec:llms-role}{{1.4}{11}{The Role of Large Language Models in the Proposed Approach}{section.1.4}{}}
+\citation{hu2021lora}
+\@writefile{toc}{\contentsline {section}{\numberline {1.5}Parameter-Efficient Fine-Tuning with LoRA}{12}{section.1.5}\protected@file@percent }
+\newlabel{sec:peft-intro}{{1.5}{12}{Parameter-Efficient Fine-Tuning with LoRA}{section.1.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.6}The SVG Path Embedder: Bridging Geometry and Language}{12}{section.1.6}\protected@file@percent }
+\newlabel{sec:spe-intro}{{1.6}{12}{The SVG Path Embedder: Bridging Geometry and Language}{section.1.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.7}Research Objectives}{13}{section.1.7}\protected@file@percent }
+\newlabel{sec:research-objectives}{{1.7}{13}{Research Objectives}{section.1.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.8}Summary of Methodology and Key Findings}{13}{section.1.8}\protected@file@percent }
+\newlabel{sec:summary-methodology}{{1.8}{13}{Summary of Methodology and Key Findings}{section.1.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.9}Thesis Organization}{14}{section.1.9}\protected@file@percent }
+\newlabel{sec:thesis-organization}{{1.9}{14}{Thesis Organization}{section.1.9}{}}
+\citation{vaswani2017attention}
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}State of the Art}{16}{chapter.2}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:stato-arte}{{2}{16}{State of the Art}{chapter.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Foundations: Transformers and Self-Attention}{16}{section.2.1}\protected@file@percent }
+\newlabel{sec:dl-foundations}{{2.1}{16}{Foundations: Transformers and Self-Attention}{section.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.1}The Transformer Architecture}{16}{subsection.2.1.1}\protected@file@percent }
+\citation{zhang2019root}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces The Transformer model architecture. Left: Encoder. Right: Decoder. (Source: Vaswani \textit  {et al.}, 2017)}}{17}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:transformer-architecture}{{2.1}{17}{The Transformer model architecture. Left: Encoder. Right: Decoder. (Source: Vaswani \textit {et al.}, 2017)}{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1.2}SVG and the Tokenization Challenge}{17}{subsection.2.1.2}\protected@file@percent }
+\citation{devlin2018bert}
+\citation{radford2018improving,brown2020language}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Large Language Models: Evolution to Decoder-Only Architectures}{18}{section.2.2}\protected@file@percent }
+\newlabel{sec:llms-evolution}{{2.2}{18}{Large Language Models: Evolution to Decoder-Only Architectures}{section.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}From BERT to GPT: Encoder vs. Decoder}{18}{subsection.2.2.1}\protected@file@percent }
+\citation{kaplan2020scaling}
+\citation{touvron2023llama}
+\citation{su2024roformer}
+\citation{shazeer2020glu}
+\citation{qwen2023}
+\citation{ainslie2023gqa}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Modern Decoder-Only LLMs}{19}{subsection.2.2.2}\protected@file@percent }
+\citation{gemma2024}
+\citation{kaplan2020scaling}
+\citation{hoffmann2022training}
+\citation{dosovitskiy2020image}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Vision-Language Models and Their Limitations}{20}{section.2.3}\protected@file@percent }
+\newlabel{sec:vision-language}{{2.3}{20}{Vision-Language Models and Their Limitations}{section.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Vision Transformers (ViT)}{20}{subsection.2.3.1}\protected@file@percent }
+\citation{radford2021learning}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces The Vision Transformer (ViT) Architecture. The image is split into patches, linearly projected, and processed by a standard Transformer encoder. (Source: Dosovitskiy \textit  {et al.}, 2020)}}{21}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:vit-architecture}{{2.2}{21}{The Vision Transformer (ViT) Architecture. The image is split into patches, linearly projected, and processed by a standard Transformer encoder. (Source: Dosovitskiy \textit {et al.}, 2020)}{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}CLIP: Contrastive Language-Image Pre-training}{21}{subsection.2.3.2}\protected@file@percent }
+\citation{li2023blip2}
+\citation{liu2023llava}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Architecture of CLIP (Contrastive Language-Image Pre-training). The model learns to align raster images and text in a shared embedding space, enabling zero-shot transfer to downstream tasks.}}{22}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:clip-architecture}{{2.3}{22}{Architecture of CLIP (Contrastive Language-Image Pre-training). The model learns to align raster images and text in a shared embedding space, enabling zero-shot transfer to downstream tasks}{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Generative Captioning: BLIP-2 and LLaVA}{22}{subsection.2.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.4}The Vector Graphics Gap}{22}{subsection.2.3.4}\protected@file@percent }
+\citation{vaswani2017attention}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Positional and Coordinate Encodings}{23}{section.2.4}\protected@file@percent }
+\newlabel{sec:positional-encodings}{{2.4}{23}{Positional and Coordinate Encodings}{section.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4.1}Sinusoidal Encodings in Transformers}{23}{subsection.2.4.1}\protected@file@percent }
+\newlabel{eq:sinusoidal-encoding}{{2.1}{23}{Sinusoidal Encodings in Transformers}{equation.2.1}{}}
+\citation{houlsby2019parameter}
+\citation{li2021prefix}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Visualization of 2D Sinusoidal Positional Encodings. High-frequency components capture fine details, while low-frequency components encode global position, enabling the model to "see" the continuous geometry.}}{24}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:2d-pe}{{2.4}{24}{Visualization of 2D Sinusoidal Positional Encodings. High-frequency components capture fine details, while low-frequency components encode global position, enabling the model to "see" the continuous geometry}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Parameter-Efficient Fine-Tuning (PEFT)}{24}{section.2.5}\protected@file@percent }
+\newlabel{sec:peft-methods}{{2.5}{24}{Parameter-Efficient Fine-Tuning (PEFT)}{section.2.5}{}}
+\citation{hu2021lora}
+\citation{wu2023iconshop}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}PEFT Methods Overview}{25}{subsection.2.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.6}Vector Graphics Generation and Understanding}{25}{section.2.6}\protected@file@percent }
+\newlabel{sec:vector-graphics-generation}{{2.6}{25}{Vector Graphics Generation and Understanding}{section.2.6}{}}
+\citation{rodriguez2023starvector}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.5}{\ignorespaces Overview of Autoregressive SVG Generation (IconShop). The model predicts the next drawing command based on the history of previous commands and a text condition. (Source: Wu \textit  {et al.}, 2023)}}{26}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:iconshop-arch}{{2.5}{26}{Overview of Autoregressive SVG Generation (IconShop). The model predicts the next drawing command based on the history of previous commands and a text condition. (Source: Wu \textit {et al.}, 2023)}{figure.caption.9}{}}
+\citation{zini2025vhector}
+\citation{jain2023vectorfusion}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.6}{\ignorespaces StarVector Architecture. A dual-encoder system that processes both the raw SVG code and the rendered image to guide generation. (Source: Rodriguez \textit  {et al.}, 2023)}}{27}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:starvector-arch}{{2.6}{27}{StarVector Architecture. A dual-encoder system that processes both the raw SVG code and the rendered image to guide generation. (Source: Rodriguez \textit {et al.}, 2023)}{figure.caption.10}{}}
+\citation{xing2024svgdreamer}
+\citation{carlier2020deepsvg}
+\citation{hu2024supersvg}
+\citation{ma2022live}
+\citation{li2020differentiable}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.7}{\ignorespaces VectorFusion Pipeline. A set of random paths is optimized via Score Distillation Sampling (SDS) from a frozen text-to-image diffusion model. The differentiable rasterizer allows gradients to flow back to the vector parameters. (Source: Jain \textit  {et al.}, 2023)}}{28}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:vectorfusion-arch}{{2.7}{28}{VectorFusion Pipeline. A set of random paths is optimized via Score Distillation Sampling (SDS) from a frozen text-to-image diffusion model. The differentiable rasterizer allows gradients to flow back to the vector parameters. (Source: Jain \textit {et al.}, 2023)}{figure.caption.11}{}}
+\citation{song2023clipvg}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Methodology}{30}{chapter.3}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:metodologia}{{3}{30}{Methodology}{chapter.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Overview of the Proposed Approach}{30}{section.3.1}\protected@file@percent }
+\newlabel{sec:methodology-overview}{{3.1}{30}{Overview of the Proposed Approach}{section.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.1}The Naive Approach: Direct Text Input}{30}{subsection.3.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces The Naive Approach: Direct SVG Text Input. The tokenizer fragments continuous coordinates into meaningless sub-tokens, preventing the LLM from grasping the geometric structure.}}{30}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:naive-pipeline}{{3.1}{30}{The Naive Approach: Direct SVG Text Input. The tokenizer fragments continuous coordinates into meaningless sub-tokens, preventing the LLM from grasping the geometric structure}{figure.caption.12}{}}
+\citation{zini2025vhector}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Intermediate Approach: Text-Only Fine-Tuning. The model is adapted via LoRA to the SVG text format. While it learns to generate valid syntax, it still suffers from the tokenization mismatch and lacks true geometric perception.}}{31}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:text-ft-pipeline}{{3.2}{31}{Intermediate Approach: Text-Only Fine-Tuning. The model is adapted via LoRA to the SVG text format. While it learns to generate valid syntax, it still suffers from the tokenization mismatch and lacks true geometric perception}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.2}Multimodal Training Process (SPE-LoRA)}{31}{subsection.3.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.3}High-Level Pipeline}{32}{subsection.3.1.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Conceptual overview of the proposed SVG captioning pipeline: (1) Preprocessing, (2) SPE Encoding, (3) LoRA-adapted LLM Processing, (4) Caption Generation.}}{32}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:pipeline-overview}{{3.3}{32}{Conceptual overview of the proposed SVG captioning pipeline: (1) Preprocessing, (2) SPE Encoding, (3) LoRA-adapted LLM Processing, (4) Caption Generation}{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1.4}Design Philosophy}{33}{subsection.3.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}The Role of Large Language Models in Captioning}{33}{section.3.2}\protected@file@percent }
+\newlabel{sec:llms-methodology}{{3.2}{33}{The Role of Large Language Models in Captioning}{section.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}Why Decoder-Only Architectures?}{33}{subsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Selection of LLM Backbones}{33}{subsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Zero-Shot Baseline: Why Direct SVG Code Input Fails}{34}{subsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Parameter-Efficient Adaptation via LoRA}{34}{section.3.3}\protected@file@percent }
+\newlabel{sec:lora-methodology}{{3.3}{34}{Parameter-Efficient Adaptation via LoRA}{section.3.3}{}}
+\citation{hu2021lora}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}The Need for Fine-Tuning}{35}{subsection.3.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Low-Rank Adaptation: Mathematical Foundation}{35}{subsection.3.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}Target Modules and Training Strategy}{35}{subsection.3.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces LoRA Architecture. The pre-trained weights $W$ are frozen (blue), while the trainable low-rank matrices $A$ and $B$ (orange) capture the task-specific adaptation $\Delta W = BA$. (Source: Hu \textit  {et al.}, 2021)}}{36}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:lora-architecture}{{3.4}{36}{LoRA Architecture. The pre-trained weights $W$ are frozen (blue), while the trainable low-rank matrices $A$ and $B$ (orange) capture the task-specific adaptation $\Delta W = BA$. (Source: Hu \textit {et al.}, 2021)}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.4}Geometric Intuition: Why LoRA Works for Continuous Features}{36}{subsection.3.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Embedding Space Architecture}{37}{section.3.4}\protected@file@percent }
+\newlabel{sec:embedding-architecture}{{3.4}{37}{Embedding Space Architecture}{section.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Dimensionality Choices}{37}{subsection.3.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Standardization into SVG Path List}{37}{subsection.3.4.2}\protected@file@percent }
+\newlabel{sec:linearization}{{3.4.2}{37}{Standardization into SVG Path List}{subsection.3.4.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Standardization Protocol}{37}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Concatenation with Text Tokens}{38}{subsection.3.4.3}\protected@file@percent }
+\citation{zini2025spe_autoencoder}
+\citation{zini2025vhector}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Concatenation Mechanism. The continuous visual embeddings (green) are prepended to the discrete text embeddings (blue), forming a unified sequence for the transformer. This explicitly shows the "Visual Prefix" strategy.}}{39}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:concatenation}{{3.5}{39}{Concatenation Mechanism. The continuous visual embeddings (green) are prepended to the discrete text embeddings (blue), forming a unified sequence for the transformer. This explicitly shows the "Visual Prefix" strategy}{figure.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Integration of the SVG Path Embedder}{39}{section.3.5}\protected@file@percent }
+\newlabel{sec:spe-methodology}{{3.5}{39}{Integration of the SVG Path Embedder}{section.3.5}{}}
+\citation{zini2025spe_autoencoder}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces Detailed Architecture of the SVG Path Embedder (SPE). In alignment with the underlying code, the system processes discrete tokens rather than raw coordinates. The tokens pass through a shared embedding layer, are augmented with 1D sinusoidal positional encodings, and processed by a standard Transformer Encoder.}}{40}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:spe-detailed}{{3.6}{40}{Detailed Architecture of the SVG Path Embedder (SPE). In alignment with the underlying code, the system processes discrete tokens rather than raw coordinates. The tokens pass through a shared embedding layer, are augmented with 1D sinusoidal positional encodings, and processed by a standard Transformer Encoder}{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Proposed Solution: Vector-Native Processing (SPE + LoRA)}{40}{section.3.6}\protected@file@percent }
+\newlabel{sec:proposed-solution-spe-lora}{{3.6}{40}{Proposed Solution: Vector-Native Processing (SPE + LoRA)}{section.3.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.1}The SVG Path Embedder (SPE)}{40}{subsection.3.6.1}\protected@file@percent }
+\newlabel{sec:spe-design}{{3.6.1}{40}{The SVG Path Embedder (SPE)}{subsection.3.6.1}{}}
+\citation{vaswani2017attention}
+\@writefile{toc}{\contentsline {subsubsection}{Architecture: From Discrete Tokens to Continuous Latent Space}{41}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Utilization for Captioning}{41}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Positional Encoding}{41}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.2}Integration with the LLM}{42}{subsection.3.6.2}\protected@file@percent }
+\newlabel{sec:lora-integration}{{3.6.2}{42}{Integration with the LLM}{subsection.3.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.3}Context Window and Sequence Length}{42}{subsection.3.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.4}Why SPE + LoRA?}{42}{subsection.3.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6.5}Trade-offs: Completeness vs. Context Length}{43}{subsection.3.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.7}Context Window Optimization}{43}{section.3.7}\protected@file@percent }
+\newlabel{sec:context-optimization}{{3.7}{43}{Context Window Optimization}{section.3.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.1}The Problem: SVG Verbosity}{43}{subsection.3.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.2}Path Simplification and Filtering}{43}{subsection.3.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.3}Length-Based Filtering}{44}{subsection.3.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7.4}Trade-offs: Completeness vs. Context Length}{44}{subsection.3.7.4}\protected@file@percent }
+\citation{hessel2021clipscore}
+\@writefile{toc}{\contentsline {section}{\numberline {3.8}Training Objective and Loss Function}{45}{section.3.8}\protected@file@percent }
+\newlabel{sec:training-objective}{{3.8}{45}{Training Objective and Loss Function}{section.3.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.8.1}Training Objective: Autoregressive Language Modeling}{45}{subsection.3.8.1}\protected@file@percent }
+\newlabel{sec:autoregressive-training}{{3.8.1}{45}{Training Objective: Autoregressive Language Modeling}{subsection.3.8.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.8.2}Masking Strategy}{45}{subsection.3.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.9}Evaluation Metrics}{45}{section.3.9}\protected@file@percent }
+\newlabel{sec:evaluation-metrics-methodology}{{3.9}{45}{Evaluation Metrics}{section.3.9}{}}
+\citation{papineni2002bleu}
+\citation{banerjee2005meteor}
+\citation{lin2004rouge}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.9.1}Visual Alignment: CLIPScore}{46}{subsection.3.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.9.2}Linguistic Quality and Composite Metrics}{46}{subsection.3.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.10}Summary of Methodological Choices}{47}{section.3.10}\protected@file@percent }
+\newlabel{sec:methodology-summary}{{3.10}{47}{Summary of Methodological Choices}{section.3.10}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Implementation}{48}{chapter.4}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:implementazione}{{4}{48}{Implementation}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}System Architecture and Technology Stack}{48}{section.4.1}\protected@file@percent }
+\newlabel{sec:system-architecture}{{4.1}{48}{System Architecture and Technology Stack}{section.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Dataset Construction and Preprocessing}{48}{subsection.4.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}SVG Parsing and Tokenization}{49}{subsection.4.1.2}\protected@file@percent }
+\newlabel{sec:svg-parsing}{{4.1.2}{49}{SVG Parsing and Tokenization}{subsection.4.1.2}{}}
+\citation{zini2025spe_autoencoder}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Dynamic Padding and Collation}{50}{subsection.4.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}The SVG Path Embedder (SPE)}{50}{section.4.2}\protected@file@percent }
+\newlabel{sec:spe-implementation}{{4.2}{50}{The SVG Path Embedder (SPE)}{section.4.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Architecture of the SVG Path Embedder (SPE). discrete path tokens are mapped to embeddings, enriched with Position Encodings, and processed by a Transformer Encoder.}}{51}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:spe_architecture}{{4.1}{51}{Architecture of the SVG Path Embedder (SPE). discrete path tokens are mapped to embeddings, enriched with Position Encodings, and processed by a Transformer Encoder}{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}The SPE Module}{51}{subsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}LoRA Integration and Training Loop}{52}{section.4.3}\protected@file@percent }
+\newlabel{sec:lora-implementation}{{4.3}{52}{LoRA Integration and Training Loop}{section.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Loading the Pre-trained LLM}{52}{subsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Injecting LoRA Adapters}{52}{subsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Baseline Training Process (LoRA-LLM)}{52}{subsection.4.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.4}Multimodal Training Process (SPE-LoRA)}{52}{subsection.4.3.4}\protected@file@percent }
+\citation{hessel2021clipscore}
+\@writefile{toc}{\contentsline {subsubsection}{Visual-Semantic Metric (Primary)}{53}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Challenges and Solutions}{54}{section.4.4}\protected@file@percent }
+\newlabel{sec:challenges}{{4.4}{54}{Challenges and Solutions}{section.4.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Addressing Gradient Explosion}{54}{subsection.4.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Illustration of the Vanishing and Exploding Gradient problem. In deep networks, gradients can grow exponentially (exploding) or decay (vanishing) as they backpropagate through layers, leading to unstable training. Proper initialization and techniques like Gradient Clipping are essential to mitigate these issues.}}{54}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:gradient_explosion}{{4.2}{54}{Illustration of the Vanishing and Exploding Gradient problem. In deep networks, gradients can grow exponentially (exploding) or decay (vanishing) as they backpropagate through layers, leading to unstable training. Proper initialization and techniques like Gradient Clipping are essential to mitigate these issues}{figure.caption.24}{}}
+\citation{pascanu2013gradients}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Hyperparameters and Training Details}{55}{subsection.4.4.2}\protected@file@percent }
+\newlabel{sec:hyperparameters}{{4.4.2}{55}{Hyperparameters and Training Details}{subsection.4.4.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Training loss, evaluation loss, and system metrics (GPU utilization) during the fine-tuning of the SPE + Qwen2-7B model.}}{56}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:training_metrics}{{4.3}{56}{Training loss, evaluation loss, and system metrics (GPU utilization) during the fine-tuning of the SPE + Qwen2-7B model}{figure.caption.25}{}}
+\citation{papineni2002bleu}
+\citation{banerjee2005meteor}
+\citation{lin2004rouge}
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Experimental Evaluation}{57}{chapter.5}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:valutazione}{{5}{57}{Experimental Evaluation}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Experimental Setup}{57}{section.5.1}\protected@file@percent }
+\newlabel{sec:experimental-setup}{{5.1}{57}{Experimental Setup}{section.5.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Dataset Curation: The Icons8 Benchmark}{57}{subsection.5.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.2}Dataset}{57}{subsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.3}Evaluation Metrics}{57}{subsection.5.1.3}\protected@file@percent }
+\citation{hessel2021clipscore}
+\citation{li2023blip2}
+\citation{xiao2023florence}
+\@writefile{toc}{\contentsline {subsubsection}{Linguistic Metrics (Reference-Based)}{58}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Visual-Semantic Metric (Reference-Free)}{58}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Composite Score}{58}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.4}Architectural Rationale: Why Decoder-Only?}{58}{subsection.5.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.5}Baselines and Models}{58}{subsection.5.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Quantitative Results}{59}{section.5.2}\protected@file@percent }
+\newlabel{sec:quantitative-results}{{5.2}{59}{Quantitative Results}{section.5.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Quantitative Results on the Test Set (400 samples). The Composite Score is calculated as $CLIP/10 + BLEU_1 + METEOR + ROUGE_L$.}}{59}{table.caption.29}\protected@file@percent }
+\newlabel{tab:main-results}{{5.1}{59}{Quantitative Results on the Test Set (400 samples). The Composite Score is calculated as $CLIP/10 + BLEU_1 + METEOR + ROUGE_L$}{table.caption.29}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2.1}Analysis of Results}{59}{subsection.5.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Ablation Studies}{60}{section.5.3}\protected@file@percent }
+\newlabel{sec:ablation-studies}{{5.3}{60}{Ablation Studies}{section.5.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Ablation: Feature Normalization}}{60}{table.caption.30}\protected@file@percent }
+\newlabel{tab:ablation-norm}{{5.2}{60}{Ablation: Feature Normalization}{table.caption.30}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}LoRA Rank}{60}{subsection.5.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.3}{\ignorespaces Ablation Study on LoRA Rank ($r$). We report standard captioning metrics (CIDEr, METEOR) and our primary visual alignment metric (CLIPScore). The configuration $r=16$ offers the best trade-off between performance and parameter efficiency, while $r=32$ yields negligible gains.}}{60}{table.caption.31}\protected@file@percent }
+\newlabel{tab:ablation-rank}{{5.3}{60}{Ablation Study on LoRA Rank ($r$). We report standard captioning metrics (CIDEr, METEOR) and our primary visual alignment metric (CLIPScore). The configuration $r=16$ offers the best trade-off between performance and parameter efficiency, while $r=32$ yields negligible gains}{table.caption.31}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Qualitative Analysis}{60}{section.5.4}\protected@file@percent }
+\newlabel{sec:qualitative-analysis}{{5.4}{60}{Qualitative Analysis}{section.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Success Cases}{61}{subsection.5.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Qualitative Comparison Across Architectures}{61}{subsection.5.4.2}\protected@file@percent }
+\newlabel{sec:qualitative-comparison}{{5.4.2}{61}{Qualitative Comparison Across Architectures}{subsection.5.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.3}Failure Modes and Error Taxonomy}{64}{subsection.5.4.3}\protected@file@percent }
+\newlabel{sec:failure-modes}{{5.4.3}{64}{Failure Modes and Error Taxonomy}{subsection.5.4.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{1. Geometric Hallucination}{64}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{2. Attribute Mismatch}{65}{section*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{3. OCR Failure}{65}{section*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{4. Abstract Concept Failure}{65}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Discussion}{65}{section.5.5}\protected@file@percent }
+\newlabel{sec:discussion}{{5.5}{65}{Discussion}{section.5.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}Qualitative Analysis Gallery}{66}{section.5.6}\protected@file@percent }
+\newlabel{sec:gallery}{{5.6}{66}{Qualitative Analysis Gallery}{section.5.6}{}}
+\newlabel{fig:sample4_detail}{{\caption@xref {fig:sample4_detail}{ on input line 40}}{68}{Qualitative Analysis Gallery}{figure.caption.37}{}}
+\newlabel{fig:sample11_detail}{{\caption@xref {fig:sample11_detail}{ on input line 114}}{71}{Qualitative Analysis Gallery}{figure.caption.40}{}}
+\newlabel{fig:sample13_detail}{{\caption@xref {fig:sample13_detail}{ on input line 161}}{73}{Qualitative Analysis Gallery}{figure.caption.43}{}}
+\newlabel{fig:sample16_detail}{{\caption@xref {fig:sample16_detail}{ on input line 264}}{76}{Qualitative Analysis Gallery}{figure.caption.47}{}}
+\newlabel{fig:sample24_detail}{{\caption@xref {fig:sample24_detail}{ on input line 365}}{78}{Qualitative Analysis Gallery}{figure.caption.50}{}}
+\newlabel{fig:sample25_detail}{{\caption@xref {fig:sample25_detail}{ on input line 474}}{81}{Qualitative Analysis Gallery}{figure.caption.54}{}}
+\newlabel{fig:sample21_detail}{{\caption@xref {fig:sample21_detail}{ on input line 532}}{84}{Qualitative Analysis Gallery}{figure.caption.58}{}}
+\newlabel{fig:sample22_detail}{{\caption@xref {fig:sample22_detail}{ on input line 579}}{86}{Qualitative Analysis Gallery}{figure.caption.61}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusions and Future Work}{87}{chapter.6}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:conclusioni}{{6}{87}{Conclusions and Future Work}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Summary of the Research Journey}{87}{section.6.1}\protected@file@percent }
+\newlabel{sec:research-journey}{{6.1}{87}{Summary of the Research Journey}{section.6.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Main Contributions Revisited}{88}{section.6.2}\protected@file@percent }
+\newlabel{sec:contributions-revisited}{{6.2}{88}{Main Contributions Revisited}{section.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Empirical Contributions}{89}{subsection.6.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}Practical Contributions}{89}{subsection.6.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Empirical Findings and Insights}{89}{section.6.3}\protected@file@percent }
+\newlabel{sec:empirical-insights}{{6.3}{89}{Empirical Findings and Insights}{section.6.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}Limitations}{89}{section.6.4}\protected@file@percent }
+\newlabel{sec:limitations-conclusions}{{6.4}{89}{Limitations}{section.6.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4.1}Technical Limitations}{89}{subsection.6.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4.2}Dataset and Domain Limitations}{90}{subsection.6.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4.3}Evaluation Limitations}{90}{subsection.6.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6.5}Ethical Considerations and Responsible Deployment}{91}{section.6.5}\protected@file@percent }
+\newlabel{sec:ethical-considerations-conclusions}{{6.5}{91}{Ethical Considerations and Responsible Deployment}{section.6.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.6}Future Research Directions}{91}{section.6.6}\protected@file@percent }
+\newlabel{sec:future-work}{{6.6}{91}{Future Research Directions}{section.6.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6.1}Architectural Extensions}{91}{subsection.6.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Hierarchical Spatial Encoders}{91}{section*.62}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Multi-Scale Feature Fusion}{91}{section*.64}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Hybrid Raster-Vector Encoders}{91}{section*.65}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces \textbf  {Hierarchical vs. Flat Encoding}. A conceptual comparison between processing the SVG DOM as a hierarchical tree (left), allowing for structure-aware encoding, versus the current flat serialization approach (right).}}{92}{figure.caption.63}\protected@file@percent }
+\newlabel{fig:hierarchical_encoder}{{6.1}{92}{\textbf {Hierarchical vs. Flat Encoding}. A conceptual comparison between processing the SVG DOM as a hierarchical tree (left), allowing for structure-aware encoding, versus the current flat serialization approach (right)}{figure.caption.63}{}}
+\@writefile{toc}{\contentsline {subsubsection}{OCR Integration}{92}{section*.67}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6.2}Dataset and Domain Expansion}{92}{subsection.6.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Technical Diagrams and Data Visualizations}{92}{section*.68}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces \textbf  {Proposed Hybrid Architecture}. A dual-stream network that processes raster images (via CNN/ViT) and vector code (via SPE) in parallel, fusing the representations to leverage both visual texture and geometric precision.}}{93}{figure.caption.66}\protected@file@percent }
+\newlabel{fig:hybrid_architecture}{{6.2}{93}{\textbf {Proposed Hybrid Architecture}. A dual-stream network that processes raster images (via CNN/ViT) and vector code (via SPE) in parallel, fusing the representations to leverage both visual texture and geometric precision}{figure.caption.66}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Cross-Dataset Generalization}{93}{section*.69}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Multilingual Captions}{93}{section*.70}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Synthetic Data Generation}{94}{section*.71}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6.3}Multimodal Pretraining}{94}{subsection.6.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{SVG-Image Contrastive Learning}{94}{section*.72}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Joint SVG-Text-Image Pretraining}{94}{section*.73}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Masked SVG Modeling}{94}{section*.74}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6.4}Evaluation Methodology}{94}{subsection.6.6.4}\protected@file@percent }
+\newlabel{sec:eval-methodology-future}{{6.6.4}{94}{Evaluation Methodology}{subsection.6.6.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{Human Evaluation at Scale}{94}{section*.75}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{User Studies with Visually Impaired Participants}{94}{section*.76}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{Benchmarking on Standardized Suites}{95}{section*.77}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6.5}Broader Vision: End-to-End Vector-Language Systems}{95}{subsection.6.6.5}\protected@file@percent }
+\newlabel{sec:broader-vision}{{6.6.5}{95}{Broader Vision: End-to-End Vector-Language Systems}{subsection.6.6.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.7}Closing Remarks}{95}{section.6.7}\protected@file@percent }
+\newlabel{sec:closing-remarks}{{6.7}{95}{Closing Remarks}{section.6.7}{}}
+\bibstyle{plain}
+\bibdata{bibliography}
+\@writefile{toc}{\contentsline {chapter}{Acknowledgments}{97}{chapter*.78}\protected@file@percent }
+\bibcite{ainslie2023gqa}{1}
+\bibcite{qwen2023}{2}
+\bibcite{banerjee2005meteor}{3}
+\bibcite{brown2020language}{4}
+\bibcite{carlier2020deepsvg}{5}
+\bibcite{devlin2018bert}{6}
+\bibcite{dosovitskiy2020image}{7}
+\bibcite{gemma2024}{8}
+\bibcite{hessel2021clipscore}{9}
+\bibcite{hoffmann2022training}{10}
+\bibcite{houlsby2019parameter}{11}
+\bibcite{hu2021lora}{12}
+\bibcite{hu2024supersvg}{13}
+\bibcite{jain2023vectorfusion}{14}
+\bibcite{kaplan2020scaling}{15}
+\bibcite{li2023blip2}{16}
+\bibcite{li2020differentiable}{17}
+\bibcite{li2021prefix}{18}
+\bibcite{lin2004rouge}{19}
+\bibcite{liu2023llava}{20}
+\bibcite{ma2022live}{21}
+\bibcite{papineni2002bleu}{22}
+\bibcite{pascanu2013gradients}{23}
+\bibcite{radford2021learning}{24}
+\bibcite{radford2018improving}{25}
+\bibcite{rodriguez2023starvector}{26}
+\bibcite{shazeer2020glu}{27}
+\bibcite{song2023clipvg}{28}
+\bibcite{su2024roformer}{29}
+\bibcite{touvron2023llama}{30}
+\bibcite{vaswani2017attention}{31}
+\bibcite{w3c2011svg}{32}
+\bibcite{wu2023iconshop}{33}
+\bibcite{xiao2023florence}{34}
+\bibcite{xing2024svgdreamer}{35}
+\bibcite{zhang2019root}{36}
+\bibcite{zini2025vhector}{37}
+\bibcite{zini2025spe_autoencoder}{38}
+\gdef \@abspage@last{102}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gemma 2 9B IT (Zero-shot)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .example {
+            margin-bottom: 40px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .svg-container {
+            width: 512px;
+            height: 512px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .caption {
+            margin-bottom: 10px;
+        }
+        .ground-truth {
+            color: #2c5282;
+            font-weight: bold;
+        }
+        .generated {
+            color: #744210;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gemma 2 9B IT (Zero-shot)</h1>
+
+    <div class="example">
+        <h2>Example 1</h2>
+        <div class="svg-container">
+            <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:1;opacity:1" d="M214,256 A88,88,0,1,1,214,253 Z" />
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:1;opacity:1" d="M261,171 L262,341 Z" />
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:1;opacity:1" d="M333,171 L334,343 Z" />
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:1;opacity:1" d="M403,225 L404,288 Z" />
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:1;opacity:1" d="M473,203 L475,311Z" />
+            </svg>
+        </div>
+        <div class="caption ground-truth">
+            <strong>Ground Truth:</strong> The image depicts the image contains a simple mathematical expression
+        </div>
+        <div class="caption generated">
+            <strong>Generated:</strong> The image shows a simple mathematical diagram consisting of a circle on the left side and several vertical lines of varying heights on the right side. The circle appears to be a complete circle drawn with a thin black outline. To the right of the circle, there are four vertical lines arranged in a row, with increasing distance between them as they move from left to right. The lines appear to be of different heights, with the middle two being the tallest. This could represent a mathematical function, graph, or some form of notation.
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Example 2</h2>
+        <div class="svg-container">
+            <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:0.6;opacity:1" d="M320,100 L192,100 M320,411 L192,411 M100,117 L100,245 M412,117 L412,245 M469,181 L43,181 M355,181 L256,352 L157,181 M256,352 L256,469 M256,43 L256,171Z" />
+            </svg>
+        </div>
+        <div class="caption ground-truth">
+            <strong>Ground Truth:</strong> The image depicts a geometric symbol that consists of a triangle with a cross at each of its vertices
+        </div>
+        <div class="caption generated">
+            <strong>Generated:</strong> The image shows a geometric symbol consisting of a triangle with additional lines extending from its vertices. The triangle is positioned in the center of the image, pointing downward. From each of the three vertices of the triangle, there are perpendicular lines extending outward, forming cross-like shapes. There is also a horizontal line running through the middle of the triangle, and vertical lines extending from the top and bottom vertices. The entire symbol is drawn with thin black lines on a white background, creating a symmetrical geometric pattern that resembles some kind of mathematical or mystical symbol.
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Example 3</h2>
+        <div class="svg-container">
+            <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:3;opacity:1" d="M238,141 L238,164 L238,141 Z" />
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:3;opacity:1" d="M222,153 L253,153 L222,153 Z" />
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:3;opacity:1" d="M259,153 L290,153 L259,153 Z" />
+                <path style="fill:none;stroke:rgb(0,0,0);stroke-width:3;opacity:1" d="M274,141 L274,164 L274,141Z" />
+            </svg>
+        </div>
+        <div class="caption ground-truth">
+            <strong>Ground Truth:</strong> The image depicts this is a markdown text
+        </div>
+        <div class="caption generated">
+            <strong>Generated:</strong> The image shows a simple symbol that appears to be a markdown syntax representation. It consists of two vertical lines with horizontal lines connecting them in the middle. The vertical lines are positioned parallel to each other, and the horizontal lines form a pattern that resembles the markdown syntax for headings or emphasis. The lines are drawn in black against a white background, creating a minimalist representation of text formatting symbols used in markdown language.
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Example 4</h2>
+        <div class="svg-container">
+            <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path style="fill:rgb(0,0,0);stroke:None;stroke-width:1;opacity:1" d="M256,0 C115,0,0,115,0,256 C0,397,115,512,256,512 C397,512,512,397,512,256 C512,115,397,0,256,0 M256,310 C226,310,202,286,202,256 C202,226,226,202,256,202 C286,202,310,226,310,256 C310,286,286,310,256,310Z" />
+            </svg>
+        </div>
+        <div class="caption ground-truth">
+            <strong>Ground Truth:</strong> The image depicts a black circle with a white dot in the center
+        </div>
+        <div class="caption generated">
+            <strong>Generated:</strong> The image shows a black circle with a white circular hole in the center. The black circle fills the entire square frame, and the white circular hole is positioned exactly in the center. The white hole takes up approximately 20% of the diameter of the black circle, creating a donut or ring-like shape. The contrast between the solid black outer circle and the white inner circle is stark and creates a simple yet striking visual element.
+        </div>
+    </div>
+
+    <div class="example">
+        <h2>Example 5</h2>
+        <div class="svg-container">
+            <svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path style="fill:rgb(0,0,0);stroke:rgb(215,127,126);stroke-width:100;opacity:1" d="M384,0 L384,256 M128,0 L128,512 Z" />
+                <path style="fill:rgb(255,255,255);stroke:rgb(215,127,126);stroke-width:40;opacity:1" d="M302,256 A82,82,0,1,0,466,256 A82,82,0,1,0,302,256Z" />
+            </svg>
+        </div>
+        <div class="caption ground-truth">
+            <strong>Ground Truth:</strong> The image depicts a simple, geometric shape consisting of a vertical red line with a circular loop at the bottom
+        </div>
+        <div class="caption generated">
+            <strong>Generated:</strong> The image shows a geometric design consisting of two vertical red lines and a circular element. On the left side, there is a thick vertical red line that extends from the top to the bottom of the image. On the right side, there is another vertical red line that extends from the top to about halfway down the image. At the end of this shorter line, there is a red circle or loop attached to it. The lines and circle have a pinkish-red color and appear to be drawn with a thick stroke against a white background, creating a simple but bold geometric composition.
+        </div>
+    </div>
+</body>
+</html>

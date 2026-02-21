@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2025/Homebrew)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: tesi_revised.aux
+The style file: plain.bst
+Database file #1: bibliography.bib
+Warning--I didn't find a database entry for "liu2023llava"
+You've used 10 entries,
+            2118 wiz_defined-function locations,
+            549 strings with 6274 characters,
+and the built_in function-call counts, 3698 in all, are:
+= -- 322
+> -- 314
+< -- 0
++ -- 125
+- -- 114
+* -- 289
+:= -- 696
+add.period$ -- 31
+call.type$ -- 10
+change.case$ -- 84
+chr.to.int$ -- 0
+cite$ -- 10
+duplicate$ -- 98
+empty$ -- 189
+format.name$ -- 114
+if$ -- 699
+int.to.chr$ -- 0
+int.to.str$ -- 10
+missing$ -- 9
+newline$ -- 54
+num.names$ -- 20
+pop$ -- 84
+preamble$ -- 1
+purify$ -- 74
+quote$ -- 0
+skip$ -- 73
+stack$ -- 0
+substring$ -- 88
+swap$ -- 10
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 40
+warning$ -- 0
+while$ -- 22
+width$ -- 12
+write$ -- 106
+(There was 1 warning)

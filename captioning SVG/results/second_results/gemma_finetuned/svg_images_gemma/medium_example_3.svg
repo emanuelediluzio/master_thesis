@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path fill="#ffda44" stroke="none" stroke-width="1" opacity="1" d="M0,0 L512,0 L512,512 L0,512 L0,0 Z" />
+<path fill="#0052b4" stroke="none" stroke-width="1" opacity="1" d="M0,0 L147,0 L147,512 L0,512 L0,0 Z" />
+<path fill="#6da544" stroke="none" stroke-width="1" opacity="1" d="M256,412 L223,337 L256,262 L289,337 L256,412 M298,312 L264,237 L298,162 L331,237 L298,312 M214,312 L181,237 L214,162 L248,237 L214,312 M365,0 L512,0 L512,512 L365,512 L365,0Z" />
+</svg>

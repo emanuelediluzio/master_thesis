@@ -1,0 +1,55 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; }
+      .caption { font-family: Arial, sans-serif; font-size: 12px; fill: #333; }
+      .good { fill: #4CAF50; }
+      .border { stroke: #ddd; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f9f9f9" class="border"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" class="title">Esempio di Caption di Alta Qualità</text>
+  
+  <!-- SVG Example -->
+  <g transform="translate(50, 60)">
+    <rect width="200" height="150" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+    <circle cx="100" cy="75" r="30" class="good"/>
+    <rect x="70" y="100" width="60" height="20" fill="#2196f3"/>
+    <text x="100" y="140" text-anchor="middle" class="caption">Diagramma semplice</text>
+  </g>
+  
+  <!-- Generated Caption -->
+  <g transform="translate(300, 60)">
+    <rect width="250" height="150" fill="#fff" stroke="#4CAF50" stroke-width="2"/>
+    <text x="320" y="85" class="caption">Caption Generata:</text>
+    <text x="320" y="105" class="caption">"Un diagramma che mostra un cerchio verde</text>
+    <text x="320" y="120" class="caption">al centro con un rettangolo blu sottostante,</text>
+    <text x="320" y="135" class="caption">disposti in una composizione verticale</text>
+    <text x="320" y="150" class="caption">su sfondo azzurro chiaro."</text>
+    <text x="320" y="175" class="caption" fill="#4CAF50">✓ Accurata e dettagliata</text>
+  </g>
+  
+  <!-- Metrics -->
+  <g transform="translate(50, 250)">
+    <text x="0" y="20" class="title">Metriche di Qualità:</text>
+    <text x="0" y="45" class="caption">BLEU-1: 0.85</text>
+    <text x="0" y="60" class="caption">METEOR: 0.78</text>
+    <text x="0" y="75" class="caption">CIDEr: 1.24</text>
+    <text x="150" y="45" class="caption">BERTScore: 0.82</text>
+    <text x="150" y="60" class="caption">CLIPScore: 0.79</text>
+    <text x="150" y="75" class="caption">ROUGE-L: 0.76</text>
+  </g>
+  
+  <!-- Analysis -->
+  <g transform="translate(350, 250)">
+    <text x="0" y="20" class="title">Analisi:</text>
+    <text x="0" y="45" class="caption">• Descrizione precisa degli elementi</text>
+    <text x="0" y="60" class="caption">• Corretta identificazione dei colori</text>
+    <text x="0" y="75" class="caption">• Buona comprensione spaziale</text>
+    <text x="0" y="90" class="caption">• Linguaggio naturale e fluido</text>
+  </g>
+</svg>

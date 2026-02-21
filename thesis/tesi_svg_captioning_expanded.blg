@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2025/Homebrew)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: tesi_svg_captioning_expanded.aux
+The style file: plain.bst
+Database file #1: bibliography.bib
+You've used 38 entries,
+            2118 wiz_defined-function locations,
+            678 strings with 11836 characters,
+and the built_in function-call counts, 15525 in all, are:
+= -- 1438
+> -- 1116
+< -- 10
++ -- 442
+- -- 402
+* -- 1140
+:= -- 2687
+add.period$ -- 116
+call.type$ -- 38
+change.case$ -- 303
+chr.to.int$ -- 0
+cite$ -- 38
+duplicate$ -- 508
+empty$ -- 905
+format.name$ -- 402
+if$ -- 3126
+int.to.chr$ -- 0
+int.to.str$ -- 38
+missing$ -- 36
+newline$ -- 194
+num.names$ -- 76
+pop$ -- 313
+preamble$ -- 1
+purify$ -- 264
+quote$ -- 0
+skip$ -- 427
+stack$ -- 0
+substring$ -- 646
+swap$ -- 145
+text.length$ -- 10
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 152
+warning$ -- 0
+while$ -- 111
+width$ -- 40
+write$ -- 401

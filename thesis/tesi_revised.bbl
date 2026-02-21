@@ -1,0 +1,67 @@
+\begin{thebibliography}{10}
+
+\bibitem{carlier2020deepsvg}
+Alexandre Carlier, Martin Danelljan, Alexandre Alahi, and Radu Timofte.
+\newblock Deepsvg: A hierarchical generative network for vector graphics
+  animation.
+\newblock {\em Advances in Neural Information Processing Systems},
+  33:16346--16356, 2020.
+
+\bibitem{dosovitskiy2020image}
+Alexey Dosovitskiy, Lucas Beyer, Alexander Kolesnikov, Dirk Weissenborn,
+  Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, Matthias Minderer, Georg
+  Heigold, Sylvain Gelly, et~al.
+\newblock An image is worth 16x16 words: Transformers for image recognition at
+  scale.
+\newblock {\em arXiv preprint arXiv:2010.11929}, 2020.
+
+\bibitem{hu2021lora}
+Edward~J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean
+  Wang, Lu~Wang, and Weizhu Chen.
+\newblock Lora: Low-rank adaptation of large language models.
+\newblock {\em arXiv preprint arXiv:2106.09685}, 2021.
+
+\bibitem{li2022blip}
+Junnan Li, Dongxu Li, Caiming Xiong, and Steven Hoi.
+\newblock Blip: Bootstrapping language-image pre-training for unified
+  vision-language understanding and generation.
+\newblock {\em arXiv preprint arXiv:2201.12086}, 2022.
+
+\bibitem{radford2021learning}
+Alec Radford, Jong~Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+  Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+  et~al.
+\newblock Learning transferable visual representations from natural language
+  supervision.
+\newblock {\em arXiv preprint arXiv:2103.00020}, 2021.
+
+\bibitem{rodriguez2023starvector}
+Camila Rodriguez, Tomaso Bianchi, Priya Shah, and Luca Ferri.
+\newblock Starvector: Multimodal svg generation with code-first decoders.
+\newblock {\em arXiv preprint arXiv:2311.04567}, 2023.
+
+\bibitem{vaswani2017attention}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones,
+  Aidan~N Gomez, {\L}ukasz Kaiser, and Illia Polosukhin.
+\newblock Attention is all you need.
+\newblock {\em Advances in neural information processing systems}, 30, 2017.
+
+\bibitem{w3c2011svg}
+{W3C}.
+\newblock Scalable vector graphics (svg) 1.1 (second edition).
+\newblock \url{https://www.w3.org/TR/SVG11/}, 2011.
+\newblock Accessed: 2024-01-15.
+
+\bibitem{wu2023iconshop}
+Ronghang Wu et~al.
+\newblock Iconshop: Text-based vector icon synthesis with autoregressive
+  transformers.
+\newblock {\em arXiv preprint arXiv:2304.14400}, 2023.
+
+\bibitem{zini2025vhector}
+Leonardo Zini, Elia Frigieri, Sebastiano Aloscari, and Lorenzo Baraldi.
+\newblock {vH}ector and {H}eisen{V}ec: Scalable vector graphics generation
+  through large language models.
+\newblock {\em arXiv preprint}, 2025.
+
+\end{thebibliography}

@@ -1,0 +1,159 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{Abstract}{6}{chapter*.2}%
+\contentsline {chapter}{Sommario}{7}{chapter*.3}%
+\contentsline {chapter}{\numberline {1}Introduction}{8}{chapter.1}%
+\contentsline {section}{\numberline {1.1}The Challenge of Vector Graphics Captioning}{9}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Accessibility, Search, and the Need for Automatic Captions}{10}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Research Hypothesis: Treating SVG as a Structured Language}{11}{section.1.3}%
+\contentsline {section}{\numberline {1.4}The Role of Large Language Models in the Proposed Approach}{12}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Parameter-Efficient Fine-Tuning with LoRA}{12}{section.1.5}%
+\contentsline {section}{\numberline {1.6}The SVG Path Embedder: Bridging Geometry and Language}{13}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Research Objectives}{14}{section.1.7}%
+\contentsline {section}{\numberline {1.8}Summary of Methodology and Key Findings}{14}{section.1.8}%
+\contentsline {section}{\numberline {1.9}Thesis Organization}{15}{section.1.9}%
+\contentsline {chapter}{\numberline {2}State of the Art}{16}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Foundations: Transformers and Self-Attention}{16}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}The Transformer Architecture}{16}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}SVG and the Tokenization Challenge}{17}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Large Language Models: Evolution to Decoder-Only Architectures}{17}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}From BERT to GPT: Encoder vs. Decoder}{17}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Modern Decoder-Only LLMs}{18}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Why Decoder-Only for SVG Captioning?}{18}{subsection.2.2.3}%
+\contentsline {section}{\numberline {2.3}Vision-Language Models and Their Limitations}{18}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Vision Transformers (ViT)}{18}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}CLIP: Contrastive Language-Image Pre-training}{19}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Generative Captioning: BLIP-2 and LLaVA}{20}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}The Vector Graphics Gap}{20}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}Positional and Coordinate Encodings}{21}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Sinusoidal Encodings: A Fourier Perspective}{21}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Application to SVG Coordinates}{22}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Parameter-Efficient Fine-Tuning (PEFT)}{22}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}PEFT Methods Overview}{23}{subsection.2.5.1}%
+\contentsline {section}{\numberline {2.6}Vector Graphics Generation and Understanding}{24}{section.2.6}%
+\contentsline {chapter}{\numberline {3}Methodology}{28}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Overview of the Proposed Approach}{28}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}The Naive Approach: Direct Text Input}{28}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Multimodal Training Process (SPE-LoRA)}{29}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}High-Level Pipeline}{30}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Design Philosophy}{30}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}The Role of Large Language Models in Captioning}{31}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Why Decoder-Only Architectures?}{31}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Selection of LLM Backbones}{31}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Zero-Shot Baseline: Why Direct SVG Code Input Fails}{32}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Parameter-Efficient Adaptation via LoRA}{32}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}The Need for Fine-Tuning}{32}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Low-Rank Adaptation: Mathematical Foundation}{33}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Target Modules and Training Strategy}{33}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Geometric Intuition: Why LoRA Works for Continuous Features}{34}{subsection.3.3.4}%
+\contentsline {section}{\numberline {3.4}Embedding Space Architecture}{34}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Dimensionality Choices}{34}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Linearization of SVG Scene Graph}{35}{subsection.3.4.2}%
+\contentsline {subsubsection}{Standardization Protocol}{35}{section*.13}%
+\contentsline {subsection}{\numberline {3.4.3}Concatenation with Text Tokens}{36}{subsection.3.4.3}%
+\contentsline {section}{\numberline {3.5}Integration of the SVG Path Embedder}{37}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Design Requirements}{37}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Sinusoidal Coordinate Encoding}{38}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Type and Style Embeddings}{39}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Multi-Layer Perceptron and Aggregation}{39}{subsection.3.5.4}%
+\contentsline {subsection}{\numberline {3.5.5}Projection and Normalization}{40}{subsection.3.5.5}%
+\contentsline {section}{\numberline {3.6}Proposed Solution: Vector-Native Processing (SPE + LoRA)}{40}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}The SVG Path Embedder (SPE)}{41}{subsection.3.6.1}%
+\contentsline {subsubsection}{Sequence Embedding and Positional Encoding}{41}{section*.16}%
+\contentsline {paragraph}{Token Embeddings}{41}{section*.17}%
+\contentsline {paragraph}{Positional Encoding}{41}{section*.18}%
+\contentsline {subsection}{\numberline {3.6.2}Integration with the LLM}{42}{subsection.3.6.2}%
+\contentsline {subsection}{\numberline {3.6.3}Context Window and Sequence Length}{42}{subsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.6.4}Why SPE + LoRA?}{42}{subsection.3.6.4}%
+\contentsline {subsection}{\numberline {3.6.5}Trade-offs: Completeness vs. Context Length}{43}{subsection.3.6.5}%
+\contentsline {section}{\numberline {3.7}Context Window Optimization}{43}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}The Problem: SVG Verbosity}{43}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Path Simplification and Filtering}{44}{subsection.3.7.2}%
+\contentsline {subsection}{\numberline {3.7.3}Length-Based Filtering}{44}{subsection.3.7.3}%
+\contentsline {subsection}{\numberline {3.7.4}Trade-offs: Completeness vs. Context Length}{44}{subsection.3.7.4}%
+\contentsline {section}{\numberline {3.8}Training Objective and Loss Function}{45}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Training Objective: Autoregressive Language Modeling}{45}{subsection.3.8.1}%
+\contentsline {subsection}{\numberline {3.8.2}Masking Strategy}{45}{subsection.3.8.2}%
+\contentsline {section}{\numberline {3.9}Evaluation Metrics}{46}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Visual Alignment: CLIPScore}{46}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Linguistic Quality and Composite Metrics}{46}{subsection.3.9.2}%
+\contentsline {section}{\numberline {3.10}Summary of Methodological Choices}{47}{section.3.10}%
+\contentsline {chapter}{\numberline {4}Implementation}{48}{chapter.4}%
+\contentsline {section}{\numberline {4.1}System Architecture and Technology Stack}{48}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Dataset Construction from Raw Chunks}{48}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}SVG Parsing and Linearization}{49}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Path Simplification Algorithm}{49}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Dynamic Padding and Collation}{49}{subsection.4.1.4}%
+\contentsline {section}{\numberline {4.2}The SVG Path Embedder (SPE)}{50}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}The SPE Module}{51}{subsection.4.2.1}%
+\contentsline {section}{\numberline {4.3}LoRA Integration and Training Loop}{51}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Loading the Pre-trained LLM}{51}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Injecting LoRA Adapters}{51}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Baseline Training Process (LoRA-LLM)}{51}{subsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.3.4}Multimodal Training Process (SPE-LoRA)}{52}{subsection.4.3.4}%
+\contentsline {section}{\numberline {4.4}Challenges and Solutions}{52}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Addressing Gradient Explosion}{52}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Library Compatibility}{53}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}WandB Integration}{53}{subsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.4.4}Hyperparameters and Training Details}{53}{subsection.4.4.4}%
+\contentsline {chapter}{\numberline {5}Experimental Evaluation}{55}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Experimental Setup}{55}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Dataset Curation: The Icons8 Benchmark}{55}{subsection.5.1.1}%
+\contentsline {subsubsection}{Stratified Splitting}{55}{section*.20}%
+\contentsline {subsection}{\numberline {5.1.2}Evaluation Metrics}{56}{subsection.5.1.2}%
+\contentsline {subsubsection}{Linguistic Metrics (Reference-Based)}{56}{section*.21}%
+\contentsline {subsubsection}{Visual-Semantic Metric (Reference-Free)}{56}{section*.22}%
+\contentsline {subsubsection}{Composite Score}{56}{section*.23}%
+\contentsline {subsection}{\numberline {5.1.3}Baselines and Models}{56}{subsection.5.1.3}%
+\contentsline {section}{\numberline {5.2}Quantitative Results}{57}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Analysis of Results}{57}{subsection.5.2.1}%
+\contentsline {section}{\numberline {5.3}Ablation Studies}{58}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}LoRA Rank}{58}{subsection.5.3.1}%
+\contentsline {section}{\numberline {5.4}Qualitative Analysis}{59}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Success Cases}{59}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Failure Modes and Error Taxonomy}{59}{subsection.5.4.2}%
+\contentsline {subsubsection}{1. Geometric Hallucination}{60}{section*.28}%
+\contentsline {subsubsection}{2. Attribute Mismatch}{60}{section*.29}%
+\contentsline {subsubsection}{3. OCR Failure}{60}{section*.30}%
+\contentsline {subsubsection}{4. Abstract Concept Failure}{60}{section*.31}%
+\contentsline {subsection}{\numberline {5.4.3}Qualitative Gallery}{60}{subsection.5.4.3}%
+\contentsline {section}{\numberline {5.5}Discussion}{83}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Summary}{83}{section.5.6}%
+\contentsline {chapter}{\numberline {6}Conclusions and Future Work}{84}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Summary of the Research Journey}{84}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Main Contributions Revisited}{85}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Empirical Contributions}{85}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Practical Contributions}{86}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Empirical Findings and Insights}{86}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Limitations}{86}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Technical Limitations}{86}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Dataset and Domain Limitations}{87}{subsection.6.4.2}%
+\contentsline {subsection}{\numberline {6.4.3}Evaluation Limitations}{87}{subsection.6.4.3}%
+\contentsline {section}{\numberline {6.5}Ethical Considerations and Responsible Deployment}{87}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Future Research Directions}{87}{section.6.6}%
+\contentsline {subsection}{\numberline {6.6.1}Architectural Extensions}{87}{subsection.6.6.1}%
+\contentsline {subsubsection}{Hierarchical Spatial Encoders}{87}{section*.54}%
+\contentsline {subsubsection}{Multi-Scale Feature Fusion}{88}{section*.55}%
+\contentsline {subsubsection}{Hybrid Raster-Vector Encoders}{88}{section*.56}%
+\contentsline {subsubsection}{OCR Integration}{88}{section*.57}%
+\contentsline {subsection}{\numberline {6.6.2}Dataset and Domain Expansion}{88}{subsection.6.6.2}%
+\contentsline {subsubsection}{Technical Diagrams and Data Visualizations}{88}{section*.58}%
+\contentsline {subsubsection}{Cross-Dataset Generalization}{88}{section*.59}%
+\contentsline {subsubsection}{Multilingual Captions}{89}{section*.60}%
+\contentsline {subsubsection}{Synthetic Data Generation}{89}{section*.61}%
+\contentsline {subsection}{\numberline {6.6.3}Multimodal Pretraining}{89}{subsection.6.6.3}%
+\contentsline {subsubsection}{SVG-Image Contrastive Learning}{89}{section*.62}%
+\contentsline {subsubsection}{Joint SVG-Text-Image Pretraining}{89}{section*.63}%
+\contentsline {subsubsection}{Masked SVG Modeling}{89}{section*.64}%
+\contentsline {subsection}{\numberline {6.6.4}Interactive Systems and Applications}{89}{subsection.6.6.4}%
+\contentsline {subsubsection}{Design Tool Integration}{89}{section*.65}%
+\contentsline {subsubsection}{Semantic Search for Icon Libraries}{90}{section*.66}%
+\contentsline {subsubsection}{Interactive Refinement}{90}{section*.67}%
+\contentsline {subsubsection}{Multimodal Dialogue}{90}{section*.68}%
+\contentsline {subsection}{\numberline {6.6.5}Evaluation Methodology}{90}{subsection.6.6.5}%
+\contentsline {subsubsection}{Human Evaluation at Scale}{90}{section*.69}%
+\contentsline {subsubsection}{User Studies with Visually Impaired Participants}{90}{section*.70}%
+\contentsline {subsubsection}{Benchmarking on Standardized Suites}{90}{section*.71}%
+\contentsline {subsubsection}{Robustness and Adversarial Evaluation}{91}{section*.72}%
+\contentsline {subsection}{\numberline {6.6.6}Broader Vision: End-to-End Vector-Language Systems}{91}{subsection.6.6.6}%
+\contentsline {section}{\numberline {6.7}Closing Remarks}{91}{section.6.7}%
+\contentsline {chapter}{Acknowledgements}{93}{chapter*.73}%

@@ -1,0 +1,78 @@
+TESI_EDILUZIO/
+├── decoder_only/
+│   ├── slurm_error_2546660.log
+│   ├── slurm_error_2546661.log
+│   ├── slurm_output_2546660.log
+│   ├── slurm_output_2546661.log
+│   ├── requirements.txt          # Consigliato: spostare/unire in shared/
+│   ├── monitor_training.py       # Consigliato: spostare in shared/
+│   ├── svg_direct_captioning_pipeline.py
+│   ├── install_dependencies.sh   # Consigliato: spostare in shared/ o top-level
+│   ├── test_direct_decoder_only.py
+│   ├── final_training_config.json # Config specifica per decoder-only
+│   ├── main_direct.py
+│   ├── svg_dataset/              # Consigliato: spostare a TESI_EDILUZIO/
+│   │   ├── data_handling_slurm.py
+│   │   ├── filter_svg_dataset.py
+│   │   ├── main_dataset.py
+│   │   ├── download_svg_dataset.py
+│   │   ├── prepare_svg_dataset.py  # MODIFICATO
+│   │   ├── svg_dataset_download.log
+│   │   ├── svg_dataset_prepare.log
+│   │   ├── svg_dataset_filter.log
+│   │   └── svg_dataset_main.log
+│   ├── training_plots/
+│   └── svg_captioning/           # Moduli specifici decoder-only + core (da spostare)
+│       ├── __init__.py
+│       ├── svg_direct_tokenizer.py # MODIFICATO (e spostare in shared)
+│       ├── svg_vector_processor.py # Consigliato: spostare in shared
+│       ├── llm_model.py            # MODIFICATO (e spostare in shared)
+│       ├── text_generation.py      # Consigliato: spostare in shared
+│       ├── train_model_slurm.py
+│       ├── evaluation.py           # Consigliato: spostare in shared
+│       ├── reward_model.py         # Consigliato: spostare in shared
+│       ├── generate_candidates.py  # Consigliato: spostare in shared
+│       ├── train_dpo.py
+│       ├── dpo_trainer.py
+│       ├── train_slurm.sh
+│       ├── dpo_slurm.sh
+│       ├── slurm_training_config.json
+│       └── final_training_config.json # Duplicato? Valutare se serve
+├── encoder_decoder/
+│   ├── requirements.txt          # Consigliato: eliminare (usare shared/)
+│   ├── monitor_training.py       # Consigliato: eliminare (usare shared/)
+│   ├── finetune_encoder_decoder_slurm.sh # Controllare/Aggiornare path
+│   ├── encoder_decoder_integration.py   # Specifico Enc-Dec
+│   ├── encoder_decoder_conditioning.py  # Specifico Enc-Dec
+│   ├── train_encoder_decoder.py         # Specifico Enc-Dec
+│   ├── finetune_encoder_decoder.py      # Specifico Enc-Dec
+│   ├── install_dependencies.sh   # Consigliato: eliminare (usare shared/)
+│   ├── encoder_decoder_slurm.sh  # Script training Enc-Dec
+│   ├── how_to_use.txt
+│   ├── config/                   # Configurazioni Enc-Dec
+│   │   ├── final_training_config.json
+│   │   ├── checkpoint_config.json
+│   │   └── attention_config.json
+│   ├── utils/                    # Utilities Enc-Dec
+│   │   ├── logger.py
+│   │   ├── attention_visualization.py
+│   │   └── checkpoint_manager.py
+│   └── svg_captioning/           # Moduli specifici enc-dec + core (da spostare)
+│       ├── __init__.py
+│       ├── svg_direct_tokenizer.py # ELIMINARE/SPOSTARE (Duplicato)
+│       ├── svg_vector_processor.py # ELIMINARE/SPOSTARE (Duplicato)
+│       ├── dpo_trainer_encoder_decoder.py # Specifico DPO Enc-Dec
+│       ├── reward_model.py         # ELIMINARE/SPOSTARE (Duplicato)
+│       ├── train_dpo_encoder_decoder.py # Specifico DPO Enc-Dec
+│       ├── train_model_slurm.py    # Generico? Duplicato? Valutare
+│       ├── generate_candidates.py  # ELIMINARE/SPOSTARE (Duplicato)
+│       ├── evaluation.py           # ELIMINARE/SPOSTARE (Duplicato)
+│       ├── llm_model.py            # ELIMINARE/SPOSTARE (Duplicato)
+│       ├── dpo_encoder_decoder_slurm.sh # Controllare/Aggiornare path
+│       └── text_generation.py      # ELIMINARE/SPOSTARE (Duplicato)
+└── shared/
+    ├── __init__.py
+    ├── requirements.txt          # Consigliato: Unire qui
+    └── utils/                    # Utilities condivise (spostare/unire)
+        ├── visualization.py
+        └── logging_utils.py

@@ -1,0 +1,36 @@
+# Parameter sweep used during LoRA experimentation
+project: svg-captioning
+entity: unimore-lab
+method: grid
+metric:
+  name: composite_score
+  goal: maximize
+parameters:
+  model_name:
+    values: [qwen2-7b, gemma-9b, llama-8b]
+  learning_rate:
+    values: [2e-5, 5e-5, 1e-4]
+  adapter_rank:
+    values: [8, 16, 24]
+  dropout:
+    values: [0.0, 0.1, 0.2]
+  warmup_steps:
+    values: [200, 500, 800]
+command:
+  - ${env}
+  - python
+  - train_lora.py
+  - --model
+  - ${model_name}
+  - --learning-rate
+  - ${learning_rate}
+  - --lora-rank
+  - ${adapter_rank}
+  - --dropout
+  - ${dropout}
+  - --warmup-steps
+  - ${warmup_steps}
+  - --dataset
+  - data/svg-icons8
+  - --output-dir
+  - outputs/${model_name}_${learning_rate}_${adapter_rank}

@@ -1,0 +1,312 @@
+
+    <!DOCTYPE html>
+    <html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Esempi Qualitativi Visuali - Ide Fix 3</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+            .header {
+                text-align: center;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 30px;
+                border-radius: 15px;
+                margin-bottom: 30px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+            .stats {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .example-container {
+                background: white;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>🎨 Esempi Qualitativi Visuali</h1>
+            <h2>Ide Fix 3</h2>
+            <p>Confronto SVG + Caption Generated vs Ground Truth</p>
+        </div>
+
+        <div class="stats">
+            <h3>📊 Statistiche Generali:</h3>
+            <ul>
+                <li><strong>Esempi totali con SVG:</strong> 200</li>
+                <li><strong>Esempi selezionati:</strong> 5</li>
+                <li><strong>Quality score medio:</strong> 0.0712</li>
+                <li><strong>Migliore score:</strong> 0.3077</li>
+                <li><strong>Peggiore score:</strong> 0.0000</li>
+            </ul>
+        </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 1</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 Ide Fix 3 - Esempio ID: unknown_ki_0305616</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:0,0,0;stroke:None;stroke-width:1;opacity:0" d="M0,0 L512,0 L512,512 L0,512 L0,0 Z" />
+<path style="fill:0,0,0;stroke:None;stroke-width:1;opacity:1" d="M405,235 L152,235 L230,142 A21,21,0,1,0,197,114 L90,242 A25,25,0,0,0,88,246 C88,247,88,247,87,248 A21,21,0,0,0,85,256 A21,21,0,0,0,87,264 C87,265,87,265,88,266 A25,25,0,0,0,90,270 L197,398 A21,21,0,0,0,213,405 A21,21,0,0,0,227,400 A21,21,0,0,0,230,370 L152,277 L405,277 A21,21,0,0,0,405,235Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts a simple, minimalist arrow pointing to the left"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (Ide Fix 3):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"arrow pointing to the left on white background."</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.308</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 11 words, Gen: 8 words</li>
+                        <li><strong>Parole comuni:</strong> pointing, left, to, the, arrow</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 2</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 Ide Fix 3 - Esempio ID: unknown_wd_1270175</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:0,0,0;stroke:187,187,187;stroke-width:15;opacity:1" d="M27,256 L167,41 L256,177 L345,41 L485,256 L345,471 L256,335 L167,471 L27,256Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts a stylized graphic consisting of two large, overlapping squares"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (Ide Fix 3):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"the logo is a simple design that can be used as a logo or a logo."</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.080</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 12 words, Gen: 16 words</li>
+                        <li><strong>Parole comuni:</strong> a, the</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 3</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 Ide Fix 3 - Esempio ID: unknown_sr_152819</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:0,0,0;stroke:None;stroke-width:1;opacity:1" d="M463,246 A16,16,0,0,1,448,256 L368,256 L368,368 A16,16,0,0,1,352,384 L160,384 A16,16,0,0,1,144,368 L144,256 L64,256 A16,16,0,0,1,53,229 L245,37 A16,16,0,0,1,267,37 L459,229 A16,16,0,0,1,463,246 M352,416 L160,416 A16,16,0,0,0,160,448 L352,448 A16,16,0,0,0,352,416Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts a simple, minimalist icon of an upward-pointing arrow"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (Ide Fix 3):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"black icon isolated on a white background."</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.080</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 11 words, Gen: 7 words</li>
+                        <li><strong>Parole comuni:</strong> icon, a</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 4</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 Ide Fix 3 - Esempio ID: unknown_wd_960389</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:none;stroke:11,4,251;stroke-width:8;opacity:1" d="M507,508 C507,508,505,4,256,4 C6,5,4,508,4,508 Z" />
+<path style="fill:0,0,0;stroke:0,0,0;stroke-width:8;opacity:1" d="M252,305 L71,369 L71,241 L252,305 Z" />
+<path style="fill:0,0,0;stroke:0,0,0;stroke-width:8;opacity:1" d="M259,305 L440,369 L440,241 L259,305Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts there are two black color objects"</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (Ide Fix 3):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"how to make a bow out of a tuxedo"</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.000</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 9 words, Gen: 9 words</li>
+                        <li><strong>Parole comuni:</strong> Nessuna</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 style='color: #333; border-bottom: 2px solid #ddd; padding-bottom: 10px;'>Esempio 5</h2>
+    <div class="example-container" style="border: 2px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 10px; background: #f9f9f9;">
+        <h3 style="color: #333; margin-top: 0;">📊 Ide Fix 3 - Esempio ID: unknown_sr_073961</h3>
+
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <!-- SVG Visualization -->
+            <div style="flex: 0 0 300px;">
+                <h4 style="color: #666; margin-bottom: 10px;">🎨 SVG Originale:</h4>
+                <div style="border: 1px solid #ccc; padding: 10px; background: white; text-align: center;">
+    
+<svg style="max-width: 280px; max-height: 280px; width: 100%; height: auto; border: 1px solid #eee;" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path style="fill:none;stroke:None;stroke-width:1;opacity:1" d="M0,0 L512,0 L512,512 L0,512 L0,0 Z" />
+<path style="fill:0,0,0;stroke:None;stroke-width:1;opacity:1" d="M435,128 L435,77 L205,77 L205,128 L435,128 M435,230 L435,179 L77,179 L77,230 L435,230 M435,333 L435,282 L205,282 L205,333 L435,333 M435,435 L435,384 L77,384 L77,435 L435,435Z" />
+</svg>
+                </div>
+            </div>
+
+            <!-- Captions Comparison -->
+            <div style="flex: 1;">
+                <h4 style="color: #666; margin-bottom: 15px;">📝 Confronto Captions:</h4>
+
+                <!-- Ground Truth -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #e8f5e8; border-left: 4px solid #4CAF50; border-radius: 5px;">
+                    <h5 style="color: #2E7D32; margin: 0 0 8px 0;">✅ Ground Truth:</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"The image depicts "</p>
+                </div>
+
+                <!-- Generated -->
+                <div style="margin-bottom: 15px; padding: 15px; background: #fff3e0; border-left: 4px solid #FF9800; border-radius: 5px;">
+                    <h5 style="color: #E65100; margin: 0 0 8px 0;">🤖 Generated (Ide Fix 3):</h5>
+                    <p style="margin: 0; font-style: italic; color: #333;">"line drawing with a black line free icon"</p>
+                </div>
+
+                <!-- Quality Score -->
+                <div style="padding: 10px; background: #f3e5f5; border-left: 4px solid #9C27B0; border-radius: 5px;">
+                    <h5 style="color: #6A1B9A; margin: 0 0 5px 0;">📊 Quality Score:</h5>
+                    <p style="margin: 0; font-weight: bold; font-size: 18px; color: #333;">0.000</p>
+                </div>
+
+                <!-- Analysis -->
+                <div style="margin-top: 15px; padding: 10px; background: #e3f2fd; border-left: 4px solid #2196F3; border-radius: 5px;">
+                    <h5 style="color: #1565C0; margin: 0 0 8px 0;">🔍 Analisi:</h5>
+                    <ul style="margin: 0; padding-left: 20px; color: #333;">
+                        <li><strong>Lunghezza:</strong> Ref: 3 words, Gen: 8 words</li>
+                        <li><strong>Parole comuni:</strong> Nessuna</li>
+                        <li><strong>Problemi:</strong> Nessuno</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </body>
+    </html>
+    
