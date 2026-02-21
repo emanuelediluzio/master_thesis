@@ -2,3 +2,10 @@ assets/
 docs/notes/
 presentation/
 thesis/
+
+# Meta and Logs
+.gitignore
+audit_logs/
+EXCEL_CONSOLIDATO_FINALE.xlsx
+LAUREA MATERIALE/
+papers generali/
